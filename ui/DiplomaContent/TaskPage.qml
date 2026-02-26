@@ -10,7 +10,7 @@ Column {
     required property int theme_id
     required property int user_id
     property var tasksContent: ['<b>Задание</b><br>Напиши простую программу, которая:<ol><li>Запрашивает у пользователя два числа.</li><li>Выводит их сумму.</li><br><p>Цель: научиться создавать переменные, использовать типы данных и базовый ввод/вывод.</p>']
-    //signal taskDemanded(int theme_id)
+    signal taskSolved()
 
     Label {
         text: tasksContent[theme_id - 1]
@@ -23,7 +23,6 @@ Column {
     }
 
     RowLayout {
-
         Button {
             text: "Отправить на проверку"
 
@@ -36,6 +35,7 @@ Column {
                         let response = JSON.parse(xhr.responseText);
                         if (response.status === "ok") {
                             resultLabel.text = "Успех";
+                            taskSolved();
                         } else if (response.status === "wrong_answer") {
                             resultLabel.text = "Неверно";
                         } else if (response.status === "compile_error") {

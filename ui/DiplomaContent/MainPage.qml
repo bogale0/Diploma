@@ -5,17 +5,16 @@ import Diploma 1.0
 
 ColumnLayout {
     required property int user_id
+    property bool isTaskSolved: false
 
     Row {
         spacing: 10
 
         Repeater {
             model: [
-                {name: "Языки", page: "LanguagesListPage.qml", params: {}},
-                {name: "Курсы", page: "CourseListPage.qml", params: {}},
-                {name: "Прогресс", page: "ProgressPage.qml", params: {"user_id": user_id}},
-                {name: "Профиль", page: "ProfilePage.qml", params: {}},
-                {name: "Настройки", page: "SettingsPage.qml", params: {}}
+                {name: "Языки", page: "LanguagesListPage.qml"},
+                {name: "Курсы", page: "CourseListPage.qml"},
+                {name: "Прогресс", page: "ProgressPage.qml", params: {"isTaskSolved": isTaskSolved}},
             ]
 
             Button {
@@ -54,6 +53,12 @@ ColumnLayout {
             if (currentItem.taskDemanded) {
                 currentItem.taskDemanded.connect(function(theme_id) {
                     content.push("TaskPage.qml", {"theme_id": theme_id, "user_id": user_id});
+                });
+            }
+
+            if (currentItem.taskSolved) {
+                currentItem.taskSolved.connect(function() {
+                    isTaskSolved = true;
                 });
             }
         }

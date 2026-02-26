@@ -4,26 +4,14 @@ import QtQuick.Layouts
 import Diploma 1.0
 
 Page {
-    required property int user_id
-    property int progressPercent: 0
+    required property bool isTaskSolved
     property var completedThemes: []
     property var pendingThemes: []
 
-    function loadProgress() {
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", Constants.endpoint + "/progress.php?user_id=" + user_id);
-        xhr.onload = function() {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                let response = JSON.parse(xhr.responseText);
-                progressPercent = response.overall_progress || 0;
-                completedThemes = response.completed_themes || [];
-                pendingThemes = response.pending_themes || [];
-            }
-        }
-        xhr.send();
+    Component.onCompleted: {
+        completedThemes = isTaskSolved ? ["Основы синтаксиса и переменные"] : [];
+        pendingThemes = isTaskSolved ? ["Условия и циклы", "Функции и массивы"] : ["Основы синтаксиса и переменные", "Условия и циклы", "Функции и массивы"];
     }
-
-    Component.onCompleted: loadProgress()
 
     Flickable {
         anchors.fill: parent
@@ -62,11 +50,11 @@ Page {
 
                     ProgressBar {
                         Layout.fillWidth: true
-                        value: progressPercent / 100
+                        value: isTaskSolved * 33 / 100
                     }
 
                     Label {
-                        text: "Выполнено " + progressPercent + "%"
+                        text: "Выполнено " + (isTaskSolved * 33) + "%"
                         font.pixelSize: 16
                     }
                 }
@@ -95,7 +83,7 @@ Page {
                     Repeater {
                         model: completedThemes
                         delegate: Label {
-                            text: "• " + modelData.name
+                            text: "• " + modelData
                             font.pixelSize: 16
                         }
                     }
@@ -131,7 +119,7 @@ Page {
                     Repeater {
                         model: pendingThemes
                         delegate: Label {
-                            text: "• " + modelData.name
+                            text: "• " + modelData
                             font.pixelSize: 16
                         }
                     }
