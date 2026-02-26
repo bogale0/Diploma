@@ -14,9 +14,9 @@ Window {
     StackView {
         id: stack
         anchors.fill: parent
-        initialItem: Authorization {
+        initialItem: MainPage {user_id: 2}/*Authorization {
             onLoginSuccess: stack.replace("MainPage.qml", {"user_id": user_id})
-        }
+        }*/
     }
 }
 

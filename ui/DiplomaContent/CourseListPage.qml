@@ -5,6 +5,8 @@ import Diploma 1.0
 
 ListView {
     anchors.fill: parent
+    property string titleText
+    signal themeChosen()
 
     model: [
         "Основы C++",
@@ -17,7 +19,8 @@ ListView {
         width: parent.width
 
         onClicked: {
-            console.log("TheoryPage.qml " + modelData)
+            titleText = modelData;
+            themeChosen();
         }
     }
 }

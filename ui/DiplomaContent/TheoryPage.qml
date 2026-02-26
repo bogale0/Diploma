@@ -4,10 +4,10 @@ import QtQuick.Layouts
 import Diploma 1.0
 
 Column {
-    property string titleText: ""
     anchors.fill: parent
     spacing: 10
     padding: 20
+    property string titleText: ""
 
     Label {
         text: titleText
@@ -27,10 +27,6 @@ Column {
 
     Button {
         text: "Перейти к заданию"
-
-        Connections {
-            target: parent
-            onClicked: StackView.view.push("TaskPage.qml")
-        }
+        onClicked: StackView.view.push("TaskPage.qml")
     }
 }

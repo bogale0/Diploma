@@ -3,23 +3,13 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Diploma 1.0
 
-RowLayout {
+ColumnLayout {
     required property int user_id
     anchors.fill: parent
 
-    StackView {
-        id: contentStack
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        initialItem: "CourseListPage.qml"
-    }
-
-    Column {
+    Row {
+        anchors.fill: parent
         spacing: 10
-
-        anchors {
-            verticalCenter: parent.verticalCenter
-        }
 
         Repeater {
             model: [
@@ -32,11 +22,25 @@ RowLayout {
             Button {
                 text: modelData.name
                 Layout.fillWidth: true
+                onClicked: contentStack.replace(modelData.page)
+            }
+        }
+    }
 
-                Connections {
-                    target: parent
-                    onClicked: contentStack.replace(modelData.page)
-                }
+    StackView {
+        id: contentStack
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        initialItem: "CourseListPage.qml"
+
+        onCurrentItemChanged: {
+            if (!currentItem)
+                return;
+
+            if (currentItem.themeChosen) {
+                currentItem.themeChosen.connect(function(a) {
+                    contentStack.push("TheoryPage.qml", {titleText: currentItem.titleText});
+                })
             }
         }
     }

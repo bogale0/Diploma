@@ -14,6 +14,10 @@ qt6_add_qml_module(DiplomaContent
         "App.qml"
         "CourseListPage.qml"
         "TheoryPage.qml"
+        "TaskPage.qml"
+        "ProgressPage.qml"
+        "ProfilePage.qml"
+        "SettingsPage.qml"
 )
 
 
