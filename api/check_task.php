@@ -22,12 +22,12 @@ if (trim($code) === "") {
 
 $tests = [
     [
-        "input" => "2 3\nAlice\n",
-        "expected" => "5\nHello, Alice\n"
+        "input" => "2 3\n",
+        "expected" => "5\n"
     ],
     [
-        "input" => "10 -5\nBob\n",
-        "expected" => "5\nHello, Bob\n"
+        "input" => "10 -5\n",
+        "expected" => "5\n"
     ]
 ];
 

@@ -11,6 +11,7 @@ ColumnLayout {
 
         Repeater {
             model: [
+                {name: "Языки", page: "LanguagesListPage.qml", params: {}},
                 {name: "Курсы", page: "CourseListPage.qml", params: {}},
                 {name: "Прогресс", page: "ProgressPage.qml", params: {"user_id": user_id}},
                 {name: "Профиль", page: "ProfilePage.qml", params: {}},
