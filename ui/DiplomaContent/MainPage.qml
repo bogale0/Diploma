@@ -11,15 +11,16 @@ ColumnLayout {
 
         Repeater {
             model: [
-                {name: "Курсы", page: "LanguagesListPage.qml"},
-                {name: "Темы", page: "CourseListPage.qml"},
-                {name: "Прогресс", page: "ProgressPage.qml"}
+                {name: "Курсы", page: "CourseListPage.qml", params: {}},
+                {name: "Прогресс", page: "ProgressPage.qml", params: {"user_id": user_id}},
+                {name: "Профиль", page: "ProfilePage.qml", params: {}},
+                {name: "Настройки", page: "SettingsPage.qml", params: {}}
             ]
 
             Button {
                 text: modelData.name
                 Layout.fillWidth: true
-                onClicked: content.replace(modelData.page)
+                onClicked: content.replace(modelData.page, modelData.params || {})
             }
         }
     }
@@ -51,7 +52,7 @@ ColumnLayout {
 
             if (currentItem.taskDemanded) {
                 currentItem.taskDemanded.connect(function(theme_id) {
-                    content.push("TaskPage.qml", {"theme_id": theme_id});
+                    content.push("TaskPage.qml", {"theme_id": theme_id, "user_id": user_id});
                 });
             }
         }

@@ -8,7 +8,8 @@ Column {
     spacing: 10
     padding: 15
     required property int theme_id
-    property var tasksContent: ['<b>Задание</b><br>Напиши простую программу, которая:<ol><li>Запрашивает у пользователя два числа.</li><li>Выводит их сумму.</li><p>Цель: научиться создавать переменные, использовать типы данных и базовый ввод/вывод.</p>']
+    required property int user_id
+    property var tasksContent: ['<b>Задание</b><br>Напиши простую программу, которая:<ol><li>Запрашивает у пользователя два числа.</li><li>Выводит их сумму.</li><li>Выводит приветствие с именем пользователя.</li><li>Цель: научиться создавать переменные, использовать типы данных и базовый ввод/вывод.</li><blockquote><p>Цель: научиться создавать переменные, использовать типы данных и базовый ввод/вывод.</p></blockquote>']
     //signal taskDemanded(int theme_id)
 
     Label {
@@ -47,7 +48,9 @@ Column {
                     }
                 }
                 xhr.send(JSON.stringify({
-                    code: codeEditor.text
+                    code: codeEditor.text,
+                    user_id: user_id,
+                    theme_id: theme_id
                 }));
             }
         }
