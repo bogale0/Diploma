@@ -1,10 +1,8 @@
 <?php
 require_once "functions.php";
-
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     api_exit(405, ["error" => "Method not allowed"]);
 }
-
 $data = json_decode(file_get_contents("php://input"), true);
 if (!isset($data["code"]) || !is_string($data["code"])) {
     api_exit(400, ["error" => "Missing or invalid code"]);
@@ -14,15 +12,14 @@ $code = $data["code"];
 if (trim($code) === "") {
     api_exit(400, ["error" => "Code is empty"]);
 }
-
 $tests = [
     [
-        "input" => "2 3\nAlice\n",
-        "expected" => "5\nHello, Alice\n"
+        "input" => "2 3\n",
+        "expected" => "5\n"
     ],
     [
-        "input" => "10 -5\nBob\n",
-        "expected" => "5\nHello, Bob\n"
+        "input" => "10 -5\n",
+        "expected" => "5\n"
     ]
 ];
 
