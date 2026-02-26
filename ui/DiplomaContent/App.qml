@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import Diploma
+import Diploma 1.0
 
 Window {
     width: maximumWidth
@@ -15,9 +15,7 @@ Window {
         id: stack
         anchors.fill: parent
         initialItem: Authorization {
-            onLoginSuccess: {
-                stack.push("MainPage.qml", {"user_id": user_id});
-            }
+            onLoginSuccess: stack.replace("MainPage.qml", {"user_id": user_id})
         }
     }
 }
