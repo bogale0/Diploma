@@ -4,10 +4,8 @@ import QtQuick.Layouts
 import Diploma 1.0
 
 Item {
-    anchors.fill: parent
-    property int user_id
     property int authMode: Constants.loginMode
-    signal loginSuccess()
+    signal loginSuccess(int user_id)
 
     Rectangle {
         width: parent.width
@@ -71,8 +69,7 @@ Item {
                     xhr.onload = function() {
                         if (xhr.status >= 200 && xhr.status < 300) {
                             let response = JSON.parse(xhr.responseText);
-                            user_id = response["user_id"];
-                            loginSuccess();
+                            loginSuccess(response["user_id"]);
                         } else {
                             errText.text = xhr.responseText;
                         }

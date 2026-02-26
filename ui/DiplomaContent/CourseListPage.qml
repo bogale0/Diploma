@@ -6,21 +6,17 @@ import Diploma 1.0
 ListView {
     anchors.fill: parent
     property string titleText
-    signal themeChosen()
+    signal themeChosen(int theme_id)
 
     model: [
-        "Основы C++",
-        "Алгоритмы",
-        "Структуры данных"
+        {id: 1, name: "Основы синтаксиса и переменные"},
+        {id: 2, name: "Условия и циклы"},
+        {id: 3, name: "Функции и массивы"}
     ]
 
     delegate: ItemDelegate {
-        text: modelData
+        text: modelData.name
         width: parent.width
-
-        onClicked: {
-            titleText = modelData;
-            themeChosen();
-        }
+        onClicked: themeChosen(modelData.id);
     }
 }

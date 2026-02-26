@@ -14,9 +14,18 @@ Window {
     StackView {
         id: stack
         anchors.fill: parent
-        initialItem: MainPage {user_id: 2}/*Authorization {
-            onLoginSuccess: stack.replace("MainPage.qml", {"user_id": user_id})
-        }*/
+        initialItem: MainPage {user_id: 2}//Authorization {}
+
+        onCurrentItemChanged: {
+            if (!currentItem)
+                return;
+
+            if (currentItem.loginSuccess) {
+                currentItem.loginSuccess.connect(function(id) {
+                    stack.replace("MainPage.qml", {"user_id": id});
+                })
+            }
+        }
     }
 }
 

@@ -5,10 +5,8 @@ import Diploma 1.0
 
 ColumnLayout {
     required property int user_id
-    anchors.fill: parent
 
     Row {
-        anchors.fill: parent
         spacing: 10
 
         Repeater {
@@ -22,13 +20,13 @@ ColumnLayout {
             Button {
                 text: modelData.name
                 Layout.fillWidth: true
-                onClicked: contentStack.replace(modelData.page)
+                onClicked: content.replace(modelData.page)
             }
         }
     }
 
     StackView {
-        id: contentStack
+        id: content
         Layout.fillWidth: true
         Layout.fillHeight: true
         initialItem: "CourseListPage.qml"
@@ -38,9 +36,15 @@ ColumnLayout {
                 return;
 
             if (currentItem.themeChosen) {
-                currentItem.themeChosen.connect(function(a) {
-                    contentStack.push("TheoryPage.qml", {titleText: currentItem.titleText});
-                })
+                currentItem.themeChosen.connect(function(theme_id) {
+                    content.push("TheoryPage.qml", {"theme_id": theme_id});
+                });
+            }
+
+            if (currentItem.taskDemanded) {
+                currentItem.taskDemanded.connect(function(theme_id) {
+                    content.push("TaskPage.qml", {"theme_id": theme_id});
+                });
             }
         }
     }
