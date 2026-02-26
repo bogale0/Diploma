@@ -29,11 +29,20 @@ ColumnLayout {
         id: content
         Layout.fillWidth: true
         Layout.fillHeight: true
-        initialItem: "CourseListPage.qml"
+        initialItem: LanguagesListPage {}
 
         onCurrentItemChanged: {
             if (!currentItem)
                 return;
+
+            if (currentItem.langChosen) {
+                currentItem.langChosen.connect(function(lang_id) {
+                    if (lang_id === 1)
+                        content.push("CourseListPage.qml");
+                    else
+                        currentItem.errText = "Курс находится в разработке"
+                });
+            }
 
             if (currentItem.themeChosen) {
                 currentItem.themeChosen.connect(function(theme_id) {

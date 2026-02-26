@@ -4,8 +4,6 @@ import QtQuick.Layouts
 import Diploma 1.0
 
 ListView {
-    anchors.fill: parent
-    property string titleText
     signal themeChosen(int theme_id)
 
     model: [
