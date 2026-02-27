@@ -1,26 +1,25 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Diploma 1.0
 
 ColumnLayout {
-    required property int user_id
-    property bool isTaskSolved: false
+    required property string bearer_token
 
     Row {
         spacing: 10
+        padding: 10
 
         Repeater {
             model: [
                 {name: "Языки", page: "LanguagesListPage.qml"},
                 {name: "Курсы", page: "CourseListPage.qml"},
-                {name: "Прогресс", page: "ProgressPage.qml", params: {"isTaskSolved": isTaskSolved}},
+                {name: "Прогресс", page: "ProgressPage.qml"}
             ]
 
             Button {
                 text: modelData.name
                 Layout.fillWidth: true
-                onClicked: content.replace(modelData.page, modelData.params || {})
+                onClicked: content.replace(modelData.page)
             }
         }
     }
@@ -37,10 +36,7 @@ ColumnLayout {
 
             if (currentItem.langChosen) {
                 currentItem.langChosen.connect(function(lang_id) {
-                    if (lang_id === 1)
-                        content.push("CourseListPage.qml");
-                    else
-                        currentItem.errText = "Курс находится в разработке"
+                    content.push("CourseListPage.qml");
                 });
             }
 

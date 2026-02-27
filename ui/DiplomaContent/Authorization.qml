@@ -4,13 +4,15 @@ import QtQuick.Layouts
 import Diploma 1.0
 
 Item {
-    property int authMode: Constants.loginMode
+    readonly property int loginMode: 0
+    readonly property int signupMode: 1
+    property int authMode: loginMode
     signal loginSuccess(int user_id)
 
     Rectangle {
         width: parent.width
         height: parent.height * 0.6
-        color: "#83abbd"
+        color: Constants.blueBgColor
     }
 
     Rectangle {
@@ -56,10 +58,10 @@ Item {
                 onClicked: {
                     let method;
                     switch (authMode) {
-                    case Constants.loginMode:
+                    case loginMode:
                         method = "/login.php";
                         break;
-                    case Constants.signupMode:
+                    case signupMode:
                         method = "/signup.php";
                         break;
                     }
@@ -96,10 +98,10 @@ Item {
                         let tmp = toggleLink.text;
                         toggleLink.text = actionBtn.text;
                         actionBtn.text = tmp;
-                        if (authMode === Constants.loginMode) {
-                            authMode = Constants.signupMode;
+                        if (authMode === loginMode) {
+                            authMode = signupMode;
                         } else {
-                            authMode = Constants.loginMode;
+                            authMode = loginMode;
                         }
                     }
                 }

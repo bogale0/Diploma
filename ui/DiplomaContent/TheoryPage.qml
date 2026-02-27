@@ -12,14 +12,14 @@ Column {
 
     ScrollView {
         id: scrollView
-        width: parent.width * 0.8
-        height: parent.height * 0.7
-
-        ScrollBar.horizontal.interactive: false
+        width: parent.width * 0.97
+        height: parent.height * 0.8
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
         Text {
             width: scrollView.width
             wrapMode: Text.WordWrap
+            padding: 10
             text: theoryContents[theme_id - 1]
             font.pixelSize: 22
         }

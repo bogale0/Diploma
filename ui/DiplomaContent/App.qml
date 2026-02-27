@@ -14,7 +14,7 @@ Window {
     StackView {
         id: stack
         anchors.fill: parent
-        initialItem: MainPage {user_id: 2}//Authorization {}
+        initialItem: Authorization {}//MainPage {bearer_token: ""}
 
         onCurrentItemChanged: {
             if (!currentItem)
@@ -23,7 +23,7 @@ Window {
             if (currentItem.loginSuccess) {
                 currentItem.loginSuccess.connect(function(id) {
                     stack.replace("MainPage.qml", {"user_id": id});
-                })
+                });
             }
         }
     }
