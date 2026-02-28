@@ -3,8 +3,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 ColumnLayout {
-    required property string bearer_token
-
     Row {
         spacing: 10
         padding: 10

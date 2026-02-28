@@ -9,10 +9,15 @@ $name = $data["name"];
 $password = $data["password"];
 
 $pdo = db_init();
-$stmt = $pdo->prepare("select id, password from users where name = ?");
+$stmt = $pdo->prepare("select id, password_hash from users where name = ?");
 $stmt->execute([$name]);
 $user = $stmt->fetch();
-if ($user === false || !password_verify($password, $user["password"]))
+if ($user === false || !password_verify($password, $user["password_hash"]))
     api_exit(401, ["error" => "Invalid credentials"]);
-api_exit(200, ["user_id" => $user["id"]]);
+
+//$pdo->exec("delete from sessions where created_at < (now() - interval 1 hour)");
+$token = random_bytes(15);
+$stmt = $pdo->prepare("insert into sessions (bearer_token, user_id) values (?, ?)");
+$stmt->execute([$token, $user["id"]]);
+api_exit(200, ["bearer_token" => strtr(base64_encode($token), '+/', '-_')]);
 ?>

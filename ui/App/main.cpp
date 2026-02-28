@@ -3,14 +3,19 @@
 
 #include <QApplication>
 #include <QQmlApplicationEngine>
-
 #include "autogen/environment.h"
+#include "apiclient.h"
 
 int main(int argc, char *argv[])
 {
     set_qt_environment();
     QApplication app(argc, argv);
-
+    qmlRegisterSingletonInstance(
+        "Backend",
+        1, 0,
+        "Api",
+        new ApiClient("http://localhost/Diploma/api")
+    );
     QQmlApplicationEngine engine;
     const QUrl url(mainQmlFile);
     QObject::connect(

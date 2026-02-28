@@ -14,18 +14,8 @@ Window {
     StackView {
         id: stack
         anchors.fill: parent
-        initialItem: Authorization {}//MainPage {bearer_token: ""}
-
-        onCurrentItemChanged: {
-            if (!currentItem)
-                return;
-
-            if (currentItem.loginSuccess) {
-                currentItem.loginSuccess.connect(function(id) {
-                    stack.replace("MainPage.qml", {"user_id": id});
-                });
-            }
+        initialItem: Authorization {
+            onAuthSuccess: stack.replace("MainPage.qml");
         }
     }
 }
-
