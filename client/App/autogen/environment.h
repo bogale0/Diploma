@@ -8,8 +8,8 @@
 #include <QGuiApplication>
 #include "qqmlextensionplugin.h"
 
-Q_IMPORT_QML_PLUGIN(DiplomaContentPlugin)
 Q_IMPORT_QML_PLUGIN(DiplomaPlugin)
+Q_IMPORT_QML_PLUGIN(DiplomaContentPlugin)
 
 const char mainQmlFile[] = "qrc:/qt/qml/DiplomaContent/App.qml";
 

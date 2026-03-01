@@ -1,60 +1,26 @@
 import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
 
-ColumnLayout {
-    Row {
-        spacing: 10
-        padding: 10
+MainPageForm {
+    stack.onCurrentItemChanged: {
+        if (!currentItem)
+            return;
 
-        Repeater {
-            model: [
-                {name: "Языки", page: "LanguagesListPage.qml"},
-                {name: "Курсы", page: "CourseListPage.qml"},
-                {name: "Прогресс", page: "ProgressPage.qml"}
-            ]
-
-            Button {
-                text: modelData.name
-                Layout.fillWidth: true
-                onClicked: content.replace(modelData.page)
-            }
+        if (currentItem.langChosen) {
+            currentItem.langChosen.connect(function(lang_id) {
+                stack.push("CourseListPage.qml");
+            });
         }
-    }
 
-    StackView {
-        id: content
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        initialItem: LanguagesListPage {}
+        if (currentItem.themeChosen) {
+            currentItem.themeChosen.connect(function(theme_id) {
+                stack.push("TheoryPage.qml", {"theme_id": theme_id});
+            });
+        }
 
-        onCurrentItemChanged: {
-            if (!currentItem)
-                return;
-
-            if (currentItem.langChosen) {
-                currentItem.langChosen.connect(function(lang_id) {
-                    content.push("CourseListPage.qml");
-                });
-            }
-
-            if (currentItem.themeChosen) {
-                currentItem.themeChosen.connect(function(theme_id) {
-                    content.push("TheoryPage.qml", {"theme_id": theme_id});
-                });
-            }
-
-            if (currentItem.taskDemanded) {
-                currentItem.taskDemanded.connect(function(theme_id) {
-                    content.push("TaskPage.qml", {"theme_id": theme_id, "user_id": user_id});
-                });
-            }
-
-            if (currentItem.taskSolved) {
-                currentItem.taskSolved.connect(function() {
-                    isTaskSolved = true;
-                });
-            }
+        if (currentItem.taskDemanded) {
+            currentItem.taskDemanded.connect(function(theme_id) {
+                stack.push("TaskPage.qml", {"theme_id": theme_id, "user_id": user_id});
+            });
         }
     }
 }

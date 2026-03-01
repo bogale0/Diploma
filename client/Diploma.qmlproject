@@ -5,7 +5,6 @@ import QmlProject
 
 Project {
     mainFile: "DiplomaContent/App.qml"
-    mainUiFile: "DiplomaContent/Screen01.ui.qml"
     targetDirectory: "/opt/Diploma"
     enableCMakeGeneration: true
     widgetApp: true

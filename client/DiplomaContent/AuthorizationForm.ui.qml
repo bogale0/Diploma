@@ -11,6 +11,7 @@ import QtQuick.Layouts
 import Diploma 1.0
 
 Item {
+    id: item1
     readonly property string loginMode: "login"
     readonly property string signupMode: "signup"
     property string authMode: loginMode
