@@ -9,3 +9,12 @@ create table sessions (
     created_at datetime default current_timestamp,
     foreign key (user_id) references users(id) on delete cascade
 );
+create table languages (
+    id int auto_increment primary key,
+    name varchar(64) not null
+);
+insert into languages (name) values ('C++'), ('Python');
+/*create table themes (
+    topic varchar(64) not null,
+    lang_id int not null
+)*/
