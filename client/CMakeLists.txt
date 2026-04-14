@@ -22,7 +22,8 @@ qt_standard_project_setup()
 
 
 qt_add_executable(${CMAKE_PROJECT_NAME}
-    App/apiclient.h App/apiclient.cpp)
+    App/apiclient.h App/apiclient.cpp
+)
 qt_add_resources(${CMAKE_PROJECT_NAME} "configuration"
 
 target_link_libraries(DiplomaApp PRIVATE Qt6::Core)

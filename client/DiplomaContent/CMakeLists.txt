@@ -9,20 +9,20 @@ qt6_add_qml_module(DiplomaContent
     VERSION 1.0
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
-        "Authorization.qml"
-        "ProgressPage.qml"
-        "ProfilePage.qml"
-        "AuthorizationForm.ui.qml"
         "App.qml"
         "ListPage.qml"
-        "TheoryPage.qml"
-        "CourseListPage.qml"
-        "LanguagesListPage.qml"
-        "MainPageForm.ui.qml"
-        "MainPage.qml"
-        "SettingsPage.qml"
         "TaskPage.qml"
+        "MainPage.qml"
+        "ProfilePage.qml"
+        "MainPageForm.ui.qml"
         "ListPageForm.ui.qml"
+        "TheoryPage.qml"
+        "AuthorizationForm.ui.qml"
+        "LanguagesListPage.qml"
+        "CourseListPage.qml"
+        "Authorization.qml"
+        "SettingsPage.qml"
+        "ProgressPage.qml"
 )
 
 

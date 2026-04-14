@@ -9,7 +9,7 @@ AuthorizationForm {
             authSuccess();
         }
 
-        function onNetworkError(err) {
+        function onApiError(err) {
             errText = err;
         }
     }

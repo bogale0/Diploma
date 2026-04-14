@@ -14,8 +14,8 @@ Window {
     StackView {
         id: stack
         anchors.fill: parent
-        initialItem: ListPage {items: [{id: 1, text: "hi"}, {id: 2, text: "bye"}]}/*Authorization {
+        initialItem: /*ListPage {items: [{id: 1, text: "hi"}, {id: 2, text: "bye"}]}*/Authorization {
             onAuthSuccess: stack.replace("MainPage.qml");
-        }*/
+        }//*/
     }
 }

@@ -10,12 +10,8 @@ int main(int argc, char *argv[])
 {
     set_qt_environment();
     QApplication app(argc, argv);
-    qmlRegisterSingletonInstance(
-        "Backend",
-        1, 0,
-        "Api",
-        new ApiClient("http://localhost/Diploma/api")
-    );
+    qmlRegisterSingletonInstance("Backend", 1, 0, "Api", new ApiClient("http://localhost/Diploma/api"));
+    //qmlRegisterUncreatableMetaObject(Auth::staticMetaObject, "Auth", 1, 0, "Auth", "Enums only");
     QQmlApplicationEngine engine;
     const QUrl url(mainQmlFile);
     QObject::connect(

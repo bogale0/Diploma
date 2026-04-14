@@ -12,9 +12,9 @@ import Diploma 1.0
 
 Item {
     id: item1
-    readonly property string loginMode: "login"
-    readonly property string signupMode: "signup"
-    property string authMode: loginMode
+    readonly property int loginMode: 0
+    readonly property int signupMode: 1
+    property int authMode: loginMode
     property alias login: loginText.text
     property alias password: pswdText.text
     property alias authButton: authButton
