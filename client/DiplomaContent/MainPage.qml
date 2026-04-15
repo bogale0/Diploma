@@ -5,7 +5,7 @@ MainPageForm {
         if (!currentItem)
             return;
 
-        if (currentItem.langChosen) {
+        /*if (currentItem.langChosen) {
             currentItem.langChosen.connect(function(lang_id) {
                 stack.push("CourseListPage.qml");
             });
@@ -21,6 +21,6 @@ MainPageForm {
             currentItem.taskDemanded.connect(function(theme_id) {
                 stack.push("TaskPage.qml", {"theme_id": theme_id, "user_id": user_id});
             });
-        }
+        }*/
     }
 }

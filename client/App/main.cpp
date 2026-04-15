@@ -6,12 +6,10 @@
 #include "autogen/environment.h"
 #include "apiclient.h"
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     set_qt_environment();
     QApplication app(argc, argv);
-    qmlRegisterSingletonInstance("Backend", 1, 0, "Api", new ApiClient("http://localhost/Diploma/api"));
-    //qmlRegisterUncreatableMetaObject(Auth::staticMetaObject, "Auth", 1, 0, "Auth", "Enums only");
+    qmlRegisterSingletonInstance("Backend", 1, 0, "Api", new ApiClient("http://localhost/api/Diploma"));
     QQmlApplicationEngine engine;
     const QUrl url(mainQmlFile);
     QObject::connect(
@@ -30,3 +28,9 @@ int main(int argc, char *argv[])
 
     return app.exec();
 }
+/*
+ * apiclient
+ * App
+ * Authorization
+ * MainPage
+*/

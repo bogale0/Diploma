@@ -3,7 +3,6 @@ import QtQuick
 import QtQuick.Studio.Application
 
 QtObject {
-    readonly property string endpoint: "http://localhost/Diploma/api"
     readonly property string blueBgColor: "#83abbd"
 
     property string relativeFontDirectory: "fonts"

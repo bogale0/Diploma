@@ -1,6 +1,5 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QJsonObject>
 #include <QUrlQuery>
 #include "apiclient.h"
 
@@ -19,7 +18,11 @@ ApiClient::ApiClient(QString host, QObject *parent)
     m_network = new QNetworkAccessManager(this);
 }
 
-void ApiClient::auth(const QString &name, const QString &password, AuthType type) {
+void ApiClient::setBearer(QString token) {
+    m_bearerToken = token;
+}
+
+qint32 ApiClient::auth(const QString &name, const QString &password, AuthType type) {
     QString method;
     switch (type) {
     case AuthType::LOGIN:
@@ -28,24 +31,21 @@ void ApiClient::auth(const QString &name, const QString &password, AuthType type
     case AuthType::REGISTER:
         method = "signup";
         break;
-    default:
-        emit apiError("Unknown auth type");
-        return;
     }
-    apiCall(RequestType::POST, method, {{"name", name}, {"password", password}}, [this](const QJsonObject &response) {
-        QString token = response["bearer_token"].toString();
-        m_bearerToken = token;
+    return apiCall(RequestType::POST, method, {{"name", name}, {"password", password}});
+    /*, [this](const QJsonObject &response) {
+        m_bearerToken = (QString)response["bearer_token"].toString();
         emit authSuccess();
-    });
+    }*/
 }
 
-void ApiClient::getLanguages() {
-    apiCall(RequestType::GET, "languages", {}, [this](const QJsonObject &response) {
+qint32 ApiClient::getLanguages() {
+    /*apiCall(RequestType::GET, "languages", {}, [this](const QJsonObject &response) {
         emit languagesReceived(response["languages"].toArray());
-    });
+    });*/
 }
 
-void ApiClient::apiCall(RequestType type, QString method, QJsonObject data, std::function<void(const QJsonObject &response)> postProcess) {
+qint32 ApiClient::apiCall(RequestType type, QString method, QJsonObject data) {
     QUrl url(m_host + "/" + method + ".php");
     QNetworkReply *reply = nullptr;
     switch (type) {
@@ -66,20 +66,18 @@ void ApiClient::apiCall(RequestType type, QString method, QJsonObject data, std:
         reply = m_network->post(request, body);
         break;
     }
-    default:
-        emit apiError("Unknown request type");
-        return;
     }
-    connect(reply, &QNetworkReply::finished, this,
-            [this, reply, postProcess]()
-            {
-                int status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-                QJsonObject response = QJsonDocument::fromJson(reply->readAll()).object();
-                reply->deleteLater();
-                if (status >= 200 && status < 300) {
-                    postProcess(response);
-                } else {
-                    emit apiError(response["error"].toString());
-                }
-            });
+    quint32 requestId = m_request_id++;
+    connect(reply, &QNetworkReply::finished, this, [this, reply, requestId]() {
+        qint32 status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+        QJsonParseError err;
+        QJsonObject response = QJsonDocument::fromJson(reply->readAll(), &err).object();
+        if (err.error != QJsonParseError::NoError) {
+            status = 500;
+            response = {{"error", "JSON parse error: " + err.errorString()}};
+        }
+        reply->deleteLater();
+        emit apiResult(requestId, status, response);
+    });
+    return requestId;
 }

@@ -2,7 +2,7 @@
 #define APICLIENT_H
 
 #include <QObject>
-#include <QJsonArray>
+#include <QJsonObject>
 using Qt::staticMetaObject;
 class QNetworkAccessManager;
 enum class RequestType;
@@ -12,16 +12,16 @@ class ApiClient : public QObject {
     Q_OBJECT
 public:
     explicit ApiClient(QString host, QObject *parent = nullptr);
-    Q_INVOKABLE void auth(const QString &name, const QString &password, AuthType type);
-    Q_INVOKABLE void getLanguages();
+    Q_INVOKABLE void setBearer(QString token);
+    Q_INVOKABLE qint32 auth(const QString &name, const QString &password, AuthType type);
+    Q_INVOKABLE qint32 getLanguages();
 
 signals:
-    void apiError(const QString &error);
-    void authSuccess();
-    void languagesReceived(QJsonArray languages);
+    void apiResult(const qint32 id, const qint32 status, QJsonObject data);
 
 private:
-    void apiCall(RequestType type, QString method, QJsonObject data, std::function<void(const QJsonObject &response)> postProcess);
+    qint32 apiCall(RequestType type, QString method, QJsonObject data);
+    qint32 m_request_id;
     const QString m_host;
     QNetworkAccessManager *m_network;
     QString m_bearerToken;

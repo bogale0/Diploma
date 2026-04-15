@@ -38,6 +38,6 @@ ColumnLayout {
         id: content
         Layout.fillWidth: true
         Layout.fillHeight: true
-        initialItem: LanguagesListPage {}
+        initialItem: ListPage {}
     }
 }

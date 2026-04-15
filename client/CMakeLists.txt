@@ -17,17 +17,13 @@ set(QML_IMPORT_PATH ${QT_QML_OUTPUT_DIRECTORY}
 )
 
 find_package(Qt6 6.8 REQUIRED COMPONENTS Core Gui Widgets Qml Quick QuickTimeline ShaderTools)
-find_package(Qt6 REQUIRED COMPONENTS Core)
 qt_standard_project_setup()
 
 
 qt_add_executable(${CMAKE_PROJECT_NAME}
-    App/apiclient.h App/apiclient.cpp
-)
+    App/apiclient.h App/apiclient.cpp)
 qt_add_resources(${CMAKE_PROJECT_NAME} "configuration"
-
-target_link_libraries(DiplomaApp PRIVATE Qt6::Core)
-PREFIX "/"
+    PREFIX "/"
     FILES
         qtquickcontrols2.conf)
 
