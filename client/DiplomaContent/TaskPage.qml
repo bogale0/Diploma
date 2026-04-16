@@ -3,8 +3,8 @@ import Backend 1.0
 
 TaskPageForm {
     signal taskSolved()
-    checkButton.onClicked: Api.checkSolution(theme_id, codeText)
-    Component.onCompleted: Api.getTask(theme_id)
+    checkButton.onClicked: Api.checkSolution(task_id, codeText)
+    Component.onCompleted: Api.getTask(task_id)
 
     Connections {
         target: Api
@@ -13,8 +13,8 @@ TaskPageForm {
             taskContent = task
         }
 
-        function onSolutionChecked(text) {
-            resultText = text
+        function onSolutionChecked(result) {
+            resultText = result
         }
     }
 }

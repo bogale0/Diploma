@@ -12,8 +12,9 @@ import Diploma 1.0
 Column {
     spacing: 10
     padding: 20
+    property var taskList
     property string theoryContent
-    property alias taskButton: taskButton
+    signal taskChosen(int id)
 
     ScrollView {
         id: scrollView
@@ -30,8 +31,17 @@ Column {
         }
     }
 
-    Button {
-        id: taskButton
-        text: "Перейти к заданию"
+    Row {
+        Repeater {
+            model: taskList
+
+            Button {
+                text: "Задание " + modelData.id
+
+                Connections {
+                    onClicked: taskChosen(modelData.id);
+                }
+            }
+        }
     }
 }

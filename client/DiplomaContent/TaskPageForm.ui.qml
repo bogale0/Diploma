@@ -14,7 +14,7 @@ Column {
     anchors.fill: parent
     spacing: 10
     padding: 15
-    required property int theme_id
+    required property int task_id
     property alias taskContent: contentLabel.text
     property alias codeText: codeEditor.text
     property alias checkButton: checkButton

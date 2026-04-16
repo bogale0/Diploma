@@ -18,8 +18,8 @@ MainPageForm {
         }
 
         if (stack.currentItem.taskDemanded) {
-            stack.currentItem.taskDemanded.connect(function(theme_id) {
-                stack.push("TaskPage.qml", {"theme_id": theme_id});
+            stack.currentItem.taskDemanded.connect(function(task_id) {
+                stack.push("TaskPage.qml", {"task_id": task_id});
             });
         }
     }

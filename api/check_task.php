@@ -12,16 +12,7 @@ $text = $data["text"];
 if (trim($text) === "") {
     api_exit(400, ["error" => "Text is empty"]);
 }
-/*$tests = [
-    [
-        "input" => "2 3\n",
-        "expected" => "5\n"
-    ],
-    [
-        "input" => "10 -5\n",
-        "expected" => "5\n"
-    ]
-];*/
+//$tests =
 
 $tempDir = sys_get_temp_dir() . "/diploma_check_" . bin2hex(random_bytes(8));
 if (!mkdir($tempDir, 0700, true)) {

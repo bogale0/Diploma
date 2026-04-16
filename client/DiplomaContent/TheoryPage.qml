@@ -5,13 +5,19 @@ TheoryPageForm {
     required property int theme_id
     signal taskDemanded(int id)
     Component.onCompleted: Api.getTheory(theme_id)
-    taskButton.onClicked: taskDemanded(theme_id)
 
     Connections {
         target: Api
 
-        function onTheoryReceived(text) {
-            theoryContent = text
+        function onTheoryReceived(obj) {
+            taskList = obj["tasks"]
+            theoryContent = obj["theory"]
+        }
+    }
+
+    Connections {
+        function onTaskChosen(task_id) {
+            taskDemanded(task_id)
         }
     }
 }

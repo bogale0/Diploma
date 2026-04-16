@@ -13,11 +13,6 @@ enum class AuthType {
     REGISTER = 1
 };
 
-enum class ThemeInfoType {
-    THEORY,
-    TASK
-};
-
 ApiClient::ApiClient(QString host, QObject *parent)
     : m_host{host}, QObject{parent} {
     m_network = new QNetworkAccessManager(this);
@@ -55,15 +50,20 @@ void ApiClient::getThemes(qint32 lang_id) {
 }
 
 void ApiClient::getTheory(qint32 theme_id) {
-    themeInfo(theme_id, ThemeInfoType::THEORY);
+    apiCall(RequestType::GET, "theory", {{"theme_id", theme_id}}, [this](const QJsonObject &response) {
+        emit theoryReceived(response);
+    });
 }
-void ApiClient::getTask(qint32 theme_id) {
-    themeInfo(theme_id, ThemeInfoType::TASK);
+
+void ApiClient::getTask(qint32 task_id) {
+    apiCall(RequestType::GET, "task", {{"task_id", task_id}}, [this](const QJsonObject &response) {
+        emit taskReceived(response["task"].toString());
+    });
 }
 
 void ApiClient::checkSolution(qint32 theme_id, QString codeText) {}
 
-void ApiClient::themeInfo(qint32 theme_id, ThemeInfoType type) {
+/*void ApiClient::themeInfo(qint32 theme_id, ThemeInfoType type) {
     auto it = m_cacheThemeInfo.find(theme_id);
     if (it != m_cacheThemeInfo.end()) {
         switch (type) {
@@ -87,7 +87,7 @@ void ApiClient::themeInfo(qint32 theme_id, ThemeInfoType type) {
             break;
         }
     });
-}
+}*/
 
 void ApiClient::apiCall(RequestType type, QString method, QJsonObject data, std::function<void(const QJsonObject &response)> postProcess) {
     QUrl url(m_host + "/" + method + ".php");
@@ -100,7 +100,6 @@ void ApiClient::apiCall(RequestType type, QString method, QJsonObject data, std:
         }
         url.setQuery(query);
         QNetworkRequest request(url);
-        qDebug() << url.toString();
         reply = m_network->get(request);
         break;
     }

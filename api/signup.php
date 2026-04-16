@@ -14,10 +14,10 @@ $hash = password_hash($password, PASSWORD_DEFAULT);
 $token = random_bytes(15);
 try {
     $pdo = db_init();
-    $stmt = $pdo->prepare("insert into users (name, password_hash) values (?, ?)");
+    $stmt = $pdo->prepare("insert into `users` (`name`, `password_hash`) values (?, ?)");
     $stmt->execute([$name, $hash]);
     $user_id = $pdo->lastInsertId();
-    $stmt = $pdo->prepare("insert into sessions (bearer_token, user_id) values (?, ?)");
+    $stmt = $pdo->prepare("insert into `sessions` (`bearer_token`, `user_id`) values (?, ?)");
     $stmt->execute([$token, $user_id]);
 } catch (PDOException $e) {
     if ($e->getCode() == 23000)

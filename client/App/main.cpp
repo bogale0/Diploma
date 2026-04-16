@@ -28,11 +28,3 @@ int main(int argc, char *argv[]) {
 
     return app.exec();
 }
-/*
- * App
- * Authorization
- * MainPage
- * LanguagesList
- * ThemesList
- * ListPage
-*/
