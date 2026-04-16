@@ -19,7 +19,7 @@ ColumnLayout {
         Repeater {
             model: [
                 {name: "Языки", page: "LanguagesListPage.qml"},
-                {name: "Курсы", page: "CourseListPage.qml"},
+                {name: "Курсы", page: "ThemesListPage.qml"},
                 {name: "Прогресс", page: "ProgressPage.qml"}
             ]
 
@@ -38,6 +38,6 @@ ColumnLayout {
         id: content
         Layout.fillWidth: true
         Layout.fillHeight: true
-        initialItem: ListPage {}
+        initialItem: LanguagesListPage {}
     }
 }

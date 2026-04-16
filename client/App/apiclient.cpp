@@ -13,16 +13,17 @@ enum class AuthType {
     REGISTER = 1
 };
 
+enum class ThemeInfoType {
+    THEORY,
+    TASK
+};
+
 ApiClient::ApiClient(QString host, QObject *parent)
     : m_host{host}, QObject{parent} {
     m_network = new QNetworkAccessManager(this);
 }
 
-void ApiClient::setBearer(QString token) {
-    m_bearerToken = token;
-}
-
-qint32 ApiClient::auth(const QString &name, const QString &password, AuthType type) {
+void ApiClient::auth(const QString &name, const QString &password, AuthType type) {
     QString method;
     switch (type) {
     case AuthType::LOGIN:
@@ -31,31 +32,75 @@ qint32 ApiClient::auth(const QString &name, const QString &password, AuthType ty
     case AuthType::REGISTER:
         method = "signup";
         break;
+    default:
+        emit apiError("Unknown auth type");
+        return;
     }
-    return apiCall(RequestType::POST, method, {{"name", name}, {"password", password}});
-    /*, [this](const QJsonObject &response) {
-        m_bearerToken = (QString)response["bearer_token"].toString();
+    apiCall(RequestType::POST, method, {{"name", name}, {"password", password}}, [this](const QJsonObject &response) {
+        m_bearerToken = response["bearer_token"].toString();
         emit authSuccess();
-    }*/
+    });
 }
 
-qint32 ApiClient::getLanguages() {
-    /*apiCall(RequestType::GET, "languages", {}, [this](const QJsonObject &response) {
+void ApiClient::getLanguages() {
+    apiCall(RequestType::GET, "languages", {}, [this](const QJsonObject &response) {
         emit languagesReceived(response["languages"].toArray());
-    });*/
+    });
 }
 
-qint32 ApiClient::apiCall(RequestType type, QString method, QJsonObject data) {
+void ApiClient::getThemes(qint32 lang_id) {
+    apiCall(RequestType::GET, "themes", {{"lang_id", lang_id}}, [this](const QJsonObject &response) {
+        emit themesReceived(response["themes"].toArray());
+    });
+}
+
+void ApiClient::getTheory(qint32 theme_id) {
+    themeInfo(theme_id, ThemeInfoType::THEORY);
+}
+void ApiClient::getTask(qint32 theme_id) {
+    themeInfo(theme_id, ThemeInfoType::TASK);
+}
+
+void ApiClient::checkSolution(qint32 theme_id, QString codeText) {}
+
+void ApiClient::themeInfo(qint32 theme_id, ThemeInfoType type) {
+    auto it = m_cacheThemeInfo.find(theme_id);
+    if (it != m_cacheThemeInfo.end()) {
+        switch (type) {
+        case ThemeInfoType::THEORY:
+            emit theoryReceived(it.value()["theory"].toString());
+            break;
+        case ThemeInfoType::TASK:
+            emit taskReceived(it.value()["task"].toString());
+            break;
+        }
+        return;
+    }
+    apiCall(RequestType::GET, "theme_info", {{"theme_id", theme_id}}, [this, theme_id, type](const QJsonObject &response) {
+        m_cacheThemeInfo.insert(theme_id, response);
+        switch (type) {
+        case ThemeInfoType::THEORY:
+            emit theoryReceived(response["theory"].toString());
+            break;
+        case ThemeInfoType::TASK:
+            emit taskReceived(response["task"].toString());
+            break;
+        }
+    });
+}
+
+void ApiClient::apiCall(RequestType type, QString method, QJsonObject data, std::function<void(const QJsonObject &response)> postProcess) {
     QUrl url(m_host + "/" + method + ".php");
     QNetworkReply *reply = nullptr;
     switch (type) {
     case RequestType::GET: {
         QUrlQuery query;
         for (auto it = data.begin(); it != data.end(); ++it) {
-            query.addQueryItem(it.key(), it.value().toString());
+            query.addQueryItem(it.key(), it.value().toVariant().toString());
         }
         url.setQuery(query);
         QNetworkRequest request(url);
+        qDebug() << url.toString();
         reply = m_network->get(request);
         break;
     }
@@ -67,17 +112,17 @@ qint32 ApiClient::apiCall(RequestType type, QString method, QJsonObject data) {
         break;
     }
     }
-    quint32 requestId = m_request_id++;
-    connect(reply, &QNetworkReply::finished, this, [this, reply, requestId]() {
+    connect(reply, &QNetworkReply::finished, this, [this, reply, postProcess]() {
         qint32 status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
         QJsonParseError err;
         QJsonObject response = QJsonDocument::fromJson(reply->readAll(), &err).object();
-        if (err.error != QJsonParseError::NoError) {
-            status = 500;
-            response = {{"error", "JSON parse error: " + err.errorString()}};
-        }
         reply->deleteLater();
-        emit apiResult(requestId, status, response);
+        if (err.error != QJsonParseError::NoError) {
+            emit apiError("JSON parse error: " + err.errorString());
+        } else if (status < 200 || status >= 300) {
+            emit apiError(response["error"].toString());
+        } else {
+            postProcess(response);
+        }
     });
-    return requestId;
 }

@@ -4,15 +4,15 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     api_exit(405, ["error" => "Method not allowed"]);
 }
 $data = json_decode(file_get_contents("php://input"), true);
-if (!isset($data["code"]) || !is_string($data["code"])) {
-    api_exit(400, ["error" => "Missing or invalid code"]);
+if (!isset($data["text"]) || !is_string($data["text"])) {
+    api_exit(400, ["error" => "Missing or invalid text"]);
 }
 
-$code = $data["code"];
-if (trim($code) === "") {
-    api_exit(400, ["error" => "Code is empty"]);
+$text = $data["text"];
+if (trim($text) === "") {
+    api_exit(400, ["error" => "Text is empty"]);
 }
-$tests = [
+/*$tests = [
     [
         "input" => "2 3\n",
         "expected" => "5\n"
@@ -21,7 +21,7 @@ $tests = [
         "input" => "10 -5\n",
         "expected" => "5\n"
     ]
-];
+];*/
 
 $tempDir = sys_get_temp_dir() . "/diploma_check_" . bin2hex(random_bytes(8));
 if (!mkdir($tempDir, 0700, true)) {
@@ -30,7 +30,7 @@ if (!mkdir($tempDir, 0700, true)) {
 
 $sourceFile = $tempDir . "/main.cpp";
 $binaryFile = $tempDir . "/main";
-file_put_contents($sourceFile, $code);
+file_put_contents($sourceFile, $text);
 
 $compileCommand = sprintf(
     'g++ -std=c++17 -O2 -Wall -Wextra -o %s %s 2>&1',

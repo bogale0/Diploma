@@ -15,7 +15,7 @@ $user = $stmt->fetch();
 if ($user === false || !password_verify($password, $user["password_hash"]))
     api_exit(401, ["error" => "Invalid credentials"]);
 
-//$pdo->exec("delete from sessions where created_at < (now() - interval 1 hour)");
+$pdo->exec("delete from sessions where created_at < (now() - interval 4 hour)");
 $token = random_bytes(15);
 $stmt = $pdo->prepare("insert into sessions (bearer_token, user_id) values (?, ?)");
 $stmt->execute([$token, $user["id"]]);

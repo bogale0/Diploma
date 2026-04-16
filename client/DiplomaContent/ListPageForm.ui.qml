@@ -11,7 +11,7 @@ import QtQuick.Layouts
 import Diploma 1.0
 
 Column {
-    property var items // array of: {int id, string text}
+    property var items
     signal itemChosen(int id)
 
     ListView {

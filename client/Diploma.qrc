@@ -8,17 +8,20 @@
         <file>DiplomaContent/App.qml</file>
         <file>DiplomaContent/Authorization.qml</file>
         <file>DiplomaContent/AuthorizationForm.ui.qml</file>
-        <file>DiplomaContent/CourseListPage.qml</file>
         <file>DiplomaContent/LanguagesListPage.qml</file>
-        <file>DiplomaContent/ListPage.qml</file>
         <file>DiplomaContent/ListPageForm.ui.qml</file>
         <file>DiplomaContent/MainPage.qml</file>
         <file>DiplomaContent/MainPageForm.ui.qml</file>
-        <file>DiplomaContent/ProfilePage.qml</file>
-        <file>DiplomaContent/ProgressPage.qml</file>
-        <file>DiplomaContent/SettingsPage.qml</file>
         <file>DiplomaContent/TaskPage.qml</file>
+        <file>DiplomaContent/TaskPageForm.ui.qml</file>
+        <file>DiplomaContent/ThemesListPage.qml</file>
         <file>DiplomaContent/TheoryPage.qml</file>
+        <file>DiplomaContent/TheoryPageForm.ui.qml</file>
+        <file>DiplomaContent/old/ProfilePage.qml</file>
+        <file>DiplomaContent/old/ProgressPage.qml</file>
+        <file>DiplomaContent/old/SettingsPage.qml</file>
+        <file>DiplomaContent/old/TaskPage.qml</file>
+        <file>DiplomaContent/old/TheoryPage.qml</file>
         <file>qtquickcontrols2.conf</file>
     </qresource>
 </RCC>

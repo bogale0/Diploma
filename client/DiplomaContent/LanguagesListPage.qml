@@ -1,28 +1,21 @@
 import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
-import Diploma 1.0
+import Backend 1.0
 
-ColumnLayout {
-    signal langChosen(int lang_id)
+ListPageForm {
+    signal langChosen(int id)
+    Component.onCompleted: Api.getLanguages()
 
-    ListView {
-        Layout.fillWidth: true
-        Layout.fillHeight: true
+    Connections {
+        target: Api
 
-        model: [
-            {id: 1, name: "C++"},
-            {id: 2, name: "Python"}
-        ]
+        function onLanguagesReceived(langs) {
+            items = langs
+        }
+    }
 
-        delegate: ItemDelegate {
-            text: modelData.name
-            anchors {
-                left: parent.left
-                right: parent.right
-                leftMargin: 10
-            }
-            onClicked: langChosen(modelData.id)
+    Connections {
+        function onItemChosen(id) {
+            langChosen(id)
         }
     }
 }

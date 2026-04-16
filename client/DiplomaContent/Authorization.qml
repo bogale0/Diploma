@@ -7,15 +7,14 @@ AuthorizationForm {
     Connections {
         target: Api
 
-        function onApiResult(id, status, data) {
-            if (status < 200 || status >= 300) {
-                errText = data["error"];
-            } else if (id === authRequestId) {
-                Api.setBearer(data["bearer_token"])
-                authSuccess();
-            }
+        function onApiError(err) {
+            errText = err;
+        }
+
+        function onAuthSuccess() {
+            authSuccess();
         }
     }
 
-    authButton.onClicked: authRequestId = Api.auth(login, password, authMode)
+    authButton.onClicked: Api.auth(login, password, authMode)
 }

@@ -29,8 +29,10 @@ int main(int argc, char *argv[]) {
     return app.exec();
 }
 /*
- * apiclient
  * App
  * Authorization
  * MainPage
+ * LanguagesList
+ * ThemesList
+ * ListPage
 */
