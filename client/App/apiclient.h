@@ -17,7 +17,7 @@ public:
     Q_INVOKABLE void getThemes(qint32 lang_id);
     Q_INVOKABLE void getTheory(qint32 theme_id);
     Q_INVOKABLE void getTask(qint32 task_id);
-    Q_INVOKABLE void checkSolution(qint32 theme_id, QString codeText);
+    Q_INVOKABLE void checkSolution(qint32 task_id, QString codeText);
 
 signals:
     void apiError(const QString error);

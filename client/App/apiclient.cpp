@@ -61,7 +61,11 @@ void ApiClient::getTask(qint32 task_id) {
     });
 }
 
-void ApiClient::checkSolution(qint32 theme_id, QString codeText) {}
+void ApiClient::checkSolution(qint32 task_id, QString codeText) {
+    apiCall(RequestType::POST, "check_task", {{"task_id", task_id}, {"text", codeText}}, [this](const QJsonObject &response) {
+        emit solutionChecked(response["result"].toString());
+    });
+}
 
 /*void ApiClient::themeInfo(qint32 theme_id, ThemeInfoType type) {
     auto it = m_cacheThemeInfo.find(theme_id);
