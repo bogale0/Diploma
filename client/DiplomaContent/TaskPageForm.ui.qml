@@ -10,32 +10,121 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Diploma 1.0
 
-Column {
+Item {
     anchors.fill: parent
-    spacing: 10
-    padding: 15
     required property int task_id
     property alias taskContent: contentLabel.text
     property alias codeText: codeEditor.text
     property alias checkButton: checkButton
     property alias resultText: resultLabel.text
 
-    Label {
-        id: contentLabel
-        font.pixelSize: 22
+    Rectangle {
+        anchors.fill: parent
+        color: "#0d111b"
     }
 
-    TextArea {
-        id: codeEditor
-        placeholderText: "Введите код..."
-    }
+    ColumnLayout {
+        anchors.fill: parent
+        anchors.margins: 16
+        spacing: 10
 
-    Button {
-        id: checkButton
-        text: "Отправить на проверку"
-    }
+        RowLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            spacing: 10
 
-    Label {
-        id: resultLabel
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                radius: 14
+                color: "#0a0f1d"
+                border.color: "#2d3752"
+
+                ScrollView {
+                    anchors.fill: parent
+                    anchors.margins: 10
+                    clip: true
+
+                    TextArea {
+                        id: codeEditor
+                        width: parent.width
+                        height: Math.max(parent.height, contentHeight)
+                        color: "#d8e5ff"
+                        font.family: "Fira Code"
+                        font.pixelSize: 16
+                        wrapMode: TextEdit.NoWrap
+                        selectByMouse: true
+                        background: Rectangle {
+                            color: "transparent"
+                        }
+                    }
+                }
+
+                Text {
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    anchors.leftMargin: 16
+                    anchors.topMargin: 16
+                    text: "Введите код..."
+                    color: "#6f7ea6"
+                    font.pixelSize: 16
+                    visible: codeEditor.length === 0
+                    font.family: "Fira Code"
+                }
+            }
+
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                radius: 14
+                color: "#121826"
+                border.color: "#2d3752"
+
+                ScrollView {
+                    anchors.fill: parent
+                    anchors.margins: 12
+                    clip: true
+                    ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+
+                    Label {
+                        id: contentLabel
+                        width: parent.width
+                        wrapMode: Text.Wrap
+                        color: "#edf2ff"
+                        font.pixelSize: 18
+                        lineHeight: 1.25
+                    }
+                }
+            }
+        }
+
+        Button {
+            id: checkButton
+            Layout.fillWidth: true
+            Layout.preferredHeight: 50
+            text: "Отправить на проверку"
+
+            background: Rectangle {
+                radius: 12
+                color: parent.down ? "#6d28d9" : parent.hovered ? "#5b34b8" : "#4c1d95"
+            }
+
+            contentItem: Text {
+                text: parent.text
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                color: "#ffffff"
+                font.pixelSize: 16
+                font.weight: Font.DemiBold
+            }
+        }
+
+        Label {
+            id: resultLabel
+            Layout.fillWidth: true
+            color: "#d9e2ff"
+            wrapMode: Text.Wrap
+            font.pixelSize: 15
+        }
     }
 }

@@ -22,42 +22,58 @@ Item {
     signal authSuccess()
 
     Rectangle {
-        width: parent.width
-        height: parent.height * 0.6
-        color: Constants.blueBgColor
+        anchors.fill: parent
+        color: "#06080f"
     }
 
     Rectangle {
-        width: parent.width * 0.5
-        height: parent.height * 0.6
-        color: "#d7e2e7"
-        radius: 15
-        border.color: "#dbbcbc"
-        border.width: 1
+        width: parent.width * 0.42
+        height: parent.height * 0.62
+        radius: 22
+        color: "#10141f"
+        border.color: "#2d3752"
         anchors.centerIn: parent
 
-        Text {
-            id: errText
-            anchors.horizontalCenter: parent.horizontalCenter
-            y: parent.height * 0.05
-            color: "#ff0000"
-            font.pixelSize: 20
-        }
-
         ColumnLayout {
-            anchors.centerIn: parent
-            width: parent.width * 0.4
-            spacing: 15
+            anchors.fill: parent
+            anchors.margins: 28
+            spacing: 16
+
+            Label {
+                text: authMode === loginMode ? "Вход в аккаунт" : "Создание аккаунта"
+                color: "#edf2ff"
+                font.pixelSize: 28
+                font.weight: Font.Bold
+                Layout.fillWidth: true
+            }
+
+            Label {
+                text: "Изучайте программирование на практике"
+                color: "#99a8cf"
+                wrapMode: Text.Wrap
+                Layout.fillWidth: true
+                font.pixelSize: 14
+            }
+
+            Text {
+                id: errText
+                color: "#ef4444"
+                font.pixelSize: 14
+                Layout.fillWidth: true
+                visible: text.length > 0
+            }
 
             TextField {
                 id: loginText
                 Layout.fillWidth: true
+                Layout.preferredHeight: 46
                 placeholderText: "Логин"
             }
 
             TextField {
                 id: pswdText
                 Layout.fillWidth: true
+                Layout.preferredHeight: 46
                 echoMode: TextInput.Password
                 placeholderText: "Пароль"
             }
@@ -65,14 +81,30 @@ Item {
             Button {
                 id: authButton
                 Layout.fillWidth: true
+                Layout.preferredHeight: 48
                 text: "Войти"
+
+                background: Rectangle {
+                    radius: 12
+                    color: parent.down ? "#6d28d9" : parent.hovered ? "#5b34b8" : "#4c1d95"
+                }
+
+                contentItem: Text {
+                    text: parent.text
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    color: "#ffffff"
+                    font.pixelSize: 16
+                    font.weight: Font.DemiBold
+                }
             }
 
             Label {
                 id: toggleLink
-                color: "#0000ff"
+                color: "#a5b4fc"
                 text: "Зарегистрироваться"
-                font.pixelSize: 16
+                font.pixelSize: 15
+                font.underline: true
                 Layout.alignment: Qt.AlignHCenter
 
                 MouseArea {
@@ -92,6 +124,10 @@ Item {
                         }
                     }
                 }
+            }
+
+            Item {
+                Layout.fillHeight: true
             }
         }
     }
