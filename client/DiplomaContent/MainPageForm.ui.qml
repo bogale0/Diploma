@@ -9,35 +9,88 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-ColumnLayout {
+Item {
     property alias stack: content
 
-    Row {
-        spacing: 10
-        padding: 10
-
-        Repeater {
-            model: [
-                {name: "Языки", page: "LanguagesListPage.qml"},
-                {name: "Курсы", page: "ThemesListPage.qml"},
-                {name: "Прогресс", page: "ProgressPage.qml"}
-            ]
-
-            Button {
-                text: modelData.name
-                Layout.fillWidth: true
-
-                Connections {
-                    onClicked: content.replace(modelData.page)
-                }
+    Rectangle {
+        anchors.fill: parent
+        gradient: Gradient {
+            GradientStop {
+                position: 0
+                color: "#0b1220"
+            }
+            GradientStop {
+                position: 1
+                color: "#161f36"
             }
         }
     }
 
-    StackView {
-        id: content
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        initialItem: LanguagesListPage {}
+    ColumnLayout {
+        anchors.fill: parent
+        anchors.margins: 18
+        spacing: 14
+
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 72
+            radius: 18
+            color: "#1d2945"
+            border.color: "#2a3a62"
+
+            RowLayout {
+                anchors.fill: parent
+                anchors.margins: 12
+                spacing: 10
+
+                Repeater {
+                    model: [
+                        {name: "Языки", page: "LanguagesListPage.qml"},
+                        {name: "Курсы", page: "ThemesListPage.qml"},
+                        {name: "Прогресс", page: "ProgressPage.qml"}
+                    ]
+
+                    Button {
+                        text: modelData.name
+                        Layout.fillWidth: true
+
+                        background: Rectangle {
+                            radius: 12
+                            color: parent.down ? "#4f46e5" : parent.hovered ? "#303f67" : "#263556"
+                            border.color: "#3d4f79"
+                        }
+
+                        contentItem: Text {
+                            text: parent.text
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            color: "#e8f0ff"
+                            font.pixelSize: 17
+                            font.weight: Font.DemiBold
+                        }
+
+                        Connections {
+                            onClicked: content.replace(modelData.page)
+                        }
+                    }
+                }
+            }
+        }
+
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            radius: 18
+            color: "#f8faff"
+            border.color: "#d9e4ff"
+            clip: true
+
+            StackView {
+                id: content
+                anchors.fill: parent
+                anchors.margins: 10
+                initialItem: LanguagesListPage {}
+            }
+        }
     }
 }

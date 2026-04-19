@@ -10,32 +10,93 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Diploma 1.0
 
-Column {
+Item {
     anchors.fill: parent
-    spacing: 10
-    padding: 15
     required property int task_id
     property alias taskContent: contentLabel.text
     property alias codeText: codeEditor.text
     property alias checkButton: checkButton
     property alias resultText: resultLabel.text
 
-    Label {
-        id: contentLabel
-        font.pixelSize: 22
+    Rectangle {
+        anchors.fill: parent
+        color: "#f5f8ff"
     }
 
-    TextArea {
-        id: codeEditor
-        placeholderText: "Введите код..."
-    }
+    ColumnLayout {
+        anchors.fill: parent
+        anchors.margins: 16
+        spacing: 12
 
-    Button {
-        id: checkButton
-        text: "Отправить на проверку"
-    }
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 80
+            radius: 14
+            color: "#ffffff"
+            border.color: "#d7e3ff"
 
-    Label {
-        id: resultLabel
+            Label {
+                id: contentLabel
+                anchors.fill: parent
+                anchors.margins: 14
+                wrapMode: Text.Wrap
+                verticalAlignment: Text.AlignVCenter
+                color: "#1d2945"
+                font.pixelSize: 20
+                font.weight: Font.DemiBold
+            }
+        }
+
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            radius: 14
+            color: "#0f172a"
+            border.color: "#223156"
+
+            TextArea {
+                id: codeEditor
+                anchors.fill: parent
+                anchors.margins: 10
+                placeholderText: "Введите код..."
+                color: "#d8e5ff"
+                placeholderTextColor: "#8ca2d1"
+                font.family: "Fira Code"
+                font.pixelSize: 16
+                wrapMode: TextEdit.NoWrap
+                background: Rectangle {
+                    color: "transparent"
+                }
+            }
+        }
+
+        Button {
+            id: checkButton
+            Layout.fillWidth: true
+            Layout.preferredHeight: 50
+            text: "Отправить на проверку"
+
+            background: Rectangle {
+                radius: 12
+                color: parent.down ? "#3f49bf" : parent.hovered ? "#5863d8" : "#4a56c8"
+            }
+
+            contentItem: Text {
+                text: parent.text
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                color: "#ffffff"
+                font.pixelSize: 16
+                font.weight: Font.DemiBold
+            }
+        }
+
+        Label {
+            id: resultLabel
+            Layout.fillWidth: true
+            color: "#1d2945"
+            wrapMode: Text.Wrap
+            font.pixelSize: 15
+        }
     }
 }
