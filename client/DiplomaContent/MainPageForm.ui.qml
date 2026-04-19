@@ -9,35 +9,79 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-ColumnLayout {
+Item {
     property alias stack: content
 
-    Row {
-        spacing: 10
-        padding: 10
+    Rectangle {
+        anchors.fill: parent
+        color: "#06080f"
+    }
 
-        Repeater {
-            model: [
-                {name: "Языки", page: "LanguagesListPage.qml"},
-                {name: "Курсы", page: "ThemesListPage.qml"},
-                {name: "Прогресс", page: "ProgressPage.qml"}
-            ]
+    ColumnLayout {
+        anchors.fill: parent
+        anchors.margins: 18
+        spacing: 14
 
-            Button {
-                text: modelData.name
-                Layout.fillWidth: true
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 72
+            radius: 18
+            color: "#10141f"
+            border.color: "#272d3d"
 
-                Connections {
-                    onClicked: content.replace(modelData.page)
+            RowLayout {
+                anchors.fill: parent
+                anchors.margins: 12
+                spacing: 10
+
+                Repeater {
+                    model: [
+                        {name: "Языки", page: "LanguagesListPage.qml"},
+                        {name: "Курсы", page: "ThemesListPage.qml"},
+                        {name: "Прогресс", page: "ProgressPage.qml"}
+                    ]
+
+                    Button {
+                        text: modelData.name
+                        Layout.fillWidth: true
+
+                        background: Rectangle {
+                            radius: 12
+                            color: parent.down ? "#7c3aed" : parent.hovered ? "#242c42" : "#1a2234"
+                            border.color: "#303a55"
+                        }
+
+                        contentItem: Text {
+                            text: parent.text
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            color: "#eaf0ff"
+                            font.pixelSize: 17
+                            font.weight: Font.DemiBold
+                        }
+
+                        Connections {
+                            onClicked: content.replace(modelData.page)
+                        }
+                    }
                 }
             }
         }
-    }
 
-    StackView {
-        id: content
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        initialItem: LanguagesListPage {}
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            radius: 18
+            color: "#0d111b"
+            border.color: "#272d3d"
+            clip: true
+
+            StackView {
+                id: content
+                anchors.fill: parent
+                anchors.margins: 10
+                initialItem: LanguagesListPage {}
+            }
+        }
     }
 }
