@@ -10,7 +10,13 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 Item {
+    readonly property int languagesPageId: 1
+    readonly property int themesPageId: 2
+    readonly property int theoryPageId: 3
+    readonly property int taskPageId: 4
+    readonly property int progressPageId: 5
     property alias stack: content
+    signal navigationRequest(int page_id, var properties)
 
     Rectangle {
         anchors.fill: parent
@@ -36,13 +42,12 @@ Item {
 
                 Repeater {
                     model: [
-                        {name: "Языки", page: "LanguagesListPage.qml"},
-                        {name: "Курсы", page: "ThemesListPage.qml"},
-                        {name: "Прогресс", page: "ProgressPage.qml"}
+                        {id: languagesPageId, name: "Языки"},
+                        {id: themesPageId, name: "Темы"},
+                        {id: progressPageId, name: "Прогресс"}
                     ]
 
                     Button {
-                        text: modelData.name
                         Layout.fillWidth: true
 
                         background: Rectangle {
@@ -52,7 +57,7 @@ Item {
                         }
 
                         contentItem: Text {
-                            text: parent.text
+                            text: modelData.name
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             color: "#eaf0ff"
@@ -61,7 +66,7 @@ Item {
                         }
 
                         Connections {
-                            onClicked: content.replace(modelData.page)
+                            onClicked: navigationRequest(modelData.id, {})
                         }
                     }
                 }
@@ -80,7 +85,6 @@ Item {
                 id: content
                 anchors.fill: parent
                 anchors.margins: 10
-                initialItem: LanguagesListPage {}
             }
         }
     }

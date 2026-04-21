@@ -2,7 +2,7 @@ import QtQuick
 import Backend 1.0
 
 TaskPageForm {
-    signal taskSolved()
+    signal taskSolved(int id)
     checkButton.onClicked: Api.checkSolution(task_id, codeText)
     Component.onCompleted: Api.getTask(task_id)
 
