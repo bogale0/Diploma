@@ -57,7 +57,13 @@ void ApiClient::getTheory(qint32 theme_id) {
 
 void ApiClient::getTask(qint32 task_id) {
     apiCall(RequestType::GET, "task", {{"task_id", task_id}}, [this](const QJsonObject &response) {
-        emit taskReceived(response["task"].toString());
+        emit taskReceived(response["task"].toString(), response["public_input"].toString(), response["public_output"].toString());
+    });
+}
+
+void ApiClient::runSolution(QString codeText, QString inputText) {
+    apiCall(RequestType::POST, "run_task", {{"text", codeText}, {"input", inputText}}, [this](const QJsonObject &response) {
+        emit solutionRan(response["result"].toString(), response["output"].toString());
     });
 }
 

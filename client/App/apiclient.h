@@ -17,6 +17,7 @@ public:
     Q_INVOKABLE void getThemes(qint32 lang_id);
     Q_INVOKABLE void getTheory(qint32 theme_id);
     Q_INVOKABLE void getTask(qint32 task_id);
+    Q_INVOKABLE void runSolution(QString codeText, QString inputText);
     Q_INVOKABLE void checkSolution(qint32 task_id, QString codeText);
 
 signals:
@@ -25,7 +26,8 @@ signals:
     void languagesReceived(const QJsonArray languages);
     void themesReceived(const QJsonArray themes);
     void theoryReceived(const QJsonObject info);
-    void taskReceived(const QString task);
+    void taskReceived(const QString task, const QString publicInput, const QString publicOutput);
+    void solutionRan(const QString result, const QString output);
     void solutionChecked(const QString result);
 
 private:
