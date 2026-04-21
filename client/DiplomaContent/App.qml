@@ -14,8 +14,8 @@ Window {
     StackView {
         id: stack
         anchors.fill: parent
-        initialItem: Authorization {
+        initialItem: MainPage {} /*Authorization {
             onAuthSuccess: stack.replace("MainPage.qml");
-        }
+        }*/
     }
 }

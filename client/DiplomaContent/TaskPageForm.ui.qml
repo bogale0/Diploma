@@ -58,23 +58,13 @@ Item {
                         font.family: "Fira Code"
                         font.pixelSize: 16
                         wrapMode: TextEdit.NoWrap
+                        placeholderTextColor: "#60ffffff"
+                        placeholderText: "Введите код..."
                         selectByMouse: true
                         background: Rectangle {
                             color: "transparent"
                         }
                     }
-                }
-
-                Text {
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    anchors.leftMargin: 16
-                    anchors.topMargin: 16
-                    text: "Введите код..."
-                    color: "#6f7ea6"
-                    font.pixelSize: 16
-                    visible: codeEditor.length === 0
-                    font.family: "Fira Code"
                 }
             }
 
@@ -86,9 +76,9 @@ Item {
                 border.color: "#2d3752"
 
                 ColumnLayout {
-                anchors.fill: parent
-                anchors.margins: 12
-                spacing: 8
+                    anchors.fill: parent
+                    anchors.margins: 12
+                    spacing: 8
 
                     ScrollView {
                         Layout.fillWidth: true
@@ -106,93 +96,68 @@ Item {
                         }
                     }
 
-                Label {
-                    text: "Пример теста"
-                    color: "#edf2ff"
-                    font.pixelSize: 16
-                    font.weight: Font.DemiBold
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 10
-
-                    TextArea {
-                        id: publicInput
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 80
-                        readOnly: true
-                        color: "#d8e5ff"
-                        font.family: "Fira Code"
+                    Label {
+                        text: "Пример"
+                        color: "#edf2ff"
                         font.pixelSize: 14
-                        wrapMode: TextEdit.Wrap
-                        background: Rectangle {
-                            radius: 8
-                            color: "#0a0f1d"
-                            border.color: "#2d3752"
-                        }
-                        placeholderText: "Вход (пример)"
+                        font.weight: Font.DemiBold
                     }
 
-                    TextArea {
-                        id: publicOutput
+
+                    RowLayout {
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 80
-                        readOnly: true
-                        color: "#d8e5ff"
-                        font.family: "Fira Code"
-                        font.pixelSize: 14
-                        wrapMode: TextEdit.Wrap
-                        background: Rectangle {
-                            radius: 8
-                            color: "#0a0f1d"
-                            border.color: "#2d3752"
+                        spacing: 10
+
+                        TextField {
+                            id: publicInput
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 30
+                            readOnly: true
+                            color: "#d8e5ff"
+                            font.pixelSize: 14
+                            placeholderText: "Вход"
                         }
-                        placeholderText: "Выход (пример)"
-                    }
-                }
 
-                Label {
-                    text: "Пользовательский запуск"
-                    color: "#edf2ff"
-                    font.pixelSize: 16
-                    font.weight: Font.DemiBold
-                }
-
-                RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 10
-
-                    TextArea {
-                        id: runInput
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 80
-                        color: "#d8e5ff"
-                        font.family: "Fira Code"
-                        font.pixelSize: 14
-                        wrapMode: TextEdit.Wrap
-                        background: Rectangle {
-                            radius: 8
-                            color: "#0a0f1d"
-                            border.color: "#2d3752"
+                        TextField {
+                            id: publicOutput
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 30
+                            readOnly: true
+                            color: "#d8e5ff"
+                            font.pixelSize: 14
+                            placeholderText: "Выход"
                         }
-                        placeholderText: "Вход для запуска"
                     }
 
-                    TextArea {
-                        id: runOutput
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 80
-                        color: "#d8e5ff"
-                        font.family: "Fira Code"
+                    Label {
+                        text: "Свой тест"
+                        color: "#edf2ff"
                         font.pixelSize: 14
-                        wrapMode: TextEdit.Wrap
-                        background: Rectangle {
-                            radius: 8
-                            color: "#0a0f1d"
-                            border.color: "#2d3752"
+                        font.weight: Font.DemiBold
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: 10
+
+                        TextField {
+                            id: runInput
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 30
+                            color: "#d8e5ff"
+                            font.pixelSize: 14
+                            placeholderText: "Вход"
                         }
-                        placeholderText: "Выход после запуска"
+
+                        TextField {
+                            id: runOutput
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 30
+                            readOnly: true
+                            color: "#d8e5ff"
+                            font.pixelSize: 14
+                            placeholderText: "Выход"
+                        }
                     }
                 }
             }

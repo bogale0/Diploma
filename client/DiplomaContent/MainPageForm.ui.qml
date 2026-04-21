@@ -42,8 +42,8 @@ Item {
 
                 Repeater {
                     model: [
-                        {id: languagesPageId, name: "Языки"},
-                        {id: themesPageId, name: "Темы"},
+                        {id: languagesPageId, name: "Курсы"},
+                        {id: themesPageId, name: "Уроки"},
                         {id: progressPageId, name: "Прогресс"}
                     ]
 
