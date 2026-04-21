@@ -25,7 +25,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: "#0d111b"
+        color: "#f3f8ff"
     }
 
     ColumnLayout {
@@ -42,8 +42,8 @@ Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 radius: 14
-                color: "#0a0f1d"
-                border.color: "#2d3752"
+                color: "#e8f1ff"
+                border.color: "#9cb5db"
 
                 ScrollView {
                     anchors.fill: parent
@@ -54,16 +54,27 @@ Item {
                         id: codeEditor
                         width: parent.width
                         height: Math.max(parent.height, contentHeight)
-                        color: "#d8e5ff"
+                        color: "#1d3d6b"
                         font.family: "Fira Code"
                         font.pixelSize: 16
+                        leftPadding: 8
+                        topPadding: 8
                         wrapMode: TextEdit.NoWrap
-                        placeholderTextColor: "#60ffffff"
-                        placeholderText: "Введите код..."
                         selectByMouse: true
                         background: Rectangle {
                             color: "transparent"
                         }
+                    }
+
+                    Text {
+                        anchors.left: parent.left
+                        anchors.top: parent.top
+                        anchors.margins: 18
+                        text: "Введите код..."
+                        color: "#7a9bc8"
+                        font.family: "Fira Code"
+                        font.pixelSize: 16
+                        visible: codeEditor.text.length === 0
                     }
                 }
             }
@@ -72,8 +83,8 @@ Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 radius: 14
-                color: "#121826"
-                border.color: "#2d3752"
+                color: "#e1edff"
+                border.color: "#9cb5db"
 
                 ColumnLayout {
                     anchors.fill: parent
@@ -90,7 +101,7 @@ Item {
                             id: contentLabel
                             width: parent.width
                             wrapMode: Text.Wrap
-                            color: "#edf2ff"
+                            color: "#16345f"
                             font.pixelSize: 18
                             lineHeight: 1.25
                         }
@@ -98,7 +109,7 @@ Item {
 
                     Label {
                         text: "Пример"
-                        color: "#edf2ff"
+                        color: "#16345f"
                         font.pixelSize: 14
                         font.weight: Font.DemiBold
                     }
@@ -113,9 +124,15 @@ Item {
                             Layout.fillWidth: true
                             Layout.preferredHeight: 30
                             readOnly: true
-                            color: "#d8e5ff"
+                            color: "#1d3d6b"
+                            placeholderTextColor: "#6b89b8"
                             font.pixelSize: 14
                             placeholderText: "Вход"
+                            background: Rectangle {
+                                radius: 8
+                                color: "#f6f9ff"
+                                border.color: "#9cb5db"
+                            }
                         }
 
                         TextField {
@@ -123,15 +140,21 @@ Item {
                             Layout.fillWidth: true
                             Layout.preferredHeight: 30
                             readOnly: true
-                            color: "#d8e5ff"
+                            color: "#1d3d6b"
+                            placeholderTextColor: "#6b89b8"
                             font.pixelSize: 14
                             placeholderText: "Выход"
+                            background: Rectangle {
+                                radius: 8
+                                color: "#f6f9ff"
+                                border.color: "#9cb5db"
+                            }
                         }
                     }
 
                     Label {
                         text: "Свой тест"
-                        color: "#edf2ff"
+                        color: "#16345f"
                         font.pixelSize: 14
                         font.weight: Font.DemiBold
                     }
@@ -144,9 +167,15 @@ Item {
                             id: runInput
                             Layout.fillWidth: true
                             Layout.preferredHeight: 30
-                            color: "#d8e5ff"
+                            color: "#1d3d6b"
+                            placeholderTextColor: "#6b89b8"
                             font.pixelSize: 14
                             placeholderText: "Вход"
+                            background: Rectangle {
+                                radius: 8
+                                color: "#f6f9ff"
+                                border.color: "#9cb5db"
+                            }
                         }
 
                         TextField {
@@ -154,9 +183,15 @@ Item {
                             Layout.fillWidth: true
                             Layout.preferredHeight: 30
                             readOnly: true
-                            color: "#d8e5ff"
+                            color: "#1d3d6b"
+                            placeholderTextColor: "#6b89b8"
                             font.pixelSize: 14
                             placeholderText: "Выход"
+                            background: Rectangle {
+                                radius: 8
+                                color: "#f6f9ff"
+                                border.color: "#9cb5db"
+                            }
                         }
                     }
                 }
@@ -175,14 +210,14 @@ Item {
 
                 background: Rectangle {
                     radius: 12
-                    color: parent.down ? "#2563eb" : parent.hovered ? "#1d4ed8" : "#1e40af"
+                    color: parent.down ? "#4a8eff" : parent.hovered ? "#3e80f1" : "#2f6cd4"
                 }
 
                 contentItem: Text {
                     text: parent.text
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    color: "#ffffff"
+                    color: "#f8fbff"
                     font.pixelSize: 16
                     font.weight: Font.DemiBold
                 }
@@ -196,14 +231,14 @@ Item {
 
                 background: Rectangle {
                     radius: 12
-                    color: parent.down ? "#6d28d9" : parent.hovered ? "#5b34b8" : "#4c1d95"
+                    color: parent.down ? "#4f8ef7" : parent.hovered ? "#3f7ee8" : "#316ad1"
                 }
 
                 contentItem: Text {
                     text: parent.text
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    color: "#ffffff"
+                    color: "#f8fbff"
                     font.pixelSize: 16
                     font.weight: Font.DemiBold
                 }
@@ -213,7 +248,7 @@ Item {
         Label {
             id: resultLabel
             Layout.fillWidth: true
-            color: "#d9e2ff"
+            color: "#234877"
             wrapMode: Text.Wrap
             font.pixelSize: 15
         }
