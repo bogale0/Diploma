@@ -85,34 +85,26 @@ Item {
                 color: "#121826"
                 border.color: "#2d3752"
 
-                ScrollView {
-                    anchors.fill: parent
-                    anchors.margins: 12
-                    clip: true
-                    ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-
-                    Label {
-                        id: contentLabel
-                        width: parent.width
-                        wrapMode: Text.Wrap
-                        color: "#edf2ff"
-                        font.pixelSize: 18
-                        lineHeight: 1.25
-                    }
-                }
-            }
-        }
-
-        Rectangle {
-            Layout.fillWidth: true
-            radius: 14
-            color: "#121826"
-            border.color: "#2d3752"
-
-            ColumnLayout {
+                ColumnLayout {
                 anchors.fill: parent
                 anchors.margins: 12
                 spacing: 8
+
+                    ScrollView {
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        clip: true
+                        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+
+                        Label {
+                            id: contentLabel
+                            width: parent.width
+                            wrapMode: Text.Wrap
+                            color: "#edf2ff"
+                            font.pixelSize: 18
+                            lineHeight: 1.25
+                        }
+                    }
 
                 Label {
                     text: "Пример теста"
