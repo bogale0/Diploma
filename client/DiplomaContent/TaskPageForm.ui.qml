@@ -15,7 +15,12 @@ Item {
     required property int task_id
     property alias taskContent: contentLabel.text
     property alias codeText: codeEditor.text
-    property alias checkButton: checkButton
+    property alias runInputText: runInput.text
+    property alias runOutputText: runOutput.text
+    property alias publicInputText: publicInput.text
+    property alias publicOutputText: publicOutput.text
+    property alias runButton: runButton
+    property alias submitButton: submitButton
     property alias resultText: resultLabel.text
 
     Rectangle {
@@ -98,24 +103,153 @@ Item {
             }
         }
 
-        Button {
-            id: checkButton
+        Rectangle {
             Layout.fillWidth: true
-            Layout.preferredHeight: 50
-            text: "Отправить на проверку"
+            radius: 14
+            color: "#121826"
+            border.color: "#2d3752"
 
-            background: Rectangle {
-                radius: 12
-                color: parent.down ? "#6d28d9" : parent.hovered ? "#5b34b8" : "#4c1d95"
+            ColumnLayout {
+                anchors.fill: parent
+                anchors.margins: 12
+                spacing: 8
+
+                Label {
+                    text: "Пример теста"
+                    color: "#edf2ff"
+                    font.pixelSize: 16
+                    font.weight: Font.DemiBold
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 10
+
+                    TextArea {
+                        id: publicInput
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 80
+                        readOnly: true
+                        color: "#d8e5ff"
+                        font.family: "Fira Code"
+                        font.pixelSize: 14
+                        wrapMode: TextEdit.Wrap
+                        background: Rectangle {
+                            radius: 8
+                            color: "#0a0f1d"
+                            border.color: "#2d3752"
+                        }
+                        placeholderText: "Вход (пример)"
+                    }
+
+                    TextArea {
+                        id: publicOutput
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 80
+                        readOnly: true
+                        color: "#d8e5ff"
+                        font.family: "Fira Code"
+                        font.pixelSize: 14
+                        wrapMode: TextEdit.Wrap
+                        background: Rectangle {
+                            radius: 8
+                            color: "#0a0f1d"
+                            border.color: "#2d3752"
+                        }
+                        placeholderText: "Выход (пример)"
+                    }
+                }
+
+                Label {
+                    text: "Пользовательский запуск"
+                    color: "#edf2ff"
+                    font.pixelSize: 16
+                    font.weight: Font.DemiBold
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 10
+
+                    TextArea {
+                        id: runInput
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 80
+                        color: "#d8e5ff"
+                        font.family: "Fira Code"
+                        font.pixelSize: 14
+                        wrapMode: TextEdit.Wrap
+                        background: Rectangle {
+                            radius: 8
+                            color: "#0a0f1d"
+                            border.color: "#2d3752"
+                        }
+                        placeholderText: "Вход для запуска"
+                    }
+
+                    TextArea {
+                        id: runOutput
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 80
+                        color: "#d8e5ff"
+                        font.family: "Fira Code"
+                        font.pixelSize: 14
+                        wrapMode: TextEdit.Wrap
+                        background: Rectangle {
+                            radius: 8
+                            color: "#0a0f1d"
+                            border.color: "#2d3752"
+                        }
+                        placeholderText: "Выход после запуска"
+                    }
+                }
+            }
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 10
+
+            Button {
+                id: runButton
+                Layout.fillWidth: true
+                Layout.preferredHeight: 50
+                text: "Запустить"
+
+                background: Rectangle {
+                    radius: 12
+                    color: parent.down ? "#2563eb" : parent.hovered ? "#1d4ed8" : "#1e40af"
+                }
+
+                contentItem: Text {
+                    text: parent.text
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    color: "#ffffff"
+                    font.pixelSize: 16
+                    font.weight: Font.DemiBold
+                }
             }
 
-            contentItem: Text {
-                text: parent.text
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                color: "#ffffff"
-                font.pixelSize: 16
-                font.weight: Font.DemiBold
+            Button {
+                id: submitButton
+                Layout.fillWidth: true
+                Layout.preferredHeight: 50
+                text: "Отправить"
+
+                background: Rectangle {
+                    radius: 12
+                    color: parent.down ? "#6d28d9" : parent.hovered ? "#5b34b8" : "#4c1d95"
+                }
+
+                contentItem: Text {
+                    text: parent.text
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    color: "#ffffff"
+                    font.pixelSize: 16
+                    font.weight: Font.DemiBold
+                }
             }
         }
 
