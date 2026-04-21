@@ -20,7 +20,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: "#06080f"
+        color: "#eaf2ff"
     }
 
     ColumnLayout {
@@ -32,8 +32,8 @@ Item {
             Layout.fillWidth: true
             Layout.preferredHeight: 72
             radius: 18
-            color: "#10141f"
-            border.color: "#272d3d"
+            color: "#dce9ff"
+            border.color: "#a9bddf"
 
             RowLayout {
                 anchors.fill: parent
@@ -52,15 +52,15 @@ Item {
 
                         background: Rectangle {
                             radius: 12
-                            color: parent.down ? "#7c3aed" : parent.hovered ? "#242c42" : "#1a2234"
-                            border.color: "#303a55"
+                            color: parent.down ? "#4b84e6" : parent.hovered ? "#c0d7ff" : "#b2ccfb"
+                            border.color: "#89a8d8"
                         }
 
                         contentItem: Text {
                             text: modelData.name
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
-                            color: "#eaf0ff"
+                            color: "#17325d"
                             font.pixelSize: 17
                             font.weight: Font.DemiBold
                         }
@@ -77,8 +77,8 @@ Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
             radius: 18
-            color: "#0d111b"
-            border.color: "#272d3d"
+            color: "#f3f8ff"
+            border.color: "#a9bddf"
             clip: true
 
             StackView {

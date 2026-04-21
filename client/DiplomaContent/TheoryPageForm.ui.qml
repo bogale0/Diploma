@@ -17,7 +17,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: "#0d111b"
+        color: "#f3f8ff"
     }
 
     ColumnLayout {
@@ -29,8 +29,8 @@ Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
             radius: 16
-            color: "#121826"
-            border.color: "#2d3752"
+            color: "#e1edff"
+            border.color: "#9cb5db"
 
             ScrollView {
                 id: scrollView
@@ -42,7 +42,7 @@ Item {
                     width: scrollView.availableWidth
                     wrapMode: Text.WordWrap
                     text: theoryContent
-                    color: "#eaf0ff"
+                    color: "#17325d"
                     lineHeight: 1.35
                     font.pixelSize: 20
                 }
@@ -70,15 +70,15 @@ Item {
 
                         background: Rectangle {
                             radius: 12
-                            color: parent.down ? "#6d28d9" : parent.hovered ? "#5b34b8" : "#4c1d95"
-                            border.color: "#6f49be"
+                            color: parent.down ? "#4f8ef7" : parent.hovered ? "#3f7ee8" : "#316ad1"
+                            border.color: "#7ea5df"
                         }
 
                         contentItem: Text {
                             text: parent.text
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
-                            color: "#ffffff"
+                            color: "#f8fbff"
                             font.pixelSize: 16
                             font.weight: Font.DemiBold
                         }

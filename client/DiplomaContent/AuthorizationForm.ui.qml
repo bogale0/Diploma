@@ -23,15 +23,15 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: "#06080f"
+        color: "#eaf2ff"
     }
 
     Rectangle {
         width: parent.width * 0.42
         height: parent.height * 0.62
         radius: 22
-        color: "#10141f"
-        border.color: "#2d3752"
+        color: "#dce9ff"
+        border.color: "#9cb5db"
         anchors.centerIn: parent
 
         ColumnLayout {
@@ -41,7 +41,7 @@ Item {
 
             Label {
                 text: authMode === loginMode ? "Вход в аккаунт" : "Создание аккаунта"
-                color: "#edf2ff"
+                color: "#16345f"
                 font.pixelSize: 28
                 font.weight: Font.Bold
                 Layout.fillWidth: true
@@ -49,7 +49,7 @@ Item {
 
             Label {
                 text: "Изучайте программирование на практике"
-                color: "#99a8cf"
+                color: "#4e6f9f"
                 wrapMode: Text.Wrap
                 Layout.fillWidth: true
                 font.pixelSize: 14
@@ -57,7 +57,7 @@ Item {
 
             Text {
                 id: errText
-                color: "#ef4444"
+                color: "#cc3b3b"
                 font.pixelSize: 14
                 Layout.fillWidth: true
                 visible: text.length > 0
@@ -67,7 +67,14 @@ Item {
                 id: loginText
                 Layout.fillWidth: true
                 Layout.preferredHeight: 46
+                color: "#16345f"
+                placeholderTextColor: "#6b89b8"
                 placeholderText: "Логин"
+                background: Rectangle {
+                    radius: 10
+                    color: "#f6f9ff"
+                    border.color: "#9cb5db"
+                }
             }
 
             TextField {
@@ -75,7 +82,14 @@ Item {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 46
                 echoMode: TextInput.Password
+                color: "#16345f"
+                placeholderTextColor: "#6b89b8"
                 placeholderText: "Пароль"
+                background: Rectangle {
+                    radius: 10
+                    color: "#f6f9ff"
+                    border.color: "#9cb5db"
+                }
             }
 
             Button {
@@ -86,14 +100,14 @@ Item {
 
                 background: Rectangle {
                     radius: 12
-                    color: parent.down ? "#6d28d9" : parent.hovered ? "#5b34b8" : "#4c1d95"
+                    color: parent.down ? "#4f8ef7" : parent.hovered ? "#3f7ee8" : "#316ad1"
                 }
 
                 contentItem: Text {
                     text: parent.text
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    color: "#ffffff"
+                    color: "#f8fbff"
                     font.pixelSize: 16
                     font.weight: Font.DemiBold
                 }
@@ -101,7 +115,7 @@ Item {
 
             Label {
                 id: toggleLink
-                color: "#a5b4fc"
+                color: "#2f63b2"
                 text: "Зарегистрироваться"
                 font.pixelSize: 15
                 font.underline: true

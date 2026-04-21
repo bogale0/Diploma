@@ -16,7 +16,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: "#0d111b"
+        color: "#f3f8ff"
     }
 
     GridView {
@@ -39,8 +39,8 @@ Item {
 
                 background: Rectangle {
                     radius: 16
-                    color: parent.down ? "#7c3aed" : parent.hovered ? "#202941" : "#141a28"
-                    border.color: "#2d3752"
+                    color: parent.down ? "#4b84e6" : parent.hovered ? "#c2d8ff" : "#d8e7ff"
+                    border.color: "#9cb5db"
                 }
 
                 contentItem: ColumnLayout {
@@ -50,14 +50,14 @@ Item {
 
                     Text {
                         text: "#" + modelData.id
-                        color: "#9eaefc"
+                        color: "#456ca8"
                         font.pixelSize: 13
                     }
 
                     Text {
                         text: parent.parent.text
                         Layout.fillWidth: true
-                        color: "#ecf1ff"
+                        color: "#15335d"
                         elide: Text.ElideRight
                         wrapMode: Text.WordWrap
                         maximumLineCount: 2
@@ -71,7 +71,7 @@ Item {
 
                     Text {
                         text: "Открыть →"
-                        color: "#c6d2ff"
+                        color: "#395f96"
                         font.pixelSize: 14
                     }
                 }
