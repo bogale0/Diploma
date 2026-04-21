@@ -203,14 +203,14 @@ Item {
             spacing: 10
 
             Button {
-                id: runButton
+                id: submitButton
                 Layout.fillWidth: true
                 Layout.preferredHeight: 50
-                text: "Запустить"
+                text: "Отправить"
 
                 background: Rectangle {
                     radius: 12
-                    color: parent.down ? "#4a8eff" : parent.hovered ? "#3e80f1" : "#2f6cd4"
+                    color: parent.down ? "#4f8ef7" : parent.hovered ? "#3f7ee8" : "#316ad1"
                 }
 
                 contentItem: Text {
@@ -224,14 +224,14 @@ Item {
             }
 
             Button {
-                id: submitButton
+                id: runButton
                 Layout.fillWidth: true
                 Layout.preferredHeight: 50
-                text: "Отправить"
+                text: "Запустить"
 
                 background: Rectangle {
                     radius: 12
-                    color: parent.down ? "#4f8ef7" : parent.hovered ? "#3f7ee8" : "#316ad1"
+                    color: parent.down ? "#4a8eff" : parent.hovered ? "#3e80f1" : "#2f6cd4"
                 }
 
                 contentItem: Text {
