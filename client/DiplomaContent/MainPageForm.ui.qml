@@ -14,7 +14,8 @@ Item {
     readonly property int themesPageId: 2
     readonly property int theoryPageId: 3
     readonly property int taskPageId: 4
-    readonly property int progressPageId: 5
+    readonly property int navigateBack: 5
+    //readonly property int progressPageId: 6
     property alias stack: content
     signal navigationRequest(int page_id, var properties)
 
@@ -44,25 +45,20 @@ Item {
                     model: [
                         {id: languagesPageId, name: "Курсы"},
                         {id: themesPageId, name: "Уроки"},
-                        {id: progressPageId, name: "Прогресс"}
+                        {id: navigateBack, name: "Назад"}
+                        //{id: progressPageId, name: "Прогресс"}
                     ]
 
                     Button {
                         Layout.fillWidth: true
+                        text: modelData.name
+                        font.pixelSize: 17
+                        font.weight: Font.DemiBold
 
                         background: Rectangle {
                             radius: 12
                             color: parent.down ? "#4b84e6" : parent.hovered ? "#c0d7ff" : "#b2ccfb"
                             border.color: "#89a8d8"
-                        }
-
-                        contentItem: Text {
-                            text: modelData.name
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            color: "#17325d"
-                            font.pixelSize: 17
-                            font.weight: Font.DemiBold
                         }
 
                         Connections {

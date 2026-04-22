@@ -30,9 +30,10 @@ MainPageForm {
                 break;
             case taskPageId:
                 page = stack.push("TaskPage.qml", {"task_id": properties.task_id});
-                /*page.taskSolved.connect(function(task_id) {
-                    navigationRequest(taskPageId, {"task_id": task_id});
-                });*/
+                //page.taskSolved.connect(function(task_id) {});
+                break;
+            case navigateBack:
+                stack.pop();
                 break;
             /*case progressPageId:
                 page = stack.push("ProgressPage.qml");
