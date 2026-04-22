@@ -25,8 +25,11 @@ Item {
         anchors.margins: 14
         model: items
         clip: true
-        cellWidth: Math.max(220, Math.floor((width - 10) / 2))
-        cellHeight: 116
+        property int targetColumns: 3
+        property int targetRows: 2
+        property int cellSpacing: 12
+        cellWidth: Math.floor((width - (targetColumns - 1) * cellSpacing) / targetColumns)
+        cellHeight: Math.floor((height - (targetRows - 1) * cellSpacing) / targetRows)
 
         delegate: Item {
             width: gridView.cellWidth
@@ -34,7 +37,7 @@ Item {
 
             ItemDelegate {
                 anchors.fill: parent
-                anchors.margins: 5
+                anchors.margins: gridView.cellSpacing / 2
                 text: modelData.text
 
                 background: Rectangle {
