@@ -25,8 +25,8 @@ Item {
         anchors.margins: 14
         model: items
         clip: true
-        cellWidth: Math.max(220, Math.floor((width - 10) / 2))
-        cellHeight: 116
+        cellWidth: Math.max(260, Math.floor((width - 10) / 2))
+        cellHeight: 152
 
         delegate: Item {
             width: gridView.cellWidth
@@ -43,36 +43,71 @@ Item {
                     border.color: "#9cb5db"
                 }
 
-                contentItem: ColumnLayout {
+                contentItem: RowLayout {
                     anchors.fill: parent
                     anchors.margins: 14
-                    spacing: 8
+                    spacing: 12
 
-                    Text {
-                        text: "#" + modelData.id
-                        color: "#456ca8"
-                        font.pixelSize: 13
-                    }
-
-                    Text {
-                        text: parent.parent.text
+                    ColumnLayout {
                         Layout.fillWidth: true
-                        color: "#15335d"
-                        elide: Text.ElideRight
-                        wrapMode: Text.WordWrap
-                        maximumLineCount: 2
-                        font.pixelSize: 18
-                        font.weight: Font.DemiBold
-                    }
-
-                    Item {
                         Layout.fillHeight: true
+                        spacing: 6
+
+                        Text {
+                            text: "#" + modelData.id
+                            color: "#456ca8"
+                            font.pixelSize: 13
+                        }
+
+                        Text {
+                            text: parent.parent.text
+                            Layout.fillWidth: true
+                            color: "#15335d"
+                            elide: Text.ElideRight
+                            wrapMode: Text.WordWrap
+                            maximumLineCount: 2
+                            font.pixelSize: 18
+                            font.weight: Font.DemiBold
+                        }
+
+                        Text {
+                            Layout.fillWidth: true
+                            visible: modelData.description !== undefined && modelData.description !== null && modelData.description !== ""
+                            text: modelData.description || ""
+                            color: "#2f4f7a"
+                            wrapMode: Text.WordWrap
+                            maximumLineCount: 3
+                            elide: Text.ElideRight
+                            font.pixelSize: 13
+                        }
+
+                        Item {
+                            Layout.fillHeight: true
+                        }
+
+                        Text {
+                            text: "Открыть →"
+                            color: "#395f96"
+                            font.pixelSize: 14
+                        }
                     }
 
-                    Text {
-                        text: "Открыть →"
-                        color: "#395f96"
-                        font.pixelSize: 14
+                    Rectangle {
+                        Layout.preferredWidth: 88
+                        Layout.fillHeight: true
+                        visible: modelData.photo !== undefined && modelData.photo !== null && modelData.photo !== ""
+                        radius: 12
+                        color: "#c9dbf7"
+                        border.color: "#9cb5db"
+                        clip: true
+
+                        Image {
+                            anchors.fill: parent
+                            source: modelData.photo || ""
+                            fillMode: Image.PreserveAspectCrop
+                            asynchronous: true
+                            cache: true
+                        }
                     }
                 }
 
