@@ -2,6 +2,7 @@ import QtQuick
 import Backend 1.0
 
 ListPageForm {
+    detailedMode: false
     signal themeChosen(int id)
     required property int lang_id
     Component.onCompleted: Api.getThemes(lang_id)

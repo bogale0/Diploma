@@ -15,9 +15,13 @@ create table `sessions` (
 
 create table `languages` (
     `id` int auto_increment primary key,
-    `name` varchar(64) not null
+    `name` varchar(64) not null,
+    `short_description` varchar(255) null,
+    `photo_url` varchar(512) null
 );
-insert into `languages` (`id`, `name`) values (1, 'C++'), (2, 'Python');
+insert into `languages` (`id`, `name`, `short_description`, `photo_url`) values
+(1, 'C++', 'Компилируемый язык для системного и прикладного программирования.', 'https://isocpp.org/assets/images/cpp_logo.png'),
+(2, 'Python', 'Универсальный язык с простым синтаксисом для старта и автоматизации.', 'https://www.python.org/static/community_logos/python-logo-master-v3-TM.png');
 
 create table `themes` (
     `id` int auto_increment primary key,
