@@ -3,13 +3,15 @@
 
 #include <QApplication>
 #include <QQmlApplicationEngine>
+#include <QIcon>
 #include "autogen/environment.h"
 #include "apiclient.h"
 
 int main(int argc, char *argv[]) {
     set_qt_environment();
     QApplication app(argc, argv);
-    qmlRegisterSingletonInstance("Backend", 1, 0, "Api", new ApiClient("http://localhost/api/Diploma"));
+    app.setWindowIcon(QIcon("://images/icon.png"));
+    qmlRegisterSingletonInstance("Backend", 1, 0, "Api", new ApiClient("https://app.bogaledev.ru/api"));
     QQmlApplicationEngine engine;
     const QUrl url(mainQmlFile);
     QObject::connect(

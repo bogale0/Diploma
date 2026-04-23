@@ -26,6 +26,7 @@ qt6_add_qml_module(DiplomaContent
         "old/SettingsPage.qml"
         "old/TaskPage.qml"
         "old/TheoryPage.qml"
+        RESOURCES resources.qrc
 )
 
 

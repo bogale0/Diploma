@@ -28,7 +28,7 @@ Item {
 
     Rectangle {
         width: parent.width * 0.5
-        height: parent.height * 0.37
+        height: parent.height * 0.4
         radius: 22
         color: "#dce9ff"
         border.color: "#9cb5db"

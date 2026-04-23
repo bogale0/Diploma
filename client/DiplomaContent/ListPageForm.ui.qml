@@ -27,7 +27,7 @@ Item {
         model: items
         clip: true
         cellWidth: detailedMode ? Math.max(260, Math.floor((width - 10) / 2)) : Math.max(220, Math.floor((width - 10) / 2))
-        cellHeight: detailedMode ? 152 : 116
+        cellHeight: detailedMode ? 200 : 116
 
         delegate: Item {
             width: gridView.cellWidth
@@ -79,7 +79,7 @@ Item {
                             wrapMode: Text.WordWrap
                             maximumLineCount: 3
                             elide: Text.ElideRight
-                            font.pixelSize: 13
+                            font.pixelSize: 16
                         }
 
                         Item {
@@ -94,8 +94,8 @@ Item {
                     }
 
                     Rectangle {
-                        Layout.preferredWidth: 88
                         Layout.fillHeight: true
+                        Layout.preferredWidth: image.sourceSize.width / image.sourceSize.height * height
                         visible: detailedMode && modelData.photo !== undefined && modelData.photo !== null && modelData.photo !== ""
                         radius: 12
                         color: "#c9dbf7"
@@ -103,9 +103,10 @@ Item {
                         clip: true
 
                         Image {
+                            id: image
                             anchors.fill: parent
                             source: modelData.photo || ""
-                            fillMode: Image.PreserveAspectCrop
+                            fillMode: Image.PreserveAspectFit
                             asynchronous: true
                             cache: true
                         }

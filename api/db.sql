@@ -20,8 +20,8 @@ create table `languages` (
     `photo_url` varchar(512) null
 );
 insert into `languages` (`id`, `name`, `short_description`, `photo_url`) values
-(1, 'C++', 'Компилируемый язык для системного и прикладного программирования.', 'https://isocpp.org/assets/images/cpp_logo.png'),
-(2, 'Python', 'Универсальный язык с простым синтаксисом для старта и автоматизации.', 'https://www.python.org/static/community_logos/python-logo-master-v3-TM.png');
+(1, 'C++', 'Компилируемый язык для системного и прикладного программирования.', 'https://app.bogaledev.ru/images/cpp-logo.png'),
+(2, 'Python', 'Универсальный язык с простым синтаксисом для старта и автоматизации.', 'https://app.bogaledev.ru/images/python-logo.png');
 
 create table `themes` (
     `id` int auto_increment primary key,
