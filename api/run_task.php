@@ -25,7 +25,7 @@ $compileCommand = sprintf(
 $compileOutput = shell_exec($compileCommand);
 if (!is_file($binaryFile)) {
     rrmdir($tempDir);
-    api_exit(200, ["result" => "Compilation error", "output" => $compileOutput ?? ""]);
+    api_exit(200, ["result" => "Ошибка компиляции", "output" => $compileOutput ?? ""]);
 }
 
 $runCommand = sprintf(
@@ -37,10 +37,10 @@ $programOutput = shell_exec($runCommand);
 rrmdir($tempDir);
 
 if ($programOutput === null) {
-    api_exit(200, ["result" => "Runtime error", "output" => ""]);
+    api_exit(200, ["result" => "Ошибка выполнения", "output" => ""]);
 }
 
-api_exit(200, ["result" => "Ok", "output" => $programOutput]);
+api_exit(200, ["result" => "Успешно", "output" => $programOutput]);
 
 function rrmdir(string $dir) : void {
     if (!is_dir($dir)) {
