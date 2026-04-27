@@ -28,14 +28,16 @@ Item {
 
     Rectangle {
         width: parent.width * 0.5
-        height: parent.height * 0.4
+        height: column.height + 20
+        anchors.centerIn: parent
         radius: 22
         color: "#dce9ff"
         border.color: "#9cb5db"
-        anchors.centerIn: parent
 
         ColumnLayout {
-            anchors.fill: parent
+            id: column
+            width: parent.width - 40
+            anchors.centerIn: parent
             anchors.margins: 28
             spacing: 16
 

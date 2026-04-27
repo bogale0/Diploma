@@ -27,7 +27,7 @@ $compileCommand = sprintf(
 $compileOutput = shell_exec($compileCommand);
 if (!is_file($binaryFile)) {
     rrmdir($tempDir);
-    api_exit(200, ["result" => "Compilation error"]);
+    api_exit(200, ["result" => "Ошибка компиляции"]);
 }
 
 $pdo = db_init();
@@ -44,12 +44,12 @@ foreach ($tests as $index => $test) {
     $programOutput = shell_exec($runCommand);
     if ($programOutput === null || normalize_output($programOutput) !== normalize_output($test["output"])) {
         rrmdir($tempDir);
-        api_exit(200, ["result" => "Wrong answer"]);
+        api_exit(200, ["result" => "Неправильный ответ"]);
     }
 }
 
 rrmdir($tempDir);
-api_exit(200, ["result" => "Correct solution"]);
+api_exit(200, ["result" => "Верное решение"]);
 
 function normalize_output(string $value) : string {
     $value = str_replace(["\r\n", "\r", "\n"], "\n", trim($value));
