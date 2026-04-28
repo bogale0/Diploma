@@ -19,6 +19,7 @@ Item {
     property alias password: pswdText.text
     property alias authButton: authButton
     property alias errText: errText.text
+    property alias selectedRole: roleCombo.currentValue
     signal authSuccess()
 
     Rectangle {
@@ -72,6 +73,26 @@ Item {
                 color: "#16345f"
                 placeholderTextColor: "#6b89b8"
                 placeholderText: "Логин"
+                background: Rectangle {
+                    radius: 10
+                    color: "#f6f9ff"
+                    border.color: "#9cb5db"
+                }
+            }
+
+
+            ComboBox {
+                id: roleCombo
+                Layout.fillWidth: true
+                Layout.preferredHeight: 46
+                visible: authMode === signupMode
+                model: [
+                    { text: "Ученик", value: "student" },
+                    { text: "Учитель", value: "teacher" }
+                ]
+                textRole: "text"
+                valueRole: "value"
+
                 background: Rectangle {
                     radius: 10
                     color: "#f6f9ff"

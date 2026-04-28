@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import Diploma 1.0
+import Backend 1.0
 
 Window {
     width: maximumWidth
@@ -15,7 +16,13 @@ Window {
         id: stack
         anchors.fill: parent
         initialItem: Authorization {
-            onAuthSuccess: stack.replace("MainPage.qml");
+            onAuthSuccess: {
+                if (Api.userRole === "teacher") {
+                    stack.replace("TeacherMainPage.qml");
+                } else {
+                    stack.replace("MainPage.qml");
+                }
+            }
         }
     }
 }

@@ -14,4 +14,40 @@ function db_init() : PDO {
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     return $pdo;
 }
+
+function get_auth_user(PDO $pdo) : array {
+    $authHeader = $_SERVER["HTTP_AUTHORIZATION"] ?? "";
+    if (!preg_match('/^Bearer\s+([A-Za-z0-9\-_]+)$/', $authHeader, $matches)) {
+        api_exit(401, ["error" => "Missing bearer token"]);
+    }
+
+    $tokenBytes = base64_decode(strtr($matches[1], '-_', '+/'), true);
+    if ($tokenBytes === false || strlen($tokenBytes) !== 15) {
+        api_exit(401, ["error" => "Invalid bearer token"]);
+    }
+
+    $stmt = $pdo->prepare(
+        "select users.id, users.name, users.role
+         from sessions
+         join users on users.id = sessions.user_id
+         where sessions.bearer_token = ?
+           and sessions.created_at >= (now() - interval 4 hour)
+         limit 1"
+    );
+    $stmt->execute([$tokenBytes]);
+    $user = $stmt->fetch();
+    if ($user === false) {
+        api_exit(401, ["error" => "Session expired"]);
+    }
+
+    return $user;
+}
+
+function require_teacher(PDO $pdo) : array {
+    $user = get_auth_user($pdo);
+    if (($user["role"] ?? "") !== "teacher") {
+        api_exit(403, ["error" => "Teacher role required"]);
+    }
+    return $user;
+}
 ?>

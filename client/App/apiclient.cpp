@@ -1,5 +1,6 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QJsonDocument>
 #include <QUrlQuery>
 #include "apiclient.h"
 
@@ -18,7 +19,7 @@ ApiClient::ApiClient(QString host, QObject *parent)
     m_network = new QNetworkAccessManager(this);
 }
 
-void ApiClient::auth(const QString &name, const QString &password, AuthType type) {
+void ApiClient::auth(const QString &name, const QString &password, AuthType type, const QString &role) {
     QString method;
     switch (type) {
     case AuthType::LOGIN:
@@ -31,8 +32,11 @@ void ApiClient::auth(const QString &name, const QString &password, AuthType type
         emit apiError("Unknown auth type");
         return;
     }
-    apiCall(RequestType::POST, method, {{"name", name}, {"password", password}}, [this](const QJsonObject &response) {
+    apiCall(RequestType::POST, method, {{"name", name}, {"password", password}, {"role", role}}, [this](const QJsonObject &response) {
         m_bearerToken = response["bearer_token"].toString();
+        m_userRole = response["role"].toString();
+        m_userId = response["user_id"].toInt();
+        emit userChanged();
         emit authSuccess();
     });
 }
@@ -73,31 +77,25 @@ void ApiClient::checkSolution(qint32 task_id, QString codeText) {
     });
 }
 
-/*void ApiClient::themeInfo(qint32 theme_id, ThemeInfoType type) {
-    auto it = m_cacheThemeInfo.find(theme_id);
-    if (it != m_cacheThemeInfo.end()) {
-        switch (type) {
-        case ThemeInfoType::THEORY:
-            emit theoryReceived(it.value()["theory"].toString());
-            break;
-        case ThemeInfoType::TASK:
-            emit taskReceived(it.value()["task"].toString());
-            break;
-        }
-        return;
-    }
-    apiCall(RequestType::GET, "theme_info", {{"theme_id", theme_id}}, [this, theme_id, type](const QJsonObject &response) {
-        m_cacheThemeInfo.insert(theme_id, response);
-        switch (type) {
-        case ThemeInfoType::THEORY:
-            emit theoryReceived(response["theory"].toString());
-            break;
-        case ThemeInfoType::TASK:
-            emit taskReceived(response["task"].toString());
-            break;
-        }
+void ApiClient::createTheme(qint32 langId, const QString &topic, const QString &theory) {
+    apiCall(RequestType::POST, "create_theme", {{"lang_id", langId}, {"topic", topic}, {"theory", theory}}, [this](const QJsonObject &response) {
+        emit themeCreated(response["theme_id"].toInt());
     });
-}*/
+}
+
+void ApiClient::createTask(qint32 themeId, const QString &task, const QString &publicInput, const QString &publicOutput) {
+    apiCall(RequestType::POST, "create_task", {{"theme_id", themeId}, {"task", task}, {"public_input", publicInput}, {"public_output", publicOutput}}, [this](const QJsonObject &response) {
+        emit taskCreated(response["task_id"].toInt());
+    });
+}
+
+QString ApiClient::userRole() const {
+    return m_userRole;
+}
+
+qint32 ApiClient::userId() const {
+    return m_userId;
+}
 
 void ApiClient::apiCall(RequestType type, QString method, QJsonObject data, std::function<void(const QJsonObject &response)> postProcess) {
     QUrl url(m_host + "/" + method + ".php");
@@ -110,12 +108,18 @@ void ApiClient::apiCall(RequestType type, QString method, QJsonObject data, std:
         }
         url.setQuery(query);
         QNetworkRequest request(url);
+        if (!m_bearerToken.isEmpty()) {
+            request.setRawHeader("Authorization", "Bearer " + m_bearerToken.toUtf8());
+        }
         reply = m_network->get(request);
         break;
     }
     case RequestType::POST: {
         QNetworkRequest request(url);
         request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+        if (!m_bearerToken.isEmpty()) {
+            request.setRawHeader("Authorization", "Bearer " + m_bearerToken.toUtf8());
+        }
         QByteArray body = QJsonDocument(data).toJson(QJsonDocument::Compact);
         reply = m_network->post(request, body);
         break;
