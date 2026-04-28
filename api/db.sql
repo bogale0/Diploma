@@ -3,7 +3,8 @@ use `Diploma`;
 create table `users` (
     `id` int auto_increment primary key,
     `name` varchar(64) not null unique,
-    `password_hash` varchar(255) not null
+    `password_hash` varchar(255) not null,
+    `role` enum('student', 'teacher') not null default 'student'
 );
 
 create table `sessions` (

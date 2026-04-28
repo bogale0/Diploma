@@ -16,5 +16,5 @@ AuthorizationForm {
         }
     }
 
-    authButton.onClicked: Api.auth(login, password, authMode)
+    authButton.onClicked: Api.auth(login, password, authMode, selectedRole)
 }

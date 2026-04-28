@@ -18,6 +18,7 @@ qt6_add_qml_module(DiplomaContent
         "MainPageForm.ui.qml"
         "TaskPage.qml"
         "TaskPageForm.ui.qml"
+        "TeacherMainPage.qml"
         "ThemesListPage.qml"
         "TheoryPage.qml"
         "TheoryPageForm.ui.qml"

@@ -7,16 +7,19 @@ if (!isset($data["name"], $data["password"]))
     api_exit(400, ["error" => "Missing fields"]);
 $name = $data["name"];
 $password = $data["password"];
+$role = $data["role"] ?? "student";
 if (!preg_match("/^[a-zA-Z0-9_-]+$/", $name))
     api_exit(400, ["error" => "Invalid symbols"]);
+if (!in_array($role, ["student", "teacher"], true))
+    api_exit(400, ["error" => "Invalid role"]);
 
 $hash = password_hash($password, PASSWORD_DEFAULT);
 $token = random_bytes(15);
 try {
     $pdo = db_init();
-    $stmt = $pdo->prepare("insert into `users` (`name`, `password_hash`) values (?, ?)");
-    $stmt->execute([$name, $hash]);
-    $user_id = $pdo->lastInsertId();
+    $stmt = $pdo->prepare("insert into `users` (`name`, `password_hash`, `role`) values (?, ?, ?)");
+    $stmt->execute([$name, $hash, $role]);
+    $user_id = (int)$pdo->lastInsertId();
     $stmt = $pdo->prepare("insert into `sessions` (`bearer_token`, `user_id`) values (?, ?)");
     $stmt->execute([$token, $user_id]);
 } catch (PDOException $e) {
@@ -24,5 +27,9 @@ try {
         api_exit(409, ["error" => "User already exists"]);
     throw $e;
 }
-api_exit(200, ["bearer_token" => strtr(base64_encode($token), '+/', '-_')]);
+api_exit(200, [
+    "bearer_token" => strtr(base64_encode($token), '+/', '-_'),
+    "user_id" => $user_id,
+    "role" => $role
+]);
 ?>
