@@ -14,6 +14,8 @@
         <file>DiplomaContent/MainPageForm.ui.qml</file>
         <file>DiplomaContent/TaskPage.qml</file>
         <file>DiplomaContent/TaskPageForm.ui.qml</file>
+        <file>DiplomaContent/TeacherMainPage.qml</file>
+        <file>DiplomaContent/ProfilePage.qml</file>
         <file>DiplomaContent/ThemesListPage.qml</file>
         <file>DiplomaContent/TheoryPage.qml</file>
         <file>DiplomaContent/TheoryPageForm.ui.qml</file>

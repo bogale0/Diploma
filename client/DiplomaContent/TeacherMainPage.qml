@@ -100,7 +100,7 @@ Item {
                         text: "Добавить тему"
                         Layout.fillWidth: true
                         onClicked: {
-                            if (selectedLangId > 0)
+                            if (selectedLangId > 0 && themeTopic.text.trim() !== "" && themeTheory.text.trim() !== "")
                                 Api.createTheme(selectedLangId, themeTopic.text, themeTheory.text)
                         }
                     }
@@ -124,6 +124,7 @@ Item {
                         textRole: "text"
                         onActivated: {
                             selectedLangId = model[currentIndex].id
+                            selectedThemeId = -1
                             Api.getThemes(selectedLangId)
                         }
                     }
@@ -159,7 +160,7 @@ Item {
                         text: "Добавить задание"
                         Layout.fillWidth: true
                         onClicked: {
-                            if (selectedThemeId > 0)
+                            if (selectedThemeId > 0 && taskBody.text.trim() !== "")
                                 Api.createTask(selectedThemeId, taskBody.text, publicIn.text, publicOut.text)
                         }
                     }

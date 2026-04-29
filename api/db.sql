@@ -22,7 +22,9 @@ create table `languages` (
 );
 insert into `languages` (`id`, `name`, `short_description`, `photo_url`) values
 (1, 'C++', 'Компилируемый язык для системного и прикладного программирования.', 'https://app.bogaledev.ru/images/cpp-logo.png'),
-(2, 'Python', 'Универсальный язык с простым синтаксисом для старта и автоматизации.', 'https://app.bogaledev.ru/images/python-logo.png');
+(2, 'Python', 'Универсальный язык с простым синтаксисом для старта и автоматизации.', 'https://app.bogaledev.ru/images/python-logo.png'),
+(3, 'C#', 'Язык платформы .NET для прикладной разработки.', 'https://app.bogaledev.ru/images/csharp-logo.png'),
+(4, 'Go', 'Компилируемый язык для сервисов и инфраструктуры.', 'https://app.bogaledev.ru/images/go-logo.png');
 
 create table `themes` (
     `id` int auto_increment primary key,
@@ -34,7 +36,11 @@ create table `themes` (
 insert into `themes` (`id`, `lang_id`, `topic`, `theory`) values
 (1, 1, 'Основы синтаксиса и переменные', '<h2>Переменные и типы данных в C++</h2><p>Язык C++ является строго типизированным языком программирования. Это означает,что каждая переменная имеет определённый тип данных, который задаёт,какие значения она может хранить и сколько памяти занимает.</p><h3>Что такое переменная</h3><p>Переменная — это именованная область памяти, в которой хранится значение.Перед использованием переменную необходимо объявить.<br></p><pre>int age = 18;<br>double price = 10.5;<br>char letter = "A";</pre><p><br>Здесь:</p><ul><li><b>int</b> — целое число</li><li><b>double</b> — число с плавающей точкой</li><li><b>char</b> — один символ</li></ul><h3>Основные типы данных</h3><ul><li><b>int</b> — целые числа</li><li><b>float</b>, <b>double</b> — дробные числа</li><li><b>char</b> — символ</li><li><b>bool</b> — логический тип (true/false)</li><li><b>std::string</b> — строка</li></ul><h3>Ввод и вывод</h3><p>Для работы с консолью используется библиотека iostream.<br></p><pre>#include &lt;iostream&gt;<br>using namespace std;<br>int main() {<br>    cout &lt;&lt; "Hello!";<br>    return 0;<br>}</pre><p><br>Оператор <b>cout</b> выводит данные в консоль,а <b>cin</b> позволяет считывать данные от пользователя.</p><pre>int x;<br>cin &gt;&gt; x;</pre><h3>Инициализация переменных</h3><p>Переменные желательно инициализировать сразу при создании,чтобы избежать неопределённого поведения программы.</p><pre>int number = 0;</pre><p>Это хорошая практика программирования.</p>'),
 (2, 1, 'Условия и циклы', ''),
-(3, 1, 'Функции и массивы', '');
+(3, 1, 'Функции и массивы', ''),
+(4, 3, 'Синтаксис и типы', ''),
+(5, 3, 'Классы и интерфейсы', ''),
+(6, 4, 'Базовые конструкции', ''),
+(7, 4, 'Функции и структуры', '');
 
 create table `tasks` (
     `id` int auto_increment primary key,
@@ -55,3 +61,14 @@ create table `task_tests` (
 insert into `task_tests` (`id`, `task_id`, `input`, `output`) values
 (1, 1, '2 3\n', '5\n'),
 (2, 1, '10 -5\n', '5\n');
+
+
+create table `user_theme_progress` (
+    `user_id` int not null,
+    `theme_id` int not null,
+    `progress_percent` tinyint unsigned not null default 0,
+    `updated_at` timestamp not null default current_timestamp on update current_timestamp,
+    primary key (`user_id`, `theme_id`),
+    foreign key (`user_id`) references `users`(`id`) on delete cascade,
+    foreign key (`theme_id`) references `themes`(`id`) on delete cascade
+);

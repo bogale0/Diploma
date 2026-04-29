@@ -5,61 +5,41 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
     api_exit(405, ["error" => "Method not allowed"]);
 }
 
-$userId = filter_input(INPUT_GET, "user_id", FILTER_VALIDATE_INT);
-if ($userId === false || $userId === null || $userId <= 0) {
-    api_exit(400, ["error" => "Invalid user_id"]);
-}
-
-$themes = [
-    ["id" => 1, "name" => "Основы синтаксиса и переменные"],
-    ["id" => 2, "name" => "Условия и циклы"],
-    ["id" => 3, "name" => "Функции и массивы"]
-];
-
 $pdo = db_init();
-ensure_progress_table($pdo);
+$user = get_auth_user($pdo);
 
-$stmt = $pdo->prepare("select theme_id, progress_percent from user_theme_progress where user_id = ?");
-$stmt->execute([$userId]);
+$stmt = $pdo->prepare(
+    "select t.id, t.topic,
+        coalesce(max(case when utp.user_id = ? then utp.progress_percent end), 0) as progress_percent
+     from themes t
+     left join user_theme_progress utp on utp.theme_id = t.id
+     group by t.id, t.topic
+     order by t.id"
+);
+$stmt->execute([(int)$user["id"]]);
 $rows = $stmt->fetchAll();
-
-$progressByTheme = [];
-foreach ($rows as $row) {
-    $progressByTheme[(int)$row["theme_id"]] = (int)$row["progress_percent"];
-}
 
 $completedThemes = [];
 $pendingThemes = [];
 $totalPercent = 0;
 
-foreach ($themes as $theme) {
-    $themeProgress = $progressByTheme[$theme["id"]] ?? 0;
+foreach ($rows as $row) {
+    $themeProgress = (int)$row["progress_percent"];
+    $theme = ["id" => (int)$row["id"], "topic" => $row["topic"]];
     $totalPercent += $themeProgress;
 
-    if ($themeProgress >= 33) {
+    if ($themeProgress >= 100) {
         $completedThemes[] = $theme;
     } else {
         $pendingThemes[] = $theme;
     }
 }
 
-$overallProgress = (int)round($totalPercent / max(count($themes), 1));
+$overallProgress = count($rows) > 0 ? (int)round($totalPercent / count($rows)) : 0;
 
 api_exit(200, [
     "overall_progress" => $overallProgress,
     "completed_themes" => $completedThemes,
     "pending_themes" => $pendingThemes
 ]);
-
-function ensure_progress_table(PDO $pdo) : void {
-    $pdo->exec(
-        "create table if not exists user_theme_progress (
-            user_id int not null,
-            theme_id int not null,
-            progress_percent tinyint unsigned not null default 0,
-            updated_at timestamp not null default current_timestamp on update current_timestamp,
-            primary key (user_id, theme_id)
-        )"
-    );
-}
 ?>

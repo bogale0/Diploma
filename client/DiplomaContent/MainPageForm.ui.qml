@@ -15,7 +15,8 @@ Item {
     readonly property int theoryPageId: 3
     readonly property int taskPageId: 4
     readonly property int navigateBack: 5
-    //readonly property int progressPageId: 6
+    readonly property int profilePageId: 6
+    readonly property int teacherPageId: 7
     property alias stack: content
     signal navigationRequest(int page_id, var properties)
 
@@ -45,8 +46,9 @@ Item {
                     model: [
                         {id: languagesPageId, name: "Курсы"},
                         {id: themesPageId, name: "Уроки"},
+                        {id: profilePageId, name: "Личный кабинет"},
+                        {id: teacherPageId, name: "Учительская"},
                         {id: navigateBack, name: "Назад"}
-                        //{id: progressPageId, name: "Прогресс"}
                     ]
 
                     Button {
