@@ -18,9 +18,13 @@ Window {
         initialItem: MainPage {
             id: mainPage
             onOpenAuthRequested: function(pageId, properties) {
-                stack.push("Authorization.qml", {
+                var authPage = stack.push("Authorization.qml", {
                     "redirectPageId": pageId,
                     "redirectProperties": properties
+                })
+                authPage.authCompleted.connect(function(redirectPageId, redirectProperties) {
+                    stack.pop()
+                    mainPage.navigationRequest(redirectPageId, redirectProperties)
                 })
             }
             onOpenTeacherRequested: stack.push("TeacherMainPage.qml")
