@@ -3,7 +3,7 @@ import Backend 1.0
 
 MainPageForm {
     property int lang_id_cache: 0
-    signal openAuthRequested()
+    signal openAuthRequested(int pageId, var properties)
     signal openTeacherRequested()
 
     function openProfile() {
@@ -33,7 +33,7 @@ MainPageForm {
                 page = stack.push("TheoryPage.qml", {"theme_id": properties.theme_id});
                 page.taskDemanded.connect(function(task_id) {
                     if (!Api.authenticated) {
-                        openAuthRequested();
+                        openAuthRequested(taskPageId, {"task_id": task_id});
                         return;
                     }
                     navigationRequest(taskPageId, {"task_id": task_id});
@@ -44,7 +44,7 @@ MainPageForm {
                 break;
             case profilePageId:
                 if (!Api.authenticated) {
-                    openAuthRequested();
+                    openAuthRequested(profilePageId, null);
                     return;
                 }
                 page = stack.push("ProfilePage.qml");
@@ -52,7 +52,7 @@ MainPageForm {
                 break;
             case teacherPageId:
                 if (Api.userRole !== "teacher") {
-                    openAuthRequested();
+                    openAuthRequested(teacherPageId, null);
                     return;
                 }
                 openTeacherRequested();

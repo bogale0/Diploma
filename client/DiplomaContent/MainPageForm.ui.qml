@@ -47,14 +47,14 @@ Item {
                         {id: languagesPageId, name: "Курсы"},
                         {id: themesPageId, name: "Уроки"},
                         {id: profilePageId, name: "Личный кабинет"},
-                        {id: teacherPageId, name: "Учительская"},
-                        {id: navigateBack, name: "Назад"}
+                        {id: navigateBack, name: "← Назад", isBack: true}
                     ]
 
                     Button {
-                        Layout.fillWidth: true
+                        Layout.fillWidth: modelData.isBack !== true
+                        Layout.preferredWidth: modelData.isBack === true ? 110 : -1
                         text: modelData.name
-                        font.pixelSize: 17
+                        font.pixelSize: modelData.isBack === true ? 14 : 17
                         font.weight: Font.DemiBold
 
                         background: Rectangle {
