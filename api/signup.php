@@ -29,7 +29,6 @@ try {
 }
 api_exit(200, [
     "bearer_token" => strtr(base64_encode($token), '+/', '-_'),
-    "user_id" => $user_id,
     "role" => $role
 ]);
 ?>

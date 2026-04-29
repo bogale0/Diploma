@@ -35,7 +35,6 @@ void ApiClient::auth(const QString &name, const QString &password, AuthType type
     apiCall(RequestType::POST, method, {{"name", name}, {"password", password}, {"role", role}}, [this](const QJsonObject &response) {
         m_bearerToken = response["bearer_token"].toString();
         m_userRole = response["role"].toString();
-        m_userId = response["user_id"].toInt();
         emit userChanged();
         emit authSuccess();
     });
@@ -59,9 +58,21 @@ void ApiClient::getTheory(qint32 theme_id) {
     });
 }
 
+void ApiClient::logout() {
+    m_bearerToken.clear();
+    m_userRole.clear();
+    emit userChanged();
+}
+
 void ApiClient::getTask(qint32 task_id) {
     apiCall(RequestType::GET, "task", {{"task_id", task_id}}, [this](const QJsonObject &response) {
         emit taskReceived(response["task"].toString(), response["public_input"].toString(), response["public_output"].toString());
+    });
+}
+
+void ApiClient::getProgress() {
+    apiCall(RequestType::GET, "progress", {}, [this](const QJsonObject &response) {
+        emit progressReceived(response);
     });
 }
 
@@ -93,8 +104,8 @@ QString ApiClient::userRole() const {
     return m_userRole;
 }
 
-qint32 ApiClient::userId() const {
-    return m_userId;
+bool ApiClient::authenticated() const {
+    return !m_bearerToken.isEmpty();
 }
 
 void ApiClient::apiCall(RequestType type, QString method, QJsonObject data, std::function<void(const QJsonObject &response)> postProcess) {

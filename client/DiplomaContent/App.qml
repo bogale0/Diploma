@@ -15,14 +15,9 @@ Window {
     StackView {
         id: stack
         anchors.fill: parent
-        initialItem: Authorization {
-            onAuthSuccess: {
-                if (Api.userRole === "teacher") {
-                    stack.replace("TeacherMainPage.qml");
-                } else {
-                    stack.replace("MainPage.qml");
-                }
-            }
+        initialItem: MainPage {
+            onOpenAuthRequested: stack.push("Authorization.qml")
+            onOpenTeacherRequested: stack.push("TeacherMainPage.qml")
         }
     }
 }

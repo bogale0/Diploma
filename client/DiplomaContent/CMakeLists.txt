@@ -15,6 +15,7 @@ qt6_add_qml_module(DiplomaContent
         "LanguagesListPage.qml"
         "ListPageForm.ui.qml"
         "MainPage.qml"
+        "ProfilePage.qml"
         "MainPageForm.ui.qml"
         "TaskPage.qml"
         "TaskPageForm.ui.qml"

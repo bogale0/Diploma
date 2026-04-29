@@ -21,7 +21,6 @@ $stmt = $pdo->prepare("insert into `sessions` (`bearer_token`, `user_id`) values
 $stmt->execute([$token, $user["id"]]);
 api_exit(200, [
     "bearer_token" => strtr(base64_encode($token), '+/', '-_'),
-    "user_id" => (int)$user["id"],
     "role" => $user["role"]
 ]);
 ?>
