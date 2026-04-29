@@ -28,7 +28,8 @@ qt6_add_qml_module(DiplomaContent
         "old/SettingsPage.qml"
         "old/TaskPage.qml"
         "old/TheoryPage.qml"
-        RESOURCES images/icon.png
+    RESOURCES
+        "images/icon.png"
 )
 
 

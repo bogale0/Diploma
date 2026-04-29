@@ -27,7 +27,17 @@ Item {
         color: "#eaf2ff"
     }
 
+    Image {
+        source: "qrc:/qt/qml/DiplomaContent/images/icon.png"
+        fillMode: Image.PreserveAspectFit
+        asynchronous: true
+        anchors.top: parent.top
+        anchors.bottom: contentRect.top
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
+
     Rectangle {
+        id: contentRect
         width: parent.width * 0.5
         height: column.height + 20
         anchors.centerIn: parent
@@ -79,7 +89,6 @@ Item {
                     border.color: "#9cb5db"
                 }
             }
-
 
             ComboBox {
                 id: roleCombo
