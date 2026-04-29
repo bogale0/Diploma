@@ -51,8 +51,8 @@ Item {
                     ]
 
                     Button {
-                        Layout.fillWidth: modelData.isBack !== true
-                        Layout.preferredWidth: modelData.isBack === true ? 110 : -1
+                        Layout.fillWidth: false
+                        Layout.preferredWidth: modelData.isBack === true ? 110 : 210
                         text: modelData.name
                         font.pixelSize: modelData.isBack === true ? 14 : 17
                         font.weight: Font.DemiBold

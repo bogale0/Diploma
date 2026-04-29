@@ -19,11 +19,21 @@ AuthorizationForm {
     }
 
     onAuthSuccess: {
-        StackView.view.pop()
-        if (redirectPageId >= 0 && StackView.view && StackView.view.currentItem
-                && StackView.view.currentItem.navigationRequest) {
-            StackView.view.currentItem.navigationRequest(redirectPageId, redirectProperties)
+        var targetPageId = redirectPageId
+        var targetProperties = redirectProperties
+        var appStack = StackView.view
+
+        if (!appStack) {
+            return
         }
+
+        appStack.pop()
+        Qt.callLater(function() {
+            if (targetPageId >= 0 && appStack.currentItem
+                    && appStack.currentItem.navigationRequest) {
+                appStack.currentItem.navigationRequest(targetPageId, targetProperties)
+            }
+        })
     }
 
     authButton.onClicked: Api.auth(login, password, authMode, selectedRole)
