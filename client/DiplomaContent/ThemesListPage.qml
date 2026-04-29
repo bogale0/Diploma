@@ -13,7 +13,7 @@ ListPageForm {
         function onThemesReceived(themes) {
             items = themes.map(function(theme, index) {
                 var enrichedTheme = Object.assign({}, theme)
-                enrichedTheme.description = "Кратко: в этом уроке разбираются ключевые идеи темы \""
+                enrichedTheme.description = "В этом уроке разбираются ключевые идеи темы \""
                         + (theme.text || "")
                         + "\", практические шаги и типичные ошибки. В конце вас ждёт закрепляющее задание."
                 if (index % 2 === 0) {

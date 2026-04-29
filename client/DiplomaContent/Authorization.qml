@@ -5,6 +5,7 @@ AuthorizationForm {
     property int authRequestId
     property int redirectPageId: -1
     property var redirectProperties: null
+    signal authCompleted(int pageId, var properties)
 
     Connections {
         target: Api
@@ -19,11 +20,7 @@ AuthorizationForm {
     }
 
     onAuthSuccess: {
-        StackView.view.pop()
-        if (redirectPageId >= 0 && StackView.view && StackView.view.currentItem
-                && StackView.view.currentItem.navigationRequest) {
-            StackView.view.currentItem.navigationRequest(redirectPageId, redirectProperties)
-        }
+        authCompleted(redirectPageId, redirectProperties)
     }
 
     authButton.onClicked: Api.auth(login, password, authMode, selectedRole)
