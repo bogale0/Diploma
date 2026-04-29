@@ -16,7 +16,13 @@ Window {
         id: stack
         anchors.fill: parent
         initialItem: MainPage {
-            onOpenAuthRequested: stack.push("Authorization.qml")
+            id: mainPage
+            onOpenAuthRequested: function(pageId, properties) {
+                stack.push("Authorization.qml", {
+                    "redirectPageId": pageId,
+                    "redirectProperties": properties
+                })
+            }
             onOpenTeacherRequested: stack.push("TeacherMainPage.qml")
         }
     }
