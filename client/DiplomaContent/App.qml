@@ -31,7 +31,14 @@ Window {
                     mainPage.navigationRequest(effectivePageId, redirectProperties)
                 })
             }
-            onOpenTeacherRequested: stack.push("TeacherMainPage.qml")
+            onOpenTeacherRequested: {
+                var teacherPage = stack.push("TeacherMainPage.qml")
+                teacherPage.loggedOut.connect(function() {
+                    stack.clear()
+                    stack.push(mainPage)
+                    mainPage.navigationRequest(mainPage.languagesPageId, null)
+                })
+            }
         }
     }
 }

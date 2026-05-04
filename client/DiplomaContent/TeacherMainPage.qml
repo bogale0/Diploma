@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import Backend 1.0
 
 Item {
+    signal loggedOut()
     property int selectedLangId: -1
     property int selectedThemeId: -1
     property int selectedTaskId: -1
@@ -28,6 +29,15 @@ Item {
             font.pixelSize: 28
             font.weight: Font.Bold
             color: "#16345f"
+        }
+
+        Button {
+            text: "Выйти из аккаунта"
+            Layout.fillWidth: true
+            onClicked: {
+                Api.logout()
+                loggedOut()
+            }
         }
 
         TabBar {
@@ -305,8 +315,12 @@ Item {
 
         function onThemesReceived(list) {
             themes = list
-            if (list.length > 0)
+            if (list.length > 0) {
                 selectedThemeId = list[0].id
+                // If user is on "Новый тест", the theme combobox may not fire onActivated.
+                // Load tasks for the first theme explicitly.
+                Api.getTasks(selectedThemeId)
+            }
         }
 
         function onTasksReceived(list) {

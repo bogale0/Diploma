@@ -10,6 +10,11 @@ TaskPageForm {
     Connections {
         target: Api
 
+        function onApiError(err) {
+            // Make sure errors from check_task (e.g. 401) are visible to user
+            resultText = err
+        }
+
         function onTaskReceived(task, publicInput, publicOutput) {
             taskContent = task
             publicInputText = publicInput
