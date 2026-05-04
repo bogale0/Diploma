@@ -100,13 +100,16 @@ void ApiClient::runSolution(QString codeText, QString inputText) {
 
 void ApiClient::checkSolution(qint32 task_id, QString codeText) {
     apiCall(RequestType::POST, "check_task", {{"task_id", task_id}, {"text", codeText}}, [this](const QJsonObject &response) {
-        const QString result = response["result"].toString();
         const int passed = response["passed_tests"].toInt();
         const int total = response["total_tests"].toInt();
         if (total > 0) {
-            emit solutionChecked(result + QString(" (тестов пройдено: %1/%2)").arg(passed).arg(total));
+            emit solutionChecked(QString("Тестов пройдено: %1/%2").arg(passed).arg(total));
+            if (passed >= total) {
+                // Refresh progress after full success (theme completion is handled server-side).
+                getProgress();
+            }
         } else {
-            emit solutionChecked(result);
+            emit solutionChecked("Тестов пройдено: 0/0");
         }
     });
 }

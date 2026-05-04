@@ -2,6 +2,11 @@
 require_once "functions.php";
 if ($_SERVER["REQUEST_METHOD"] !== "POST")
     api_exit(405, ["error" => "Method not allowed"]);
+
+$pdo = db_init();
+// Any code execution is allowed only for authenticated users (bearer token stored in sessions).
+get_auth_user($pdo);
+
 $data = json_decode(file_get_contents("php://input"), true);
 if (!isset($data["text"], $data["input"]))
     api_exit(400, ["error" => "Missing fields"]);
