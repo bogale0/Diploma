@@ -6,8 +6,10 @@ import Backend 1.0
 Item {
     property int selectedLangId: -1
     property int selectedThemeId: -1
+    property int selectedTaskId: -1
     property var languages: []
     property var themes: []
+    property var tasks: []
 
     Component.onCompleted: Api.getLanguages()
 
@@ -32,8 +34,10 @@ Item {
             id: tabBar
             Layout.fillWidth: true
             TabButton { text: "Курсы" }
+            TabButton { text: "Новый курс" }
             TabButton { text: "Новая тема" }
             TabButton { text: "Новое задание" }
+            TabButton { text: "Новый тест" }
         }
 
         StackLayout {
@@ -60,6 +64,45 @@ Item {
                                 color: "#16345f"
                                 font.pixelSize: 20
                             }
+                        }
+                    }
+                }
+            }
+
+            Flickable {
+                contentWidth: width
+                contentHeight: formLanguage.implicitHeight
+                clip: true
+
+                ColumnLayout {
+                    id: formLanguage
+                    width: parent.width
+                    spacing: 10
+
+                    TextField {
+                        id: languageName
+                        Layout.fillWidth: true
+                        placeholderText: "Название курса (языка)"
+                    }
+
+                    TextField {
+                        id: languageShort
+                        Layout.fillWidth: true
+                        placeholderText: "Краткое описание (необязательно)"
+                    }
+
+                    TextField {
+                        id: languagePhoto
+                        Layout.fillWidth: true
+                        placeholderText: "URL картинки (необязательно)"
+                    }
+
+                    Button {
+                        text: "Добавить курс"
+                        Layout.fillWidth: true
+                        onClicked: {
+                            if (languageName.text.trim() !== "")
+                                Api.createLanguage(languageName.text, languageShort.text, languagePhoto.text)
                         }
                     }
                 }
@@ -166,6 +209,79 @@ Item {
                     }
                 }
             }
+
+            Flickable {
+                contentWidth: width
+                contentHeight: formTest.implicitHeight
+                clip: true
+
+                ColumnLayout {
+                    id: formTest
+                    width: parent.width
+                    spacing: 10
+
+                    ComboBox {
+                        id: langComboForTest
+                        Layout.fillWidth: true
+                        model: languages
+                        textRole: "text"
+                        onActivated: {
+                            selectedLangId = model[currentIndex].id
+                            selectedThemeId = -1
+                            selectedTaskId = -1
+                            themes = []
+                            tasks = []
+                            Api.getThemes(selectedLangId)
+                        }
+                    }
+
+                    ComboBox {
+                        id: themeComboForTest
+                        Layout.fillWidth: true
+                        model: themes
+                        textRole: "text"
+                        onActivated: {
+                            selectedThemeId = model[currentIndex].id
+                            selectedTaskId = -1
+                            tasks = []
+                            Api.getTasks(selectedThemeId)
+                        }
+                    }
+
+                    ComboBox {
+                        id: taskComboForTest
+                        Layout.fillWidth: true
+                        model: tasks
+                        textRole: "text"
+                        onActivated: selectedTaskId = model[currentIndex].id
+                    }
+
+                    TextArea {
+                        id: testInput
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 120
+                        placeholderText: "Входные данные теста"
+                        wrapMode: TextEdit.Wrap
+                    }
+
+                    TextArea {
+                        id: testOutput
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 120
+                        placeholderText: "Ожидаемый вывод теста"
+                        wrapMode: TextEdit.Wrap
+                    }
+
+                    Button {
+                        text: "Добавить тест"
+                        Layout.fillWidth: true
+                        onClicked: {
+                            if (selectedTaskId > 0 && testInput.text.trim() !== "" && testOutput.text.trim() !== "")
+                                Api.createTest(selectedTaskId, testInput.text, testOutput.text)
+                        }
+                    }
+                }
+            }
         }
 
         Label {
@@ -193,6 +309,17 @@ Item {
                 selectedThemeId = list[0].id
         }
 
+        function onTasksReceived(list) {
+            tasks = list
+            if (list.length > 0)
+                selectedTaskId = list[0].id
+        }
+
+        function onLanguageCreated(languageId) {
+            statusLabel.text = "Курс добавлен: #" + languageId
+            Api.getLanguages()
+        }
+
         function onThemeCreated(themeId) {
             statusLabel.text = "Тема добавлена: #" + themeId
             Api.getThemes(selectedLangId)
@@ -200,6 +327,10 @@ Item {
 
         function onTaskCreated(taskId) {
             statusLabel.text = "Задание добавлено: #" + taskId
+        }
+
+        function onTestCreated(testId) {
+            statusLabel.text = "Тест добавлен: #" + testId
         }
 
         function onApiError(error) {

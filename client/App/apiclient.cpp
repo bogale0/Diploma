@@ -19,7 +19,7 @@ ApiClient::ApiClient(QString host, QObject *parent)
     m_network = new QNetworkAccessManager(this);
 }
 
-void ApiClient::auth(const QString &name, const QString &password, AuthType type, const QString &role) {
+void ApiClient::auth(const QString &name, const QString &password, AuthType type, const QString &role, const QString &recovery) {
     QString method;
     switch (type) {
     case AuthType::LOGIN:
@@ -32,11 +32,21 @@ void ApiClient::auth(const QString &name, const QString &password, AuthType type
         emit apiError("Unknown auth type");
         return;
     }
-    apiCall(RequestType::POST, method, {{"name", name}, {"password", password}, {"role", role}}, [this](const QJsonObject &response) {
+    QJsonObject payload{{"name", name}, {"password", password}, {"role", role}};
+    if (type == AuthType::REGISTER) {
+        payload.insert("recovery", recovery);
+    }
+    apiCall(RequestType::POST, method, payload, [this](const QJsonObject &response) {
         m_bearerToken = response["bearer_token"].toString();
         m_userRole = response["role"].toString();
         emit userChanged();
         emit authSuccess();
+    });
+}
+
+void ApiClient::recoverPassword(const QString &name, const QString &recovery, const QString &newPassword) {
+    apiCall(RequestType::POST, "recover_password", {{"name", name}, {"recovery", recovery}, {"new_password", newPassword}}, [this](const QJsonObject &) {
+        emit passwordRecovered();
     });
 }
 
@@ -49,6 +59,12 @@ void ApiClient::getLanguages() {
 void ApiClient::getThemes(qint32 lang_id) {
     apiCall(RequestType::GET, "themes", {{"lang_id", lang_id}}, [this](const QJsonObject &response) {
         emit themesReceived(response["themes"].toArray());
+    });
+}
+
+void ApiClient::getTasks(qint32 theme_id) {
+    apiCall(RequestType::GET, "tasks", {{"theme_id", theme_id}}, [this](const QJsonObject &response) {
+        emit tasksReceived(response["tasks"].toArray());
     });
 }
 
@@ -84,7 +100,20 @@ void ApiClient::runSolution(QString codeText, QString inputText) {
 
 void ApiClient::checkSolution(qint32 task_id, QString codeText) {
     apiCall(RequestType::POST, "check_task", {{"task_id", task_id}, {"text", codeText}}, [this](const QJsonObject &response) {
-        emit solutionChecked(response["result"].toString());
+        const QString result = response["result"].toString();
+        const int passed = response["passed_tests"].toInt();
+        const int total = response["total_tests"].toInt();
+        if (total > 0) {
+            emit solutionChecked(result + QString(" (тестов пройдено: %1/%2)").arg(passed).arg(total));
+        } else {
+            emit solutionChecked(result);
+        }
+    });
+}
+
+void ApiClient::createLanguage(const QString &name, const QString &shortDescription, const QString &photoUrl) {
+    apiCall(RequestType::POST, "create_language", {{"name", name}, {"short_description", shortDescription}, {"photo_url", photoUrl}}, [this](const QJsonObject &response) {
+        emit languageCreated(response["language_id"].toInt());
     });
 }
 
@@ -97,6 +126,12 @@ void ApiClient::createTheme(qint32 langId, const QString &topic, const QString &
 void ApiClient::createTask(qint32 themeId, const QString &task, const QString &publicInput, const QString &publicOutput) {
     apiCall(RequestType::POST, "create_task", {{"theme_id", themeId}, {"task", task}, {"public_input", publicInput}, {"public_output", publicOutput}}, [this](const QJsonObject &response) {
         emit taskCreated(response["task_id"].toInt());
+    });
+}
+
+void ApiClient::createTest(qint32 taskId, const QString &input, const QString &output) {
+    apiCall(RequestType::POST, "create_test", {{"task_id", taskId}, {"input", input}, {"output", output}}, [this](const QJsonObject &response) {
+        emit testCreated(response["test_id"].toInt());
     });
 }
 

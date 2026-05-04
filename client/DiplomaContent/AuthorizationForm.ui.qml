@@ -14,13 +14,17 @@ Item {
     id: item1
     readonly property int loginMode: 0
     readonly property int signupMode: 1
+    readonly property int recoveryMode: 2
     property int authMode: loginMode
     property alias login: loginText.text
     property alias password: pswdText.text
+    property alias recovery: recoveryText.text
+    property alias newPassword: newPswdText.text
     property alias authButton: authButton
     property alias errText: errText.text
     property alias selectedRole: roleCombo.currentValue
     signal authSuccess()
+    signal recoverySuccess()
 
     Rectangle {
         anchors.fill: parent
@@ -38,7 +42,7 @@ Item {
 
     Rectangle {
         id: contentRect
-        width: parent.width * 0.5
+        width: parent.width * 0.35
         height: column.height + 20
         anchors.centerIn: parent
         radius: 22
@@ -53,7 +57,7 @@ Item {
             spacing: 16
 
             Label {
-                text: authMode === loginMode ? "Вход в аккаунт" : "Создание аккаунта"
+                text: authMode === loginMode ? "Вход в аккаунт" : authMode === signupMode ? "Создание аккаунта" : "Восстановление пароля"
                 color: "#16345f"
                 font.pixelSize: 28
                 font.weight: Font.Bold
@@ -116,7 +120,38 @@ Item {
                 echoMode: TextInput.Password
                 color: "#16345f"
                 placeholderTextColor: "#6b89b8"
-                placeholderText: "Пароль"
+                placeholderText: authMode === recoveryMode ? "Новый пароль" : "Пароль"
+                background: Rectangle {
+                    radius: 10
+                    color: "#f6f9ff"
+                    border.color: "#9cb5db"
+                }
+            }
+
+            TextField {
+                id: recoveryText
+                Layout.fillWidth: true
+                Layout.preferredHeight: 46
+                visible: authMode === signupMode || authMode === recoveryMode
+                color: "#16345f"
+                placeholderTextColor: "#6b89b8"
+                placeholderText: "Поле для восстановления"
+                background: Rectangle {
+                    radius: 10
+                    color: "#f6f9ff"
+                    border.color: "#9cb5db"
+                }
+            }
+
+            TextField {
+                id: newPswdText
+                Layout.fillWidth: true
+                Layout.preferredHeight: 46
+                visible: authMode === recoveryMode
+                echoMode: TextInput.Password
+                color: "#16345f"
+                placeholderTextColor: "#6b89b8"
+                placeholderText: "Повторите новый пароль"
                 background: Rectangle {
                     radius: 10
                     color: "#f6f9ff"
@@ -126,7 +161,7 @@ Item {
 
             Button {
                 id: authButton
-                Layout.fillWidth: true
+                anchors.horizontalCenter: parent.horizontalCenter
                 Layout.preferredHeight: 48
                 text: "Войти"
 
@@ -148,7 +183,7 @@ Item {
             Label {
                 id: toggleLink
                 color: "#2f63b2"
-                text: "Зарегистрироваться"
+                text: authMode === loginMode ? "Зарегистрироваться" : "Назад ко входу"
                 font.pixelSize: 15
                 font.underline: true
                 Layout.alignment: Qt.AlignHCenter
@@ -159,15 +194,36 @@ Item {
 
                     Connections {
                         onClicked: {
-                            let tmp = toggleLink.text;
-                            toggleLink.text = authButton.text;
-                            authButton.text = tmp;
+                            errText.text = ""
                             if (authMode === loginMode) {
-                                authMode = signupMode;
+                                authMode = signupMode
+                                authButton.text = "Создать"
                             } else {
-                                authMode = loginMode;
+                                authMode = loginMode
+                                authButton.text = "Войти"
                             }
                         }
+                    }
+                }
+            }
+
+            Label {
+                id: forgotLink
+                color: "#2f63b2"
+                text: "Забыли пароль?"
+                visible: authMode === loginMode
+                font.pixelSize: 15
+                font.underline: true
+                Layout.alignment: Qt.AlignHCenter
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        errText.text = ""
+                        authMode = recoveryMode
+                        authButton.text = "Восстановить"
+                        toggleLink.text = "Назад ко входу"
                     }
                 }
             }

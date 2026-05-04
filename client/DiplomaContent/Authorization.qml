@@ -17,11 +17,34 @@ AuthorizationForm {
         function onAuthSuccess() {
             authSuccess();
         }
+
+        function onPasswordRecovered() {
+            recoverySuccess()
+        }
     }
 
     onAuthSuccess: {
         authCompleted(redirectPageId, redirectProperties)
     }
 
-    authButton.onClicked: Api.auth(login, password, authMode, selectedRole)
+    onRecoverySuccess: {
+        errText = "Пароль обновлён. Теперь войдите."
+        authMode = loginMode
+        authButton.text = "Войти"
+    }
+
+    authButton.onClicked: {
+        errText = ""
+        if (authMode === signupMode) {
+            Api.auth(login, password, authMode, selectedRole, recovery)
+        } else if (authMode === recoveryMode) {
+            if (password !== newPassword) {
+                errText = "Пароли не совпадают"
+                return
+            }
+            Api.recoverPassword(login, recovery, password)
+        } else {
+            Api.auth(login, password, authMode, selectedRole)
+        }
+    }
 }

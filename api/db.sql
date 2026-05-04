@@ -4,6 +4,7 @@ create table `users` (
     `id` int auto_increment primary key,
     `name` varchar(64) not null unique,
     `password_hash` varchar(255) not null,
+    `recovery_hash` varchar(255) null,
     `role` enum('student', 'teacher') not null default 'student'
 );
 
@@ -71,4 +72,13 @@ create table `user_theme_progress` (
     primary key (`user_id`, `theme_id`),
     foreign key (`user_id`) references `users`(`id`) on delete cascade,
     foreign key (`theme_id`) references `themes`(`id`) on delete cascade
+);
+
+create table `user_task_solved` (
+    `user_id` int not null,
+    `task_id` int not null,
+    `solved_at` timestamp not null default current_timestamp,
+    primary key (`user_id`, `task_id`),
+    foreign key (`user_id`) references `users`(`id`) on delete cascade,
+    foreign key (`task_id`) references `tasks`(`id`) on delete cascade
 );

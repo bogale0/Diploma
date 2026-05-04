@@ -5,9 +5,8 @@ import Backend 1.0
 
 Item {
     signal loggedOut()
-    property var completedThemes: []
-    property var pendingThemes: []
     property int overallProgress: 0
+    property var courses: []
 
     Component.onCompleted: Api.getProgress()
 
@@ -21,19 +20,59 @@ Item {
         Label { text: "Личный кабинет"; font.pixelSize: 28; font.weight: Font.Bold; color: "#16345f" }
         Label { text: "Общий прогресс: " + overallProgress + "%"; color: "#234877"; font.pixelSize: 18 }
 
-        Label { text: "Завершённые темы"; font.pixelSize: 18; color: "#16345f" }
-        Repeater {
-            model: completedThemes
-            delegate: Label { text: "• " + modelData.topic; color: "#2a5f2a" }
-        }
+        Label { text: "Курсы"; font.pixelSize: 18; color: "#16345f" }
+        ScrollView {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            clip: true
 
-        Label { text: "Темы в процессе"; font.pixelSize: 18; color: "#16345f" }
-        Repeater {
-            model: pendingThemes
-            delegate: Label { text: "• " + modelData.topic; color: "#7a5a21" }
-        }
+            ColumnLayout {
+                width: parent.width
+                spacing: 10
 
-        Item { Layout.fillHeight: true }
+                Repeater {
+                    model: courses
+                    delegate: Rectangle {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 72
+                        radius: 14
+                        color: "#e8f1ff"
+                        border.color: "#9cb5db"
+
+                        ColumnLayout {
+                            anchors.fill: parent
+                            anchors.margins: 12
+                            spacing: 6
+
+                            Label {
+                                text: modelData.text
+                                color: "#16345f"
+                                font.pixelSize: 18
+                                font.weight: Font.DemiBold
+                            }
+
+                            RowLayout {
+                                Layout.fillWidth: true
+                                spacing: 10
+
+                                ProgressBar {
+                                    Layout.fillWidth: true
+                                    from: 0
+                                    to: 100
+                                    value: modelData.progress_percent
+                                }
+
+                                Label {
+                                    text: modelData.completed_lessons + "/" + modelData.total_lessons
+                                    color: "#234877"
+                                    font.pixelSize: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         Button {
             text: "Выйти из аккаунта"
@@ -49,8 +88,7 @@ Item {
         target: Api
         function onProgressReceived(data) {
             overallProgress = data.overall_progress
-            completedThemes = data.completed_themes
-            pendingThemes = data.pending_themes
+            courses = data.courses
         }
     }
 }

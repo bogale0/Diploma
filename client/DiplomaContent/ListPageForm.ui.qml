@@ -55,12 +55,6 @@ Item {
                         spacing: 6
 
                         Text {
-                            text: "#" + modelData.id
-                            color: "#456ca8"
-                            font.pixelSize: 13
-                        }
-
-                        Text {
                             text: modelData.text || ""
                             Layout.fillWidth: true
                             color: "#15335d"
@@ -93,14 +87,9 @@ Item {
                         }
                     }
 
-                    Rectangle {
+                    Item {
                         Layout.fillHeight: true
-                        Layout.preferredWidth: image.sourceSize.width / image.sourceSize.height * height
-                        visible: detailedMode && modelData.photo !== undefined && modelData.photo !== null && modelData.photo !== ""
-                        radius: 12
-                        color: "#c9dbf7"
-                        border.color: "#9cb5db"
-                        clip: true
+                        Layout.preferredWidth: height
 
                         Image {
                             id: image

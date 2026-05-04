@@ -24,7 +24,11 @@ Window {
                 })
                 authPage.authCompleted.connect(function(redirectPageId, redirectProperties) {
                     stack.pop()
-                    mainPage.navigationRequest(redirectPageId, redirectProperties)
+                    var effectivePageId = redirectPageId
+                    if (Api.userRole === "teacher" && redirectPageId === mainPage.profilePageId) {
+                        effectivePageId = mainPage.teacherPageId
+                    }
+                    mainPage.navigationRequest(effectivePageId, redirectProperties)
                 })
             }
             onOpenTeacherRequested: stack.push("TeacherMainPage.qml")
