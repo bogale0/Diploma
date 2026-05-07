@@ -251,7 +251,7 @@ Item {
         Rectangle {
             id: resultPanel
             Layout.fillWidth: true
-            Layout.minimumHeight: 56
+            Layout.preferredHeight: resultOutput.implicitHeight + 25
             radius: 14
             color: resultSurfaceMix
             border.width: 1
@@ -261,6 +261,7 @@ Item {
             readonly property color resultSurfaceMix: "#f5f9ff"
 
             RowLayout {
+                id: resultOutput
                 anchors.fill: parent
                 anchors.margins: 12
                 spacing: 14

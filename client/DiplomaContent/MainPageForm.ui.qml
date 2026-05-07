@@ -46,8 +46,7 @@ Item {
                     model: [
                         {id: languagesPageId, name: "Курсы"},
                         {id: themesPageId, name: "Уроки"},
-                        {id: profilePageId, name: "Личный кабинет"},
-                        {id: navigateBack, name: "← Назад", isBack: true}
+                        {id: navigateBack, name: "Назад"}
                     ]
 
                     Button {

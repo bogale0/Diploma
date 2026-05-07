@@ -65,7 +65,7 @@ Item {
                     model: taskList
 
                     Button {
-                        text: "Задание " + counter++
+                        text: "Задание " + taskRow.counter++
                         width: 146
                         height: 48
 
