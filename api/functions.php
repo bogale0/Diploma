@@ -16,12 +16,16 @@ function db_init() : PDO {
 }
 
 function get_auth_user(PDO $pdo) : array {
-    $authHeader = $_SERVER["HTTP_AUTHORIZATION"] ?? "";
-    if (!preg_match('/^Bearer\s+([A-Za-z0-9\-_]+)$/', $authHeader, $matches)) {
-        api_exit(401, ["error" => "Missing bearer token"]);
+    $authHeader = $_SERVER['HTTP_AUTHORIZATION'];
+    if (strpos($authHeader, "Bearer ") !== 0) {
+        api_exit(401, ["error" => "Missing bearer authHeader: $authHeader " . json_encode(getallheaders())]);
+    }
+    $token = trim(substr($authHeader, strlen("Bearer ")));
+    if ($token === "") {
+        api_exit(401, ["error" => "Missing bearer token: $token"]);
     }
 
-    $tokenBytes = base64_decode(strtr($matches[1], '-_', '+/'), true);
+    $tokenBytes = base64_decode(strtr($token, '-_', '+/'), true);
     if ($tokenBytes === false || strlen($tokenBytes) !== 15) {
         api_exit(401, ["error" => "Invalid bearer token"]);
     }
