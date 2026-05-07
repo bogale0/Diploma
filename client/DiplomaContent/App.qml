@@ -15,6 +15,7 @@ Window {
     StackView {
         id: stack
         anchors.fill: parent
+
         initialItem: MainPage {
             id: mainPage
             onOpenAuthRequested: function(pageId, properties) {
@@ -39,6 +40,17 @@ Window {
                     mainPage.navigationRequest(mainPage.languagesPageId, null)
                 })
             }
+        }
+    }
+
+    Rectangle {
+        id: splashLayer
+        anchors.fill: parent
+        z: 10
+        color: "transparent"
+        SplashScreen {
+            anchors.fill: parent
+            onFinished: splashLayer.visible = false
         }
     }
 }

@@ -59,12 +59,13 @@ Item {
             Row {
                 id: taskRow
                 spacing: 10
+                property int counter: 1
 
                 Repeater {
                     model: taskList
 
                     Button {
-                        text: "Задание " + modelData.id
+                        text: "Задание " + counter++
                         width: 146
                         height: 48
 

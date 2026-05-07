@@ -21,7 +21,10 @@ Item {
     property alias publicOutputText: publicOutput.text
     property alias runButton: runButton
     property alias submitButton: submitButton
-    property alias resultText: resultLabel.text
+    property alias resultBadgeText: resultBadge.text
+    property alias resultPrimaryText: resultPrimary.text
+    property alias resultSubtitleText: resultSubtitle.text
+    property alias resultAccentColor: accentBar.color
 
     Rectangle {
         anchors.fill: parent
@@ -245,12 +248,65 @@ Item {
             }
         }
 
-        Label {
-            id: resultLabel
+        Rectangle {
+            id: resultPanel
             Layout.fillWidth: true
-            color: "#234877"
-            wrapMode: Text.Wrap
-            font.pixelSize: 15
+            Layout.minimumHeight: 56
+            radius: 14
+            color: resultSurfaceMix
+            border.width: 1
+            border.color: resultChromeColor
+
+            readonly property color resultChromeColor: "#b8cae8"
+            readonly property color resultSurfaceMix: "#f5f9ff"
+
+            RowLayout {
+                anchors.fill: parent
+                anchors.margins: 12
+                spacing: 14
+
+                Rectangle {
+                    id: accentBar
+                    Layout.preferredWidth: 6
+                    Layout.fillHeight: true
+                    radius: 3
+                    color: "#316ad1"
+                }
+
+                ColumnLayout {
+                    spacing: 4
+                    Layout.fillWidth: true
+
+                    Label {
+                        id: resultBadge
+                        text: "Результат"
+                        color: "#1a4a8f"
+                        font.pixelSize: 12
+                        font.weight: Font.DemiBold
+                        font.letterSpacing: 0.3
+                        visible: text.length > 0
+                    }
+
+                    Label {
+                        id: resultPrimary
+                        Layout.fillWidth: true
+                        color: "#14345f"
+                        wrapMode: Text.Wrap
+                        font.pixelSize: 16
+                        font.weight: Font.Medium
+                    }
+
+                    Label {
+                        id: resultSubtitle
+                        Layout.fillWidth: true
+                        color: "#3d5980"
+                        wrapMode: Text.Wrap
+                        font.pixelSize: 13
+                        font.family: "Fira Code"
+                        visible: text.length > 0
+                    }
+                }
+            }
         }
     }
 }
