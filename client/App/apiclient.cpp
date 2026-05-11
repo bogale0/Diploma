@@ -92,8 +92,8 @@ void ApiClient::getProgress() {
     });
 }
 
-void ApiClient::runSolution(QString codeText, QString inputText) {
-    apiCall(RequestType::POST, "run_task", {{"text", codeText}, {"input", inputText}}, [this](const QJsonObject &response) {
+void ApiClient::runSolution(qint32 task_id, QString codeText, QString inputText) {
+    apiCall(RequestType::POST, "run_task", {{"task_id", task_id}, {"text", codeText}, {"input", inputText}}, [this](const QJsonObject &response) {
         emit solutionRan(response["result"].toString(), response["output"].toString());
     });
 }

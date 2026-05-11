@@ -3,7 +3,7 @@ import Backend 1.0
 
 TaskPageForm {
     signal taskSolved(int id)
-    runButton.onClicked: Api.runSolution(codeText, runInputText)
+    runButton.onClicked: Api.runSolution(task_id, codeText, runInputText)
     submitButton.onClicked: Api.checkSolution(task_id, codeText)
     Component.onCompleted: Api.getTask(task_id)
 
@@ -20,7 +20,7 @@ TaskPageForm {
             resultPrimaryText = "Программа выполнилась без ошибки"
             resultAccentColor = "#2fa34d"
             const tail = stdoutText.trim()
-            resultSubtitleText = tail.length ? tail : "Stderr/stdin пуст: вы можете вывести отладочную информацию здесь через cout."
+            resultSubtitleText = tail.length ? tail : "Вывод пуст: вы можете вывести отладочную информацию (C++: cout, Python: print, C#: Console.WriteLine, Go: fmt.Println)."
             return
         }
         resultPrimaryText = status

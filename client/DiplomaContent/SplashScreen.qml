@@ -41,12 +41,12 @@ Item {
 
     Column {
         anchors.centerIn: parent
-        spacing: 22
+        spacing: 28
         scale: emblemScale
 
         Image {
             anchors.horizontalCenter: parent.horizontalCenter
-            width: Math.min(parent.width - 96, 120)
+            width: Math.min(parent.width - 96, 150)
             height: width
             fillMode: Image.PreserveAspectFit
             smooth: true
@@ -58,7 +58,7 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             text: "Школа программирования"
             color: "#16345f"
-            font.pixelSize: 26
+            font.pixelSize: 34
             font.weight: Font.Bold
             font.letterSpacing: 0.2
         }
@@ -70,7 +70,7 @@ Item {
             wrapMode: Text.Wrap
             text: "Курсы ЯП, теория, практика и автоматические тесты в одном месте"
             color: "#2d5588"
-            font.pixelSize: 15
+            font.pixelSize: 19
             lineHeight: 1.25
             opacity: 0.94
         }

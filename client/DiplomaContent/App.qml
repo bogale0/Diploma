@@ -15,6 +15,7 @@ Window {
     color: Constants.backgroundColor
     title: "Школа программирования"
     flags: Qt.Window | Qt.FramelessWindowHint
+    font.pixelSize: 18
 
     function openProfileLikeNav() {
         if (stack.depth > 1)
@@ -29,7 +30,7 @@ Window {
         Rectangle {
             id: customTitleBar
             Layout.fillWidth: true
-            Layout.preferredHeight: 50
+            Layout.preferredHeight: 64
             color: "#dce9ff"
 
             Rectangle {
@@ -42,9 +43,9 @@ Window {
 
             RowLayout {
                 anchors.fill: parent
-                anchors.leftMargin: 12
-                anchors.rightMargin: 8
-                spacing: 10
+                anchors.leftMargin: 14
+                anchors.rightMargin: 10
+                spacing: 12
 
                 Image {
                     Layout.fillHeight: true
@@ -63,7 +64,7 @@ Window {
                         anchors.centerIn: parent
                         text: appWindow.title
                         color: "#16345f"
-                        font.pixelSize: 18
+                        font.pixelSize: 22
                         font.weight: Font.DemiBold
                         elide: Text.ElideRight
                         horizontalAlignment: Text.AlignHCenter
@@ -85,8 +86,8 @@ Window {
 
                     ToolButton {
                         id: profileHeaderButton
-                        implicitWidth: 44
-                        implicitHeight: 44
+                        implicitWidth: 54
+                        implicitHeight: 54
                         flat: true
                         hoverEnabled: true
 
@@ -98,7 +99,7 @@ Window {
                         contentItem: Text {
                             anchors.fill: parent
                             text: "👤"
-                            font.pixelSize: 22
+                            font.pixelSize: 26
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                         }
@@ -108,8 +109,8 @@ Window {
 
                     ToolButton {
                         id: closeHeaderButton
-                        implicitWidth: 44
-                        implicitHeight: 44
+                        implicitWidth: 54
+                        implicitHeight: 54
                         flat: true
                         hoverEnabled: true
 
@@ -121,7 +122,7 @@ Window {
                         contentItem: Text {
                             anchors.fill: parent
                             text: "\u2715"
-                            font.pixelSize: 20
+                            font.pixelSize: 24
                             font.weight: Font.Medium
                             color: "#16345f"
                             horizontalAlignment: Text.AlignHCenter

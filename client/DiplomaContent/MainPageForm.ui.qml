@@ -27,12 +27,12 @@ Item {
 
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: 18
-        spacing: 14
+        anchors.margins: 24
+        spacing: 18
 
         Rectangle {
             Layout.fillWidth: true
-            Layout.preferredHeight: 72
+            Layout.preferredHeight: 92
             radius: 18
             color: "#dce9ff"
             border.color: "#a9bddf"
@@ -52,7 +52,7 @@ Item {
                     Button {
                         Layout.fillWidth: modelData.isBack !== true
                         text: modelData.name
-                        font.pixelSize: 17
+                        font.pixelSize: 22
                         font.weight: Font.DemiBold
 
                         background: Rectangle {

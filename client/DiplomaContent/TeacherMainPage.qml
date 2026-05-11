@@ -21,12 +21,12 @@ Item {
 
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: 18
-        spacing: 12
+        anchors.margins: 24
+        spacing: 14
 
         Label {
             text: "Панель учителя"
-            font.pixelSize: 28
+            font.pixelSize: 36
             font.weight: Font.Bold
             color: "#16345f"
         }
@@ -64,7 +64,7 @@ Item {
                         model: languages
                         delegate: Rectangle {
                             width: parent.width
-                            height: 70
+                            height: 92
                             radius: 12
                             color: "#d8e7ff"
                             border.color: "#9cb5db"
@@ -72,7 +72,7 @@ Item {
                                 anchors.centerIn: parent
                                 text: modelData.text + " (#" + modelData.id + ")"
                                 color: "#16345f"
-                                font.pixelSize: 20
+                                font.pixelSize: 26
                             }
                         }
                     }

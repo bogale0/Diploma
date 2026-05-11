@@ -22,8 +22,8 @@ Item {
 
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: 16
-        spacing: 12
+        anchors.margins: 20
+        spacing: 14
 
         Rectangle {
             Layout.fillWidth: true
@@ -44,14 +44,14 @@ Item {
                     text: theoryContent
                     color: "#17325d"
                     lineHeight: 1.35
-                    font.pixelSize: 20
+                    font.pixelSize: 26
                 }
             }
         }
 
         Flickable {
             Layout.fillWidth: true
-            Layout.preferredHeight: 64
+            Layout.preferredHeight: 76
             contentWidth: taskRow.width
             contentHeight: taskRow.height
             clip: true
@@ -66,8 +66,8 @@ Item {
 
                     Button {
                         text: "Задание " + taskRow.counter++
-                        width: 146
-                        height: 48
+                        width: 180
+                        height: 58
 
                         background: Rectangle {
                             radius: 12
@@ -80,7 +80,7 @@ Item {
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             color: "#f8fbff"
-                            font.pixelSize: 16
+                            font.pixelSize: 20
                             font.weight: Font.DemiBold
                         }
 

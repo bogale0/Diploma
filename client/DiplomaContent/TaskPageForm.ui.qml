@@ -33,8 +33,8 @@ Item {
 
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: 16
-        spacing: 10
+        anchors.margins: 20
+        spacing: 12
 
         RowLayout {
             Layout.fillWidth: true
@@ -59,7 +59,7 @@ Item {
                         height: Math.max(parent.height, contentHeight)
                         color: "#1d3d6b"
                         font.family: "Fira Code"
-                        font.pixelSize: 16
+                        font.pixelSize: 20
                         leftPadding: 8
                         topPadding: 8
                         wrapMode: TextEdit.NoWrap
@@ -76,7 +76,7 @@ Item {
                         text: "Введите код..."
                         color: "#7a9bc8"
                         font.family: "Fira Code"
-                        font.pixelSize: 16
+                        font.pixelSize: 20
                         visible: codeEditor.text.length === 0
                     }
                 }
@@ -105,7 +105,7 @@ Item {
                             width: parent.width
                             wrapMode: Text.Wrap
                             color: "#16345f"
-                            font.pixelSize: 18
+                            font.pixelSize: 24
                             lineHeight: 1.25
                         }
                     }
@@ -113,7 +113,7 @@ Item {
                     Label {
                         text: "Пример"
                         color: "#16345f"
-                        font.pixelSize: 14
+                        font.pixelSize: 18
                         font.weight: Font.DemiBold
                     }
 
@@ -125,11 +125,11 @@ Item {
                         TextField {
                             id: publicInput
                             Layout.fillWidth: true
-                            Layout.preferredHeight: 30
+                            Layout.preferredHeight: 40
                             readOnly: true
                             color: "#1d3d6b"
                             placeholderTextColor: "#6b89b8"
-                            font.pixelSize: 14
+                            font.pixelSize: 18
                             placeholderText: "Вход"
                             background: Rectangle {
                                 radius: 8
@@ -141,11 +141,11 @@ Item {
                         TextField {
                             id: publicOutput
                             Layout.fillWidth: true
-                            Layout.preferredHeight: 30
+                            Layout.preferredHeight: 40
                             readOnly: true
                             color: "#1d3d6b"
                             placeholderTextColor: "#6b89b8"
-                            font.pixelSize: 14
+                            font.pixelSize: 18
                             placeholderText: "Выход"
                             background: Rectangle {
                                 radius: 8
@@ -158,7 +158,7 @@ Item {
                     Label {
                         text: "Свой тест"
                         color: "#16345f"
-                        font.pixelSize: 14
+                        font.pixelSize: 18
                         font.weight: Font.DemiBold
                     }
 
@@ -169,10 +169,10 @@ Item {
                         TextField {
                             id: runInput
                             Layout.fillWidth: true
-                            Layout.preferredHeight: 30
+                            Layout.preferredHeight: 40
                             color: "#1d3d6b"
                             placeholderTextColor: "#6b89b8"
-                            font.pixelSize: 14
+                            font.pixelSize: 18
                             placeholderText: "Вход"
                             background: Rectangle {
                                 radius: 8
@@ -184,11 +184,11 @@ Item {
                         TextField {
                             id: runOutput
                             Layout.fillWidth: true
-                            Layout.preferredHeight: 30
+                            Layout.preferredHeight: 40
                             readOnly: true
                             color: "#1d3d6b"
                             placeholderTextColor: "#6b89b8"
-                            font.pixelSize: 14
+                            font.pixelSize: 18
                             placeholderText: "Выход"
                             background: Rectangle {
                                 radius: 8
@@ -208,7 +208,7 @@ Item {
             Button {
                 id: submitButton
                 Layout.fillWidth: true
-                Layout.preferredHeight: 50
+                Layout.preferredHeight: 62
                 text: "Отправить"
 
                 background: Rectangle {
@@ -221,7 +221,7 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     color: "#f8fbff"
-                    font.pixelSize: 16
+                    font.pixelSize: 21
                     font.weight: Font.DemiBold
                 }
             }
@@ -229,7 +229,7 @@ Item {
             Button {
                 id: runButton
                 Layout.fillWidth: true
-                Layout.preferredHeight: 50
+                Layout.preferredHeight: 62
                 text: "Запустить"
 
                 background: Rectangle {
@@ -242,7 +242,7 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     color: "#f8fbff"
-                    font.pixelSize: 16
+                    font.pixelSize: 21
                     font.weight: Font.DemiBold
                 }
             }
@@ -282,7 +282,7 @@ Item {
                         id: resultBadge
                         text: "Результат"
                         color: "#1a4a8f"
-                        font.pixelSize: 12
+                        font.pixelSize: 16
                         font.weight: Font.DemiBold
                         font.letterSpacing: 0.3
                         visible: text.length > 0
@@ -293,7 +293,7 @@ Item {
                         Layout.fillWidth: true
                         color: "#14345f"
                         wrapMode: Text.Wrap
-                        font.pixelSize: 16
+                        font.pixelSize: 20
                         font.weight: Font.Medium
                     }
 
@@ -302,7 +302,7 @@ Item {
                         Layout.fillWidth: true
                         color: "#3d5980"
                         wrapMode: Text.Wrap
-                        font.pixelSize: 13
+                        font.pixelSize: 17
                         font.family: "Fira Code"
                         visible: text.length > 0
                     }

@@ -59,7 +59,7 @@ Item {
             Label {
                 text: authMode === loginMode ? "Вход в аккаунт" : authMode === signupMode ? "Создание аккаунта" : "Восстановление пароля"
                 color: "#16345f"
-                font.pixelSize: 28
+                font.pixelSize: 36
                 font.weight: Font.Bold
                 Layout.fillWidth: true
             }
@@ -69,13 +69,13 @@ Item {
                 color: "#4e6f9f"
                 wrapMode: Text.Wrap
                 Layout.fillWidth: true
-                font.pixelSize: 14
+                font.pixelSize: 18
             }
 
             Text {
                 id: errText
                 color: "#cc3b3b"
-                font.pixelSize: 14
+                font.pixelSize: 18
                 Layout.fillWidth: true
                 visible: text.length > 0
             }
@@ -83,7 +83,7 @@ Item {
             TextField {
                 id: loginText
                 Layout.fillWidth: true
-                Layout.preferredHeight: 46
+                Layout.preferredHeight: 58
                 color: "#16345f"
                 placeholderTextColor: "#6b89b8"
                 placeholderText: "Логин"
@@ -97,7 +97,7 @@ Item {
             ComboBox {
                 id: roleCombo
                 Layout.fillWidth: true
-                Layout.preferredHeight: 46
+                Layout.preferredHeight: 58
                 visible: authMode === signupMode
                 model: [
                     { text: "Ученик", value: "student" },
@@ -116,7 +116,7 @@ Item {
             TextField {
                 id: pswdText
                 Layout.fillWidth: true
-                Layout.preferredHeight: 46
+                Layout.preferredHeight: 58
                 echoMode: TextInput.Password
                 color: "#16345f"
                 placeholderTextColor: "#6b89b8"
@@ -131,7 +131,7 @@ Item {
             TextField {
                 id: recoveryText
                 Layout.fillWidth: true
-                Layout.preferredHeight: 46
+                Layout.preferredHeight: 58
                 visible: authMode === signupMode || authMode === recoveryMode
                 color: "#16345f"
                 placeholderTextColor: "#6b89b8"
@@ -146,7 +146,7 @@ Item {
             TextField {
                 id: newPswdText
                 Layout.fillWidth: true
-                Layout.preferredHeight: 46
+                Layout.preferredHeight: 58
                 visible: authMode === recoveryMode
                 echoMode: TextInput.Password
                 color: "#16345f"
@@ -162,7 +162,7 @@ Item {
             Button {
                 id: authButton
                 anchors.horizontalCenter: parent.horizontalCenter
-                Layout.preferredHeight: 48
+                Layout.preferredHeight: 60
                 text: "Войти"
 
                 background: Rectangle {
@@ -175,7 +175,7 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     color: "#f8fbff"
-                    font.pixelSize: 16
+                    font.pixelSize: 21
                     font.weight: Font.DemiBold
                 }
             }
@@ -184,7 +184,7 @@ Item {
                 id: toggleLink
                 color: "#2f63b2"
                 text: authMode === loginMode ? "Зарегистрироваться" : "Назад ко входу"
-                font.pixelSize: 15
+                font.pixelSize: 19
                 font.underline: true
                 Layout.alignment: Qt.AlignHCenter
 
@@ -212,7 +212,7 @@ Item {
                 color: "#2f63b2"
                 text: "Забыли пароль?"
                 visible: authMode === loginMode
-                font.pixelSize: 15
+                font.pixelSize: 19
                 font.underline: true
                 Layout.alignment: Qt.AlignHCenter
 

@@ -23,7 +23,7 @@ public:
     Q_INVOKABLE void getTheory(qint32 theme_id);
     Q_INVOKABLE void getTask(qint32 task_id);
     Q_INVOKABLE void getProgress();
-    Q_INVOKABLE void runSolution(QString codeText, QString inputText);
+    Q_INVOKABLE void runSolution(qint32 task_id, QString codeText, QString inputText);
     Q_INVOKABLE void checkSolution(qint32 task_id, QString codeText);
     Q_INVOKABLE void createLanguage(const QString &name, const QString &shortDescription, const QString &photoUrl);
     Q_INVOKABLE void createTheme(qint32 langId, const QString &topic, const QString &theory);

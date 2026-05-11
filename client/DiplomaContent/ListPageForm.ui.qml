@@ -23,11 +23,11 @@ Item {
     GridView {
         id: gridView
         anchors.fill: parent
-        anchors.margins: 14
+        anchors.margins: 18
         model: items
         clip: true
-        cellWidth: detailedMode ? Math.max(260, Math.floor((width - 10) / 2)) : Math.max(220, Math.floor((width - 10) / 2))
-        cellHeight: detailedMode ? 200 : 116
+        cellWidth: detailedMode ? Math.max(320, Math.floor((width - 12) / 2)) : Math.max(280, Math.floor((width - 12) / 2))
+        cellHeight: detailedMode ? 240 : 140
 
         delegate: Item {
             width: gridView.cellWidth
@@ -61,7 +61,7 @@ Item {
                             elide: Text.ElideRight
                             wrapMode: Text.WordWrap
                             maximumLineCount: 2
-                            font.pixelSize: 18
+                            font.pixelSize: 24
                             font.weight: Font.DemiBold
                         }
 
@@ -73,7 +73,7 @@ Item {
                             wrapMode: Text.WordWrap
                             maximumLineCount: 3
                             elide: Text.ElideRight
-                            font.pixelSize: 16
+                            font.pixelSize: 21
                         }
 
                         Item {
@@ -83,7 +83,7 @@ Item {
                         Text {
                             text: "Открыть →"
                             color: "#395f96"
-                            font.pixelSize: 14
+                            font.pixelSize: 18
                         }
                     }
 

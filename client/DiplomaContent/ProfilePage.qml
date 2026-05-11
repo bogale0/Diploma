@@ -14,13 +14,13 @@ Item {
 
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: 18
-        spacing: 12
+        anchors.margins: 24
+        spacing: 14
 
-        Label { text: "Личный кабинет"; font.pixelSize: 28; font.weight: Font.Bold; color: "#16345f" }
-        Label { text: "Общий прогресс: " + overallProgress + "%"; color: "#234877"; font.pixelSize: 18 }
+        Label { text: "Личный кабинет"; font.pixelSize: 36; font.weight: Font.Bold; color: "#16345f" }
+        Label { text: "Общий прогресс: " + overallProgress + "%"; color: "#234877"; font.pixelSize: 24 }
 
-        Label { text: "Курсы"; font.pixelSize: 18; color: "#16345f" }
+        Label { text: "Курсы"; font.pixelSize: 24; color: "#16345f" }
         ScrollView {
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -34,7 +34,7 @@ Item {
                     model: courses
                     delegate: Rectangle {
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 72
+                        Layout.preferredHeight: 92
                         radius: 14
                         color: "#e8f1ff"
                         border.color: "#9cb5db"
@@ -47,7 +47,7 @@ Item {
                             Label {
                                 text: modelData.text
                                 color: "#16345f"
-                                font.pixelSize: 18
+                                font.pixelSize: 24
                                 font.weight: Font.DemiBold
                             }
 
@@ -65,7 +65,7 @@ Item {
                                 Label {
                                     text: modelData.completed_lessons + "/" + modelData.total_lessons
                                     color: "#234877"
-                                    font.pixelSize: 14
+                                    font.pixelSize: 18
                                 }
                             }
                         }
