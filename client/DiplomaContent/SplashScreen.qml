@@ -70,7 +70,7 @@ Item {
             wrapMode: Text.Wrap
             text: "Курсы ЯП, теория, практика и автоматические тесты в одном месте"
             color: "#2d5588"
-            font.pixelSize: 19
+            font.pixelSize: 24
             lineHeight: 1.25
             opacity: 0.94
         }

@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Window
 import QtQuick.Controls
 import QtQuick.Layouts
 import Diploma 1.0
@@ -15,7 +14,6 @@ Window {
     color: Constants.backgroundColor
     title: "Школа программирования"
     flags: Qt.Window | Qt.FramelessWindowHint
-    font.pixelSize: 18
 
     function openProfileLikeNav() {
         if (stack.depth > 1)
@@ -140,6 +138,7 @@ Window {
             Layout.fillWidth: true
             Layout.fillHeight: true
             clip: true
+            font.pixelSize: 18
 
             initialItem: MainPage {
                 id: mainPage
@@ -174,6 +173,7 @@ Window {
         anchors.fill: parent
         z: 10
         color: "transparent"
+
         SplashScreen {
             anchors.fill: parent
             onFinished: splashLayer.visible = false
