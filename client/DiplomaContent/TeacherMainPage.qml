@@ -31,53 +31,26 @@ Item {
             color: "#16345f"
         }
 
-        Button {
-            text: "Выйти из аккаунта"
-            Layout.fillWidth: true
-            onClicked: {
-                Api.logout()
-                loggedOut()
-            }
-        }
-
         TabBar {
             id: tabBar
             Layout.fillWidth: true
-            TabButton { text: "Курсы" }
             TabButton { text: "Новый курс" }
             TabButton { text: "Новая тема" }
             TabButton { text: "Новое задание" }
             TabButton { text: "Новый тест" }
+            TabButton {
+                text: "Выйти"
+                onClicked: {
+                    Api.logout()
+                    loggedOut()
+                }
+            }
         }
 
         StackLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
             currentIndex: tabBar.currentIndex
-
-            ScrollView {
-                clip: true
-                ColumnLayout {
-                    width: parent.width
-                    spacing: 8
-                    Repeater {
-                        model: languages
-                        delegate: Rectangle {
-                            width: parent.width
-                            height: 92
-                            radius: 12
-                            color: "#d8e7ff"
-                            border.color: "#9cb5db"
-                            Text {
-                                anchors.centerIn: parent
-                                text: modelData.text + " (#" + modelData.id + ")"
-                                color: "#16345f"
-                                font.pixelSize: 26
-                            }
-                        }
-                    }
-                }
-            }
 
             Flickable {
                 contentWidth: width
