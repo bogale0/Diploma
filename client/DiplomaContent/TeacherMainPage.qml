@@ -290,8 +290,6 @@ Item {
             themes = list
             if (list.length > 0) {
                 selectedThemeId = list[0].id
-                // If user is on "Новый тест", the theme combobox may not fire onActivated.
-                // Load tasks for the first theme explicitly.
                 Api.getTasks(selectedThemeId)
             }
         }

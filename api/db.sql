@@ -22,10 +22,10 @@ create table `languages` (
     `photo_url` varchar(512) null
 );
 insert into `languages` (`id`, `name`, `short_description`, `photo_url`) values
-(1, 'C++', 'Компилируемый язык для системного и прикладного программирования.', 'https://app.bogaledev.ru/images/cpp-logo.png'),
-(2, 'Python', 'Универсальный язык с простым синтаксисом для старта и автоматизации.', 'https://app.bogaledev.ru/images/python-logo.png'),
-(3, 'C#', 'Язык платформы .NET для прикладной разработки.', 'https://app.bogaledev.ru/images/csharp-logo.png'),
-(4, 'Go', 'Компилируемый язык для сервисов и инфраструктуры.', 'https://app.bogaledev.ru/images/go-logo.png');
+(1, 'C++', 'Компилируемый язык для системного и прикладного программирования.', 'https://diploma.bogaledev.ru/images/cpp-logo.png'),
+(2, 'Python', 'Универсальный язык с простым синтаксисом для старта и автоматизации.', 'https://diploma.bogaledev.ru/images/python-logo.png'),
+(3, 'C#', 'Язык платформы .NET для прикладной разработки.', 'https://diploma.bogaledev.ru/images/csharp-logo.png'),
+(4, 'Go', 'Компилируемый язык для сервисов и инфраструктуры.', 'https://diploma.bogaledev.ru/images/go-logo.png');
 
 create table `themes` (
     `id` int auto_increment primary key,
@@ -111,7 +111,6 @@ insert into `task_tests` (`id`, `task_id`, `input`, `output`) values
 (22, 11, 'xyz\n', '0\n'),
 (23, 12, 'ABC\n', '198\n'),
 (24, 12, 'a\n', '97\n');
-
 
 create table `user_theme_progress` (
     `user_id` int not null,

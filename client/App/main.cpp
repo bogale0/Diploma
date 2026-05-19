@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     set_qt_environment();
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon(":/qt/qml/DiplomaContent/images/icon.png"));
-    qmlRegisterSingletonInstance("Backend", 1, 0, "Api", new ApiClient("http://localhost/api/Diploma")); //https://app.bogaledev.ru/api
+    qmlRegisterSingletonInstance("Backend", 1, 0, "Api", new ApiClient("https://diploma.bogaledev.ru/api"));
     QQmlApplicationEngine engine;
     const QUrl url(mainQmlFile);
     QObject::connect(

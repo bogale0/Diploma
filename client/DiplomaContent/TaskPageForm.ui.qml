@@ -95,15 +95,16 @@ Item {
                     spacing: 8
 
                     ScrollView {
+                        id: scrollView
                         Layout.fillWidth: true
                         Layout.fillHeight: true
-                        clip: true
+                        anchors.margins: 14
                         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
                         Label {
                             id: contentLabel
-                            width: parent.width
-                            wrapMode: Text.Wrap
+                            width: scrollView.availableWidth
+                            wrapMode: Text.WordWrap
                             color: "#16345f"
                             font.pixelSize: 24
                             lineHeight: 1.25
@@ -125,6 +126,7 @@ Item {
                         TextField {
                             id: publicInput
                             Layout.fillWidth: true
+                            Layout.preferredWidth: 1
                             Layout.preferredHeight: 40
                             readOnly: true
                             color: "#1d3d6b"
@@ -141,6 +143,7 @@ Item {
                         TextField {
                             id: publicOutput
                             Layout.fillWidth: true
+                            Layout.preferredWidth: 1
                             Layout.preferredHeight: 40
                             readOnly: true
                             color: "#1d3d6b"
@@ -169,6 +172,7 @@ Item {
                         TextField {
                             id: runInput
                             Layout.fillWidth: true
+                            Layout.preferredWidth: 1
                             Layout.preferredHeight: 40
                             color: "#1d3d6b"
                             placeholderTextColor: "#6b89b8"
@@ -184,6 +188,7 @@ Item {
                         TextField {
                             id: runOutput
                             Layout.fillWidth: true
+                            Layout.preferredWidth: 1
                             Layout.preferredHeight: 40
                             readOnly: true
                             color: "#1d3d6b"
@@ -208,6 +213,7 @@ Item {
             Button {
                 id: submitButton
                 Layout.fillWidth: true
+                Layout.preferredWidth: 1
                 Layout.preferredHeight: 62
                 text: "Отправить"
 
@@ -229,6 +235,7 @@ Item {
             Button {
                 id: runButton
                 Layout.fillWidth: true
+                Layout.preferredWidth: 1
                 Layout.preferredHeight: 62
                 text: "Запустить"
 
