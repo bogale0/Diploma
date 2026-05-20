@@ -29,7 +29,7 @@ void ApiClient::auth(const QString &name, const QString &password, AuthType type
         method = "signup";
         break;
     default:
-        emit apiError("Unknown auth type");
+        emit apiError("Неизвестный тип авторизации");
         return;
     }
     QJsonObject payload{{"name", name}, {"password", password}, {"role", role}};
@@ -180,7 +180,7 @@ void ApiClient::apiCall(RequestType type, QString method, QJsonObject data, std:
         QJsonObject response = QJsonDocument::fromJson(reply->readAll(), &err).object();
         reply->deleteLater();
         if (err.error != QJsonParseError::NoError) {
-            emit apiError("JSON parse error: " + err.errorString());
+            emit apiError("Ошибка разбора ответа сервера: " + err.errorString());
         } else if (status < 200 || status >= 300) {
             emit apiError(response["error"].toString());
         } else {

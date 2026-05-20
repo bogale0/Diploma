@@ -1,14 +1,14 @@
 <?php
 require_once "functions.php";
 if ($_SERVER["REQUEST_METHOD"] !== "POST")
-    api_exit(405, ["error" => "Method not allowed"]);
+    api_exit(405, ["error" => "Метод не поддерживается"]);
 $data = json_decode(file_get_contents("php://input"), true);
 if (!isset($data["task_id"], $data["text"]))
-    api_exit(400, ["error" => "Missing fields"]);
+    api_exit(400, ["error" => "Не заполнены обязательные поля"]);
 $task_id = $data["task_id"];
 $text = $data["text"];
 if (trim($text) === "") {
-    api_exit(400, ["error" => "Text is empty"]);
+    api_exit(400, ["error" => "Текст решения пуст"]);
 }
 
 $pdo = db_init();
@@ -25,13 +25,13 @@ $stmt = $pdo->prepare(
 $stmt->execute([(int)$task_id]);
 $langRow = $stmt->fetch();
 if ($langRow === false) {
-    api_exit(404, ["error" => "Task not found"]);
+    api_exit(404, ["error" => "Задача не найдена"]);
 }
 $lang_id = (int)$langRow["lang_id"];
 
 $tempDir = sys_get_temp_dir() . "/diploma_check_" . bin2hex(random_bytes(8));
 if (!mkdir($tempDir, 0700, true)) {
-    api_exit(500, ["error" => "Failed to create temp dir"]);
+    api_exit(500, ["error" => "Не удалось создать временную папку"]);
 }
 $build = build_user_code($tempDir, $lang_id, $text);
 if ($build["ok"] !== true) {
@@ -169,8 +169,11 @@ function build_user_code(string $tempDir, int $lang_id, string $text) : array {
         }
 
         $compileCommand = sprintf(
-            '%s timeout 12s sh -lc %s 2>&1',
+            '%s GOCACHE=%s GOMODCACHE=%s HOME=%s timeout 12s sh -lc %s 2>&1',
             $pathPrefix,
+            escapeshellarg($tempDir . '/.cache/go-build'),
+            escapeshellarg($tempDir . '/.cache/go-mod'),
+            $tempDirArg,
             escapeshellarg('cd ' . $tempDir . ' && go build -o main main.go')
         );
         shell_exec($compileCommand);

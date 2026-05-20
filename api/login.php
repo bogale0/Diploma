@@ -1,10 +1,10 @@
 <?php
 require_once "functions.php";
 if ($_SERVER["REQUEST_METHOD"] !== "POST")
-    api_exit(405, ["error" => "Method not allowed"]);
+    api_exit(405, ["error" => "Метод не поддерживается"]);
 $data = json_decode(file_get_contents("php://input"), true);
 if (!isset($data["name"], $data["password"]))
-    api_exit(400, ["error" => "Missing fields"]);
+    api_exit(400, ["error" => "Не заполнены обязательные поля"]);
 $name = $data["name"];
 $password = $data["password"];
 
@@ -13,7 +13,7 @@ $stmt = $pdo->prepare("select `id`, `password_hash`, `role` from `users` where `
 $stmt->execute([$name]);
 $user = $stmt->fetch();
 if ($user === false || !password_verify($password, $user["password_hash"]))
-    api_exit(401, ["error" => "Invalid credentials"]);
+    api_exit(401, ["error" => "Неверный логин или пароль"]);
 
 $pdo->exec("delete from `sessions` where `created_at` < (now() - interval 4 hour)");
 $token = random_bytes(15);

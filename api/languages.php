@@ -1,6 +1,6 @@
 <?php
 require_once "functions.php";
 if ($_SERVER["REQUEST_METHOD"] !== "GET")
-    api_exit(405, ["error" => "Method not allowed"]);
+    api_exit(405, ["error" => "Метод не поддерживается"]);
 api_exit(200, ["languages" => db_init()->query("select `id`, `name` as `text`, `short_description` as `description`, `photo_url` as `photo` from `languages`")->fetchAll()]);
 ?>

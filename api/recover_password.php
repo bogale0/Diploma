@@ -1,27 +1,27 @@
 <?php
 require_once "functions.php";
 if ($_SERVER["REQUEST_METHOD"] !== "POST")
-    api_exit(405, ["error" => "Method not allowed"]);
+    api_exit(405, ["error" => "Метод не поддерживается"]);
 
 $data = json_decode(file_get_contents("php://input"), true);
 if (!isset($data["name"], $data["recovery"], $data["new_password"]))
-    api_exit(400, ["error" => "Missing fields"]);
+    api_exit(400, ["error" => "Не заполнены обязательные поля"]);
 
 $name = (string)$data["name"];
 $recovery = (string)$data["recovery"];
 $new_password = (string)$data["new_password"];
 if (trim($name) === "" || trim($recovery) === "" || trim($new_password) === "")
-    api_exit(400, ["error" => "Invalid fields"]);
+    api_exit(400, ["error" => "Некорректные поля"]);
 
 $pdo = db_init();
 $stmt = $pdo->prepare("select `id`, `recovery_hash` from `users` where `name` = ? limit 1");
 $stmt->execute([$name]);
 $user = $stmt->fetch();
 if ($user === false || !isset($user["recovery_hash"]) || $user["recovery_hash"] === null)
-    api_exit(404, ["error" => "User not found"]);
+    api_exit(404, ["error" => "Пользователь не найден"]);
 
 if (!password_verify($recovery, $user["recovery_hash"]))
-    api_exit(401, ["error" => "Invalid recovery field"]);
+    api_exit(401, ["error" => "Неверное проверочное слово"]);
 
 $new_hash = password_hash($new_password, PASSWORD_DEFAULT);
 $stmt = $pdo->prepare("update `users` set `password_hash` = ? where `id` = ?");

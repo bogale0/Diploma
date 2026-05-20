@@ -1,13 +1,13 @@
 <?php
 require_once "functions.php";
 if ($_SERVER["REQUEST_METHOD"] !== "GET")
-    api_exit(405, ["error" => "Method not allowed"]);
+    api_exit(405, ["error" => "Метод не поддерживается"]);
 if (!isset($_GET["theme_id"]))
-    api_exit(400, ["error" => "Missing fields"]);
+    api_exit(400, ["error" => "Не заполнены обязательные поля"]);
 
 $theme_id = (int)$_GET["theme_id"];
 if ($theme_id <= 0)
-    api_exit(400, ["error" => "Invalid fields"]);
+    api_exit(400, ["error" => "Некорректные поля"]);
 
 $pdo = db_init();
 $stmt = $pdo->prepare("select `id`, concat('Задание #', `id`) as `text` from `tasks` where `theme_id` = ? order by `id` asc");
