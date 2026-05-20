@@ -1,20 +1,20 @@
 <?php
 require_once "functions.php";
 if ($_SERVER["REQUEST_METHOD"] !== "POST")
-    api_exit(405, ["error" => "Method not allowed"]);
+    api_exit(405, ["error" => "Метод не поддерживается"]);
 $data = json_decode(file_get_contents("php://input"), true);
 if (!isset($data["name"], $data["password"], $data["recovery"]))
-    api_exit(400, ["error" => "Missing fields"]);
+    api_exit(400, ["error" => "Не заполнены обязательные поля"]);
 $name = $data["name"];
 $password = $data["password"];
 $recovery = (string)$data["recovery"];
 $role = $data["role"] ?? "student";
 if (!preg_match("/^[a-zA-Z0-9_-]+$/", $name))
-    api_exit(400, ["error" => "Invalid symbols"]);
+    api_exit(400, ["error" => "Недопустимые символы"]);
 if (!in_array($role, ["student", "teacher"], true))
-    api_exit(400, ["error" => "Invalid role"]);
+    api_exit(400, ["error" => "Недопустимая роль"]);
 if (trim($recovery) === "")
-    api_exit(400, ["error" => "Recovery field is empty"]);
+    api_exit(400, ["error" => "Проверочное слово не заполнено"]);
 
 $hash = password_hash($password, PASSWORD_DEFAULT);
 $recovery_hash = password_hash($recovery, PASSWORD_DEFAULT);
@@ -28,7 +28,7 @@ try {
     $stmt->execute([$token, $user_id]);
 } catch (PDOException $e) {
     if ($e->getCode() == 23000)
-        api_exit(409, ["error" => "User already exists"]);
+        api_exit(409, ["error" => "Пользователь уже существует"]);
     throw $e;
 }
 api_exit(200, [

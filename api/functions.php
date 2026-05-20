@@ -16,18 +16,18 @@ function db_init() : PDO {
 }
 
 function get_auth_user(PDO $pdo) : array {
-    $authHeader = $_SERVER['HTTP_AUTHORIZATION'];
+    $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
     if (strpos($authHeader, "Bearer ") !== 0) {
-        api_exit(401, ["error" => "Missing bearer authHeader: $authHeader " . json_encode(getallheaders())]);
+        api_exit(401, ["error" => "Отсутствует заголовок авторизации Bearer"]);
     }
     $token = trim(substr($authHeader, strlen("Bearer ")));
     if ($token === "") {
-        api_exit(401, ["error" => "Missing bearer token: $token"]);
+        api_exit(401, ["error" => "Токен авторизации не передан"]);
     }
 
     $tokenBytes = base64_decode(strtr($token, '-_', '+/'), true);
     if ($tokenBytes === false || strlen($tokenBytes) !== 15) {
-        api_exit(401, ["error" => "Invalid bearer token"]);
+        api_exit(401, ["error" => "Некорректный токен авторизации"]);
     }
 
     $stmt = $pdo->prepare(
@@ -41,7 +41,7 @@ function get_auth_user(PDO $pdo) : array {
     $stmt->execute([$tokenBytes]);
     $user = $stmt->fetch();
     if ($user === false) {
-        api_exit(401, ["error" => "Session expired"]);
+        api_exit(401, ["error" => "Сессия истекла"]);
     }
 
     return $user;
@@ -50,7 +50,7 @@ function get_auth_user(PDO $pdo) : array {
 function require_teacher(PDO $pdo) : array {
     $user = get_auth_user($pdo);
     if (($user["role"] ?? "") !== "teacher") {
-        api_exit(403, ["error" => "Teacher role required"]);
+        api_exit(403, ["error" => "Требуются права преподавателя"]);
     }
     return $user;
 }

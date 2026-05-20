@@ -2,7 +2,7 @@
 require_once "functions.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "GET") {
-    api_exit(405, ["error" => "Method not allowed"]);
+    api_exit(405, ["error" => "Метод не поддерживается"]);
 }
 
 $pdo = db_init();

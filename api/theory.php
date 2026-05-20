@@ -1,9 +1,9 @@
 <?php
 require_once "functions.php";
 if ($_SERVER["REQUEST_METHOD"] !== "GET")
-    api_exit(405, ["error" => "Method not allowed"]);
+    api_exit(405, ["error" => "Метод не поддерживается"]);
 if (!isset($_GET["theme_id"]))
-    api_exit(400, ["error" => "Missing fields"]);
+    api_exit(400, ["error" => "Не заполнены обязательные поля"]);
 $theme_id = $_GET["theme_id"];
 
 $pdo = db_init();
