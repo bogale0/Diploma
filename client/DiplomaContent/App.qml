@@ -6,8 +6,7 @@ import Backend 1.0
 
 Window {
     id: appWindow
-    width: maximumWidth
-    height: maximumHeight
+    visibility: Window.Maximized
     minimumWidth: 1024
     minimumHeight: 576
     visible: true
@@ -106,6 +105,36 @@ Window {
                     }
 
                     ToolButton {
+                        id: windowHeaderButton
+                        implicitWidth: 54
+                        implicitHeight: 54
+                        flat: true
+                        hoverEnabled: true
+
+                        background: Rectangle {
+                            radius: 10
+                            color: parent.down ? "#9eb9e8" : parent.hovered ? "#b2ccfb" : "transparent"
+                        }
+
+                        contentItem: Text {
+                            anchors.fill: parent
+                            text: appWindow.visibility === Window.Maximized ? "❐" : "□"
+                            font.pixelSize: 30
+                            font.weight: Font.Medium
+                            color: "#16345f"
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        onClicked: {
+                            if (appWindow.visibility === Window.Maximized)
+                                appWindow.showNormal()
+                            else
+                                appWindow.showMaximized()
+                        }
+                    }
+
+                    ToolButton {
                         id: closeHeaderButton
                         implicitWidth: 54
                         implicitHeight: 54
@@ -177,6 +206,73 @@ Window {
         SplashScreen {
             anchors.fill: parent
             onFinished: splashLayer.visible = false
+        }
+    }
+
+    Rectangle {
+        width: 6
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            right: parent.right
+        }
+
+        color: "transparent"
+
+        HoverHandler {
+            cursorShape: Qt.SizeHorCursor
+        }
+
+        DragHandler {
+            onActiveChanged: {
+                if (active)
+                    appWindow.startSystemResize(Qt.RightEdge)
+            }
+        }
+    }
+
+    Rectangle {
+        height: 6
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+        }
+
+        color: "transparent"
+
+        HoverHandler {
+            cursorShape: Qt.SizeVerCursor
+        }
+
+        DragHandler {
+            onActiveChanged: {
+                if (active)
+                    appWindow.startSystemResize(Qt.BottomEdge)
+            }
+        }
+    }
+
+    Rectangle {
+        width: 12
+        height: 12
+
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+
+        color: "transparent"
+
+        HoverHandler {
+            cursorShape: Qt.SizeFDiagCursor
+        }
+
+        DragHandler {
+            onActiveChanged: {
+                if (active)
+                    appWindow.startSystemResize(
+                        Qt.RightEdge | Qt.BottomEdge
+                    )
+            }
         }
     }
 }
